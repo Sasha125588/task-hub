@@ -4,14 +4,17 @@ import type { ComponentType } from "react"
 import type { HammerProps } from "@/components/animate-ui/icons/hammer-icon"
 import type { StarProps } from "@/components/animate-ui/icons/star"
 
-export type User = {
+export interface User {
 	name: string
 	src: string
 }
 
-export type Task = {
+export interface ITask {
 	id: string
 	title: string
+	startTime?: string
+	endTime?: string
+
 	image: ComponentType<StarProps & LucideProps & HammerProps>
 	dueInDays: number
 	users: User[]

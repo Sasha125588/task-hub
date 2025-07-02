@@ -12,9 +12,9 @@ import { Bot } from "@/components/animate-ui/icons/bot-icon"
 import { Hammer } from "@/components/animate-ui/icons/hammer-icon"
 import { Star } from "@/components/animate-ui/icons/star"
 
-import type { Task } from "./types"
+import type { ITask } from "./types"
 
-export const Tasks: Task[] = [
+export const Tasks: ITask[] = [
 	{
 		id: "1",
 		image: Star,

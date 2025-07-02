@@ -13,7 +13,7 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { Card } from "@/components/ui/card"
 
 import { ProgressBar } from "./ProgressBar"
-import type { Task as CardType } from "./types"
+import type { ITask as CardType } from "./types"
 
 interface Props {
 	item: CardType

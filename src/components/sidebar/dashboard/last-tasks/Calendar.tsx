@@ -1,10 +1,33 @@
 "use client"
 
-import { Calendar, Phone, Plane, Users } from "lucide-react"
-import React, { useState } from "react"
+import { Calendar, type LucideProps, Phone, Plane, Users } from "lucide-react"
+import React, {
+	type ForwardRefExoticComponent,
+	type RefAttributes,
+	useState
+} from "react"
+
+export interface Participant {
+	name: string
+	avatar: string
+}
+
+export interface ScheduleItem {
+	id: number
+	title: string
+	startTime: string
+	endTime: string
+	startHour: number
+	duration: number
+	color: string // клас Tailwind, можно уточнить через union если нужно
+	icon: ForwardRefExoticComponent<
+		Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>
+	> // или React.ElementType, если ты используешь иконки как компоненты
+	participants: Participant[]
+}
 
 const DailyTasksCalendar = () => {
-	const [tasks] = useState([
+	const [tasks] = useState<ScheduleItem[]>([
 		{
 			id: 1,
 			title: "Travel App User Flow",
@@ -55,7 +78,7 @@ const DailyTasksCalendar = () => {
 		return `${hour} am`
 	}
 
-	const getTaskPosition = task => {
+	const getTaskPosition = (task: ScheduleItem) => {
 		const startPosition = ((task.startHour - 9) / 8) * 100
 		const width = (task.duration / 8) * 100
 		return { left: `${startPosition}%`, width: `${width}%` }
