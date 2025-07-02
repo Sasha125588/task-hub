@@ -1,3 +1,6 @@
+import type { LucideProps } from "lucide-react"
+import type { ComponentType } from "react"
+
 import type { HammerProps } from "@/components/animate-ui/icons/hammer-icon"
 import type { StarProps } from "@/components/animate-ui/icons/star"
 
@@ -9,7 +12,7 @@ export type User = {
 export type Task = {
 	id: string
 	title: string
-	image: (props: StarProps & HammerProps) => React.ReactElement
+	image: ComponentType<StarProps & LucideProps & HammerProps>
 	dueInDays: number
 	users: User[]
 	progress: {

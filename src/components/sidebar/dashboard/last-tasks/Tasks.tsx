@@ -17,6 +17,9 @@ export type TTastStatus = "not-started" | "completed" | "in-progress"
 
 export function TasksList() {
 	const [status, setStatus] = useState<TTastStatus | "all">("all")
+	const [showAll, setShowAll] = useState(false)
+
+	const TASKS_LIMIT = 6
 
 	const filteredTasks = useMemo(() => {
 		if (status == "all") return Tasks
@@ -34,6 +37,17 @@ export function TasksList() {
 				return Tasks.filter(task => task.progress.status === "in-progress")
 		}
 	}, [status])
+
+	const handleShowAllTasks = () => {
+		setShowAll(prev => !prev)
+	}
+
+	const displayedFilteredTasks = showAll
+		? filteredTasks
+		: filteredTasks.slice(0, TASKS_LIMIT)
+
+	const hasMoreTasks = filteredTasks.length > TASKS_LIMIT
+
 	return (
 		<>
 			<Tabs defaultValue="all" dir="rtl">
@@ -70,7 +84,7 @@ export function TasksList() {
 						value={status as string}
 						className="grid grid-cols-3 gap-5"
 					>
-						{filteredTasks.map(task => {
+						{displayedFilteredTasks.map(task => {
 							return (
 								<div key={task.id} className="">
 									<TaskItem item={task} />
@@ -78,6 +92,32 @@ export function TasksList() {
 							)
 						})}
 					</TabsContent>
+
+					<div className="font-geist-sans mt-5 font-medium">
+						{!showAll && hasMoreTasks && (
+							<div className="flex w-[100%] items-center justify-center">
+								<div>
+									<button
+										onClick={handleShowAllTasks}
+										className="text-primary cursor-pointer hover:text-violet-500"
+									>
+										Show all {filteredTasks.length} tasks
+									</button>
+								</div>
+							</div>
+						)}
+
+						{showAll && hasMoreTasks && (
+							<div className="text-center">
+								<button
+									onClick={handleShowAllTasks}
+									className="cursor-pointer text-gray-600 hover:text-gray-700"
+								>
+									Show less
+								</button>
+							</div>
+						)}
+					</div>
 				</TabsContents>
 			</Tabs>
 		</>

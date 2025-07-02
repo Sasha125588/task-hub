@@ -1,4 +1,4 @@
-import { CircleCheck, Image } from "lucide-react"
+import { Image as ImageIcon } from "lucide-react"
 import { motion } from "motion/react"
 
 import {
@@ -12,6 +12,7 @@ import { SquareArrowOutUpRight } from "@/components/animate-ui/icons/square-arro
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { Card } from "@/components/ui/card"
 
+import { ProgressBar } from "./ProgressBar"
 import type { Task as CardType } from "./types"
 
 interface Props {
@@ -27,7 +28,9 @@ export function TaskItem({ item }: Props) {
 						<item.image animateOnHover size={24} />
 					</div>
 					<div>
-						<h3 className="text-sm font-medium">{item.title}</h3>
+						<h3 className="w-[180px] truncate text-sm font-medium">
+							{item.title}
+						</h3>
 						<p className="text-muted-foreground text-xs">
 							Due: {item.dueInDays} days
 						</p>
@@ -45,70 +48,59 @@ export function TaskItem({ item }: Props) {
 				</AvatarGroup>
 			</div>
 
-			<div
-				className={`h-12 w-full rounded-full ${item.progress.color} relative overflow-hidden`}
-			>
-				<div
-					className="absolute h-full bg-white/20"
-					style={{ width: `${item.progress.value}%` }}
-				/>
-				<span className="absolute inset-0 flex items-center justify-center text-sm font-semibold text-white">
-					{item.progress.status === "completed" ? (
-						<div className="flex items-center gap-1">
-							<CircleCheck size={16} className="" />
-							<p className="text-sm">Done</p>
-						</div>
-					) : (
-						`${item.progress.value}%`
-					)}
-				</span>
-			</div>
+			<ProgressBar progress={item.progress.value} />
 
 			<div className="text-muted-foreground flex items-center justify-between text-xs">
 				<div className="flex items-center gap-4">
 					<div className="flex items-center gap-1">
-						<MessageSquareMore animateOnHover size={18} />
-						<motion.p
-							whileHover={{ y: -2 }}
-							transition={{ type: "spring", stiffness: 300 }}
-							className="cursor-pointer text-base text-black dark:text-white"
-						>
+						<MessageSquareMore
+							animateOnHover
+							size={18}
+							className="cursor-pointer"
+						/>
+						<p className="cursor-default text-base text-black dark:text-white">
 							{item.comments}
-						</motion.p>
+						</p>
 					</div>
 					<div className="flex items-center gap-1">
 						<motion.div
 							whileHover={{ scale: 1.1 }}
 							transition={{ type: "spring", stiffness: 300 }}
 						>
-							<Image size={18} />
+							<ImageIcon size={18} className="cursor-pointer" />
 						</motion.div>
 
-						<motion.p
-							whileHover={{ y: -2 }}
-							transition={{ type: "spring", stiffness: 300 }}
-							className="cursor-pointer text-base text-black dark:text-white"
-						>
+						<p className="cursor-default text-base text-black dark:text-white">
 							{item.attachments}
-						</motion.p>
+						</p>
 					</div>
 					<div className="flex items-center gap-1">
-						<SquareArrowOutUpRight size={18} animateOnHover />
-						<motion.p
-							whileHover={{ y: -2 }}
-							transition={{ type: "spring", stiffness: 300 }}
-							className="cursor-pointer text-base text-black dark:text-white"
-						>
+						<SquareArrowOutUpRight
+							className="cursor-pointer"
+							size={18}
+							animateOnHover
+						/>
+						<p className="cursor-default text-base text-black dark:text-white">
 							{item.links}
-						</motion.p>
+						</p>
 					</div>
 				</div>
 				<div className="flex gap-3">
 					<div className="bg-primary/90 flex size-9 items-center justify-center rounded-full">
-						<PlusIcon color="white" animateOnHover size={24} />
+						<PlusIcon
+							color="white"
+							className="cursor-pointer"
+							animateOnHover
+							size={24}
+						/>
 					</div>
 					<div className="border-primary/90 flex size-9 items-center justify-center rounded-full border-[1.5px]">
-						<BrushIcon animateOnHover size={19} color="var(--primary)" />
+						<BrushIcon
+							className="cursor-pointer"
+							animateOnHover
+							size={19}
+							color="var(--primary)"
+						/>
 					</div>
 				</div>
 			</div>
