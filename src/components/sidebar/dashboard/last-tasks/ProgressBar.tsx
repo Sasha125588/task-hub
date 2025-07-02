@@ -1,4 +1,4 @@
-import { CheckCircle } from "lucide-react"
+import { SquareCheck } from "lucide-react"
 import { useMemo } from "react"
 
 import { cn } from "@/lib/utils"
@@ -16,7 +16,7 @@ export function ProgressBar({ progress }: Props) {
 		if (clamped >= 100)
 			return (
 				<>
-					<CheckCircle className="mr-1.5" />
+					<SquareCheck size={20} className="mr-1" />
 					Done
 				</>
 			)
@@ -48,7 +48,7 @@ export function ProgressBar({ progress }: Props) {
 				{clamped ? (
 					<>{progressText}</>
 				) : (
-					<div className="absolute inset-0 flex cursor-default items-center justify-center font-medium text-gray-600">
+					<div className="text-accent-foreground absolute inset-0 flex cursor-default items-center justify-center font-medium">
 						{progressText}
 					</div>
 				)}

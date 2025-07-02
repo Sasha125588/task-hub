@@ -7,7 +7,7 @@ import type { ICardItem } from "./Cards"
 export function CardItem({ item }: { item: ICardItem }) {
 	return (
 		<Card
-			className={`h-full w-full max-w-sm rounded-2xl ${item.colorClass} ${item.darkColorClass}`}
+			className={`border-border h-full w-full max-w-sm border shadow ${item.colorClass} ${item.darkColorClass}`}
 		>
 			<CardContent className="flex items-center justify-between">
 				<div>
