@@ -1,9 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
 import * as React from "react"
 import * as RechartsPrimitive from "recharts"
 
 import { cn } from "@/lib/utils"
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { light: "", dark: ".dark" } as const
@@ -125,6 +130,8 @@ function ChartTooltipContent({
 		indicator?: "line" | "dot" | "dashed"
 		nameKey?: string
 		labelKey?: string
+		payload: any
+		label: any
 	}) {
 	const { config } = useChart()
 
@@ -179,7 +186,7 @@ function ChartTooltipContent({
 		>
 			{!nestLabel ? tooltipLabel : null}
 			<div className="grid gap-1.5">
-				{payload.map((item, index) => {
+				{payload.map((item: any, index: number) => {
 					const key = `${nameKey || item.name || item.dataKey || "value"}`
 					const itemConfig = getPayloadConfigFromPayload(config, item, key)
 					const indicatorColor = color || item.payload.fill || item.color
@@ -257,9 +264,10 @@ function ChartLegendContent({
 	verticalAlign = "bottom",
 	nameKey
 }: React.ComponentProps<"div"> &
-	Pick<RechartsPrimitive.LegendProps, "payload" | "verticalAlign"> & {
+	Pick<RechartsPrimitive.LegendProps, "payloadUniqBy" | "verticalAlign"> & {
 		hideIcon?: boolean
 		nameKey?: string
+		payload: any
 	}) {
 	const { config } = useChart()
 
@@ -275,7 +283,7 @@ function ChartLegendContent({
 				className
 			)}
 		>
-			{payload.map(item => {
+			{payload.map((item: any) => {
 				const key = `${nameKey || item.dataKey || "value"}`
 				const itemConfig = getPayloadConfigFromPayload(config, item, key)
 
