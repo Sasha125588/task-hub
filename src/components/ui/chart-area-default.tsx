@@ -117,21 +117,15 @@ export function ChartAreaDefault() {
 						onValueChange={setTimeRange}
 					>
 						<SelectTrigger
-							className="hidden w-[130px] rounded-full sm:ml-auto sm:flex"
+							className="hidden w-[130px] sm:ml-auto sm:flex"
 							aria-label="Select a value"
 						>
 							<SelectValue placeholder="Last 3 months" />
 						</SelectTrigger>
-						<SelectContent className="rounded-xl">
-							<SelectItem value="90d" className="rounded-lg">
-								Yearly
-							</SelectItem>
-							<SelectItem value="30d" className="rounded-lg">
-								Monthly
-							</SelectItem>
-							<SelectItem value="7d" className="rounded-lg">
-								Weekly
-							</SelectItem>
+						<SelectContent>
+							<SelectItem value="90d">Yearly</SelectItem>
+							<SelectItem value="30d">Monthly</SelectItem>
+							<SelectItem value="7d">Weekly</SelectItem>
 						</SelectContent>
 					</Select>
 				</CardAction>

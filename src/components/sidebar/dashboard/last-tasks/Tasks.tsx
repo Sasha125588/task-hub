@@ -99,7 +99,7 @@ export function TasksList() {
 								<div>
 									<button
 										onClick={handleShowAllTasks}
-										className="text-primary cursor-pointer hover:text-violet-500"
+										className="text-primary hover:text-primary/80 cursor-pointer"
 									>
 										Show all {filteredTasks.length} tasks
 									</button>
@@ -111,7 +111,7 @@ export function TasksList() {
 							<div className="text-center">
 								<button
 									onClick={handleShowAllTasks}
-									className="cursor-pointer text-gray-600 hover:text-gray-700"
+									className="text-accent-foreground hover:text-accent-foreground/80 cursor-pointer"
 								>
 									Show less
 								</button>

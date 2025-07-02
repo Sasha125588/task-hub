@@ -58,7 +58,7 @@ export function TaskItem({ item }: Props) {
 							size={18}
 							className="cursor-pointer"
 						/>
-						<p className="cursor-default text-base text-black dark:text-white">
+						<p className="text-accent-foreground cursor-default text-base">
 							{item.comments}
 						</p>
 					</div>
@@ -70,7 +70,7 @@ export function TaskItem({ item }: Props) {
 							<ImageIcon size={18} className="cursor-pointer" />
 						</motion.div>
 
-						<p className="cursor-default text-base text-black dark:text-white">
+						<p className="text-accent-foreground cursor-default text-base">
 							{item.attachments}
 						</p>
 					</div>
@@ -80,13 +80,13 @@ export function TaskItem({ item }: Props) {
 							size={18}
 							animateOnHover
 						/>
-						<p className="cursor-default text-base text-black dark:text-white">
+						<p className="text-accent-foreground cursor-default text-base">
 							{item.links}
 						</p>
 					</div>
 				</div>
 				<div className="flex gap-3">
-					<div className="bg-primary/90 flex size-9 items-center justify-center rounded-full">
+					<div className="bg-primary dark:bg-accent flex size-9 items-center justify-center rounded-full">
 						<PlusIcon
 							color="white"
 							className="cursor-pointer"
@@ -94,7 +94,7 @@ export function TaskItem({ item }: Props) {
 							size={24}
 						/>
 					</div>
-					<div className="border-primary/90 flex size-9 items-center justify-center rounded-full border-[1.5px]">
+					<div className="border-primary/75 flex size-9 items-center justify-center rounded-full border-[1.5px]">
 						<BrushIcon
 							className="cursor-pointer"
 							animateOnHover

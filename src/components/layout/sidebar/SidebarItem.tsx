@@ -18,8 +18,8 @@ export function SidebarItem({ item }: { item: DataBlock }) {
 	const pathname = usePathname()
 	return (
 		<SidebarGroup key={item.title}>
-			<SidebarGroupLabel className="my-0 py-0 text-zinc-400">
-				<p className="text-[15px] leading-7 [&:not(:first-child)]:mt-6">
+			<SidebarGroupLabel className="my-0 py-0">
+				<p className="text-[13px] leading-7 [&:not(:first-child)]:mt-6">
 					{item.title}
 				</p>
 			</SidebarGroupLabel>
@@ -30,7 +30,7 @@ export function SidebarItem({ item }: { item: DataBlock }) {
 							return (
 								<SidebarMenuItem key={item.title}>
 									<SidebarMenuButton
-										size="lg"
+										size="md"
 										className="rounded-full px-3"
 										asChild
 										isActive={pathname === item.url}
@@ -39,7 +39,7 @@ export function SidebarItem({ item }: { item: DataBlock }) {
 											<div className={`m-0 flex h-5 w-5 items-center p-0`}>
 												{item.icon}
 											</div>
-											{item.title}
+											<p>{item.title}</p>
 										</a>
 									</SidebarMenuButton>
 								</SidebarMenuItem>

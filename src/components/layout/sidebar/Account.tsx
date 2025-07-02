@@ -41,7 +41,7 @@ export function Account({
 	return (
 		<SidebarMenu>
 			<SidebarHeader className="mb-0 pb-0">
-				<p className="text-[15px] text-zinc-400">Account</p>
+				<p className="text-sidebar-foreground/70 text-[13px]">Account</p>
 			</SidebarHeader>
 			<SidebarMenuItem>
 				<DropdownMenu>

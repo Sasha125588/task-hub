@@ -1,3 +1,4 @@
+import DailyTasksCalendar from "./Calendar"
 import { TasksList } from "./Tasks"
 
 export function LastTasks() {

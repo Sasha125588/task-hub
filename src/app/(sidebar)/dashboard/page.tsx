@@ -9,11 +9,11 @@ export const metadata: Metadata = {
 
 export default function DashboardPage() {
 	return (
-		<div className="flex w-full flex-col gap-5">
-			<div className="flex-1">
+		<div className="flex w-full flex-col gap-7">
+			<div className="">
 				<Statistic />
 			</div>
-			<div className="flex-1">
+			<div className="">
 				<LastTasks />
 			</div>
 		</div>
