@@ -1,6 +1,6 @@
 "use client"
 
-import { Calendar, Coffee, FileText, Phone, Plane, Users } from "lucide-react"
+import { Calendar, Phone, Plane, Users } from "lucide-react"
 import React, { useState } from "react"
 
 const DailyTasksCalendar = () => {
