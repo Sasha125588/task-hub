@@ -10,6 +10,14 @@ import { cn } from "@/lib/utils"
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { light: "", dark: ".dark" } as const
 
@@ -125,14 +133,14 @@ function ChartTooltipContent({
 	labelKey
 }: React.ComponentProps<typeof RechartsPrimitive.Tooltip> &
 	React.ComponentProps<"div"> & {
-		hideLabel?: boolean
-		hideIndicator?: boolean
-		indicator?: "line" | "dot" | "dashed"
-		nameKey?: string
-		labelKey?: string
-		payload: any
-		label: any
-	}) {
+		hideLabel?: boolean | undefined
+		hideIndicator?: boolean | undefined
+		indicator?: "line" | "dot" | "dashed" | undefined
+		nameKey?: string | undefined
+		labelKey?: string | undefined
+		payload?: any
+		label?: any
+	}): React.JSX.Element | null {
 	const { config } = useChart()
 
 	const tooltipLabel = React.useMemo(() => {
