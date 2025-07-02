@@ -85,8 +85,8 @@ const DailyTasksCalendar = () => {
 	}
 
 	return (
-		<div className="mx-auto min-h-screen max-w-6xl bg-gray-50 p-6">
-			<div className="rounded-xl bg-white p-6 shadow-sm">
+		<div className="mx-auto min-h-screen max-w-6xl p-6">
+			<div className="bg-muted rounded-xl p-6 shadow-sm">
 				{/* Header */}
 				<div className="mb-8 flex items-center justify-between">
 					<div className="flex items-center space-x-3">

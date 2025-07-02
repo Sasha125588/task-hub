@@ -24,7 +24,7 @@ export function TaskItem({ item }: Props) {
 		<Card className="p-4">
 			<div className="flex items-center justify-between">
 				<div className="flex items-center gap-2">
-					<div className="bg-primary/10 flex size-10 items-center justify-center rounded-full">
+					<div className="bg-primary/10 flex size-10 items-center justify-center rounded-lg shadow-md">
 						<item.image animateOnHover size={24} />
 					</div>
 					<div>
@@ -86,7 +86,7 @@ export function TaskItem({ item }: Props) {
 					</div>
 				</div>
 				<div className="flex gap-3">
-					<div className="bg-primary dark:bg-accent flex size-9 items-center justify-center rounded-full">
+					<div className="bg-primary dark:bg-chart-3 flex size-9 items-center justify-center rounded-full">
 						<PlusIcon
 							color="white"
 							className="cursor-pointer"

@@ -19,7 +19,7 @@ import {
 	SidebarContent,
 	SidebarHeader,
 	SidebarRail
-} from "@/components/ui/sidebar"
+} from "@/components/animate-ui/radix/sidebar"
 
 import { Account } from "./Account"
 import { SidebarItem } from "./SidebarItem"

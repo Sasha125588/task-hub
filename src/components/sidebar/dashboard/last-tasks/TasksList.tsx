@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react"
 
+import { FlipButton } from "@/components/animate-ui/buttons/flip"
 import {
 	Tabs,
 	TabsContent,
@@ -18,12 +19,24 @@ const TASKS_LIMIT = 6
 
 export function TasksList() {
 	const [status, setStatus] = useState<TTaskStatus>("all")
+	const [sortDueAsc, setSortDueAsc] = useState(true)
 	const [showAll, setShowAll] = useState(false)
 
 	const filteredTasks = useMemo(() => {
-		if (status === "all") return Tasks
-		return Tasks.filter(task => task.progress.status === status)
-	}, [status])
+		const filtered =
+			status === "all"
+				? Tasks
+				: Tasks.filter(task => task.progress.status === status)
+
+		const sorted = filtered.sort((a, b) => {
+			const aDue = a.dueInDays ?? Infinity
+			const bDue = b.dueInDays ?? Infinity
+
+			return sortDueAsc ? bDue - aDue : aDue - bDue
+		})
+
+		return sorted
+	}, [status, sortDueAsc])
 
 	const displayedTasks = showAll
 		? filteredTasks
@@ -31,7 +44,13 @@ export function TasksList() {
 
 	const hasMoreTasks = filteredTasks.length > TASKS_LIMIT
 
-	const toggleShowAll = () => setShowAll(prev => !prev)
+	const toggleShowAll = () => {
+		setShowAll(prev => !prev)
+	}
+
+	const handleSortByDue = () => {
+		setSortDueAsc(prev => !prev)
+	}
 
 	return (
 		<Tabs
@@ -40,13 +59,20 @@ export function TasksList() {
 			onValueChange={value => setStatus(value as TTaskStatus)}
 		>
 			<div className="flex items-center justify-between">
-				<TabsList dir="ltr">
-					<TabsTrigger value="all">All</TabsTrigger>
-					<TabsTrigger value="completed">Completed</TabsTrigger>
-					<TabsTrigger value="in-progress">In Progress</TabsTrigger>
-					<TabsTrigger value="not-started">Not started</TabsTrigger>
-				</TabsList>
-
+				<div className="flex items-center gap-2">
+					<TabsList dir="ltr">
+						<TabsTrigger value="all">All</TabsTrigger>
+						<TabsTrigger value="completed">Completed</TabsTrigger>
+						<TabsTrigger value="in-progress">In Progress</TabsTrigger>
+						<TabsTrigger value="not-started">Not started</TabsTrigger>
+					</TabsList>
+					<FlipButton
+						frontText="Farthest"
+						backText="Soonest"
+						onClick={handleSortByDue}
+						className="rounded-lg shadow"
+					/>
+				</div>
 				<h4 className="font-geist-sans scroll-m-20 text-xl font-semibold tracking-tight">
 					Last Tasks{" "}
 					<span className="text-accent-foreground/60">

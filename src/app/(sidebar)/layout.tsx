@@ -1,8 +1,11 @@
 import type { PropsWithChildren } from "react"
 
+import {
+	SidebarInset,
+	SidebarProvider
+} from "@/components/animate-ui/radix/sidebar"
 import { Header } from "@/components/layout/sidebar/Header"
 import { AppSidebar } from "@/components/layout/sidebar/Sidebar"
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 
 export default function DashboardLayout({ children }: PropsWithChildren) {
 	return (

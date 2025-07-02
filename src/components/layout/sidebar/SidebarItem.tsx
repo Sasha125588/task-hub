@@ -10,7 +10,7 @@ import {
 	SidebarMenu,
 	SidebarMenuButton,
 	SidebarMenuItem
-} from "@/components/ui/sidebar"
+} from "@/components/animate-ui/radix/sidebar"
 
 import type { DataBlock } from "./Sidebar"
 
@@ -30,8 +30,8 @@ export function SidebarItem({ item }: { item: DataBlock }) {
 							return (
 								<SidebarMenuItem key={item.title}>
 									<SidebarMenuButton
-										size="md"
-										className="rounded-full px-3"
+										size="lg"
+										className="px-3"
 										asChild
 										isActive={pathname === item.url}
 									>

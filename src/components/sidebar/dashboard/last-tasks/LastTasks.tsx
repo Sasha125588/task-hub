@@ -1,4 +1,4 @@
-import { TasksList } from "./Tasks"
+import { TasksList } from "./TasksList"
 
 export function LastTasks() {
 	return (

@@ -33,7 +33,7 @@ type MotionHighlightContextType<T extends string> = {
 }
 
 const MotionHighlightContext = React.createContext<
-	//eslint-disable-next-line @typescript-eslint/no-explicit-any
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	MotionHighlightContextType<any> | undefined
 >(undefined)
 
@@ -44,7 +44,7 @@ function useMotionHighlight<T extends string>(): MotionHighlightContextType<T> {
 			"useMotionHighlight must be used within a MotionHighlightProvider"
 		)
 	}
-	return context as MotionHighlightContextType<T>
+	return context as unknown as MotionHighlightContextType<T>
 }
 
 type BaseMotionHighlightProps<T extends string> = {
@@ -76,7 +76,7 @@ type ControlledParentModeMotionHighlightProps<T extends string> =
 
 type ControlledChildrenModeMotionHighlightProps<T extends string> =
 	BaseMotionHighlightProps<T> & {
-		mode?: "children"
+		mode?: "children" | undefined
 		controlledItems: true
 		children: React.ReactNode
 	}
@@ -180,7 +180,7 @@ function MotionHighlight<T extends string>({
 	)
 
 	const clearBounds = React.useCallback(() => {
-		setBoundsState(null)
+		setBoundsState(prev => (prev === null ? prev : null))
 	}, [])
 
 	React.useEffect(() => {
@@ -384,7 +384,7 @@ function MotionHighlightItem({
 	const childValue =
 		id ?? value ?? element.props?.["data-value"] ?? element.props?.id ?? itemId
 	const isActive = activeValue === childValue
-	const isDisabled = disabled ?? contextDisabled
+	const isDisabled = disabled === undefined ? contextDisabled : disabled
 	const itemTransition = transition ?? contextTransition
 
 	const localRef = React.useRef<HTMLDivElement>(null)
@@ -400,6 +400,7 @@ function MotionHighlightItem({
 
 		const updateBounds = () => {
 			if (!localRef.current) return
+
 			const bounds = localRef.current.getBoundingClientRect()
 
 			if (shouldUpdateBounds) {
@@ -468,54 +469,56 @@ function MotionHighlightItem({
 
 	if (asChild) {
 		if (mode === "children") {
-			return React.cloneElement(element, {
-				key: childValue,
-				ref: localRef,
-				className: cn("relative", element.props.className),
-				...getNonOverridingDataAttributes(element, {
-					...dataAttributes,
-					"data-slot": "motion-highlight-item-container"
-				}),
-				...commonHandlers,
-				...props,
-				children: (
-					<>
-						<AnimatePresence initial={false}>
-							{isActive && !isDisabled && (
-								<motion.div
-									layoutId={`transition-background-${contextId}`}
-									data-slot="motion-highlight"
-									className={cn(
-										"absolute inset-0 z-0 bg-zinc-100 dark:bg-zinc-800",
-										contextClassName,
-										activeClassName
-									)}
-									transition={itemTransition}
-									initial={{ opacity: 0 }}
-									animate={{ opacity: 1 }}
-									exit={{
-										opacity: 0,
-										transition: {
-											...itemTransition,
-											delay:
-												(itemTransition?.delay ?? 0) +
-												(exitDelay ?? contextExitDelay ?? 0)
-										}
-									}}
-									{...dataAttributes}
-								/>
-							)}
-						</AnimatePresence>
-						<div
-							data-slot="motion-highlight-item"
-							className={cn("relative z-[1]", className)}
-							{...dataAttributes}
-						>
-							{children}
-						</div>
-					</>
-				)
-			})
+			return React.cloneElement(
+				element,
+				{
+					key: childValue,
+					ref: localRef,
+					className: cn("relative", element.props.className),
+					...getNonOverridingDataAttributes(element, {
+						...dataAttributes,
+						"data-slot": "motion-highlight-item-container"
+					}),
+					...commonHandlers,
+					...props
+				},
+				<>
+					<AnimatePresence initial={false}>
+						{isActive && !isDisabled && (
+							<motion.div
+								layoutId={`transition-background-${contextId}`}
+								data-slot="motion-highlight"
+								className={cn(
+									"absolute inset-0 z-0 bg-zinc-100 dark:bg-zinc-800",
+									contextClassName,
+									activeClassName
+								)}
+								transition={itemTransition}
+								initial={{ opacity: 0 }}
+								animate={{ opacity: 1 }}
+								exit={{
+									opacity: 0,
+									transition: {
+										...itemTransition,
+										delay:
+											(itemTransition?.delay ?? 0) +
+											(exitDelay ?? contextExitDelay ?? 0)
+									}
+								}}
+								{...dataAttributes}
+							/>
+						)}
+					</AnimatePresence>
+
+					<div
+						data-slot="motion-highlight-item"
+						className={cn("relative z-[1]", className)}
+						{...dataAttributes}
+					>
+						{children}
+					</div>
+				</>
+			)
 		}
 
 		return React.cloneElement(element, {
@@ -566,6 +569,7 @@ function MotionHighlightItem({
 					)}
 				</AnimatePresence>
 			)}
+
 			{React.cloneElement(element, {
 				className: cn("relative z-[1]", element.props.className),
 				...getNonOverridingDataAttributes(element, {

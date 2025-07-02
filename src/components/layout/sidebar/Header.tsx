@@ -2,8 +2,8 @@
 
 import { usePathname } from "next/navigation"
 
+import { SidebarTrigger } from "@/components/animate-ui/radix/sidebar"
 import { Separator } from "@/components/ui/separator"
-import { SidebarTrigger } from "@/components/ui/sidebar"
 import { ModeToggle } from "@/components/ui/toggle-theme"
 
 import { SearchForm } from "./Search"

@@ -105,9 +105,9 @@ export function ChartAreaDefault() {
 		return date >= startDate
 	})
 	return (
-		<Card className="h-full w-full shadow-xs">
+		<Card className="h-full w-full">
 			<CardHeader className="flex items-center">
-				<CardTitle className="font-geist-sans flex-1 font-semibold">
+				<CardTitle className="font-geist-sans text-foreground/95 flex-1 text-2xl">
 					Projects Statistic
 				</CardTitle>
 				<CardAction>
