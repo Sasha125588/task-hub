@@ -14,6 +14,7 @@ type FlipDirection = "top" | "bottom" | "left" | "right"
 
 type FlipButtonProps = HTMLMotionProps<"button"> & {
 	frontText: string
+	flipped: boolean
 	backText: string
 	transition?: Transition
 	frontClassName?: string
@@ -26,6 +27,7 @@ const DEFAULT_SPAN_CLASS_NAME =
 
 function FlipButton({
 	frontText,
+	flipped,
 	backText,
 	transition = { type: "spring", stiffness: 280, damping: 20 },
 	className,
@@ -35,8 +37,6 @@ function FlipButton({
 	onClick,
 	...props
 }: FlipButtonProps) {
-	const [isClicked, setIsClicked] = React.useState(false)
-
 	const isVertical = from === "top" || from === "bottom"
 	const rotateAxis = isVertical ? "rotateX" : "rotateY"
 	const frontOffset = from === "top" || from === "left" ? "50%" : "-50%"
@@ -66,19 +66,18 @@ function FlipButton({
 	}
 
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-		setIsClicked(prev => !prev)
 		onClick?.(event)
 	}
 
 	// Определяем текущее состояние анимации
-	const currentState = isClicked ? "clicked" : "initial"
+	const currentState = flipped ? "clicked" : "initial"
 
 	return (
 		<motion.button
 			data-slot="flip-button"
 			initial="initial"
 			animate={currentState}
-			whileTap={isClicked ? "initial" : "hover"}
+			whileTap={flipped ? "initial" : "hover"}
 			className={cn(
 				"relative inline-block h-10 cursor-pointer px-3 py-2 text-sm font-medium perspective-[1000px] focus:outline-none",
 				className

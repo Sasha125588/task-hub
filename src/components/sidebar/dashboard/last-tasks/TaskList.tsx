@@ -1,6 +1,7 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { parseAsBoolean, parseAsStringLiteral, useQueryState } from "nuqs"
+import { useMemo } from "react"
 
 import { FlipButton } from "@/components/animate-ui/buttons/flip"
 import {
@@ -13,14 +14,24 @@ import {
 import { TaskItem } from "./TasksItem"
 import { Tasks } from "./data"
 
-export type TTaskStatus = "all" | "not-started" | "completed" | "in-progress"
+export const TTaskStatus = [
+	"all",
+	"not-started",
+	"completed",
+	"in-progress"
+] as const
+
+type TaskStatus = (typeof TTaskStatus)[number]
 
 const TASKS_LIMIT = 6
 
-export function TasksList() {
-	const [status, setStatus] = useState<TTaskStatus>("all")
-	const [sortDueAsc, setSortDueAsc] = useState(true)
-	const [showAll, setShowAll] = useState(false)
+export function TaskList() {
+	const [status, setStatus] = useQueryState<TaskStatus>(
+		"status",
+		parseAsStringLiteral(TTaskStatus).withDefault("all")
+	)
+	const [sortDueAsc, setSortDueAsc] = useQueryState("sort", parseAsBoolean)
+	const [showAll, setShowAll] = useQueryState("show-all", parseAsBoolean)
 
 	const filteredTasks = useMemo(() => {
 		const filtered =
@@ -32,15 +43,15 @@ export function TasksList() {
 			const aDue = a.dueInDays ?? Infinity
 			const bDue = b.dueInDays ?? Infinity
 
-			return sortDueAsc ? bDue - aDue : aDue - bDue
+			return sortDueAsc ? aDue - bDue : bDue - aDue
 		})
 
 		return sorted
 	}, [status, sortDueAsc])
 
-	const displayedTasks = showAll
-		? filteredTasks
-		: filteredTasks.slice(0, TASKS_LIMIT)
+	const displayedTasks = useMemo(() => {
+		return showAll ? filteredTasks : filteredTasks.slice(0, TASKS_LIMIT)
+	}, [filteredTasks, showAll, sortDueAsc])
 
 	const hasMoreTasks = filteredTasks.length > TASKS_LIMIT
 
@@ -54,9 +65,9 @@ export function TasksList() {
 
 	return (
 		<Tabs
-			defaultValue="all"
+			defaultValue={status}
 			dir="rtl"
-			onValueChange={value => setStatus(value as TTaskStatus)}
+			onValueChange={value => setStatus(value as TaskStatus)}
 		>
 			<div className="flex items-center justify-between">
 				<div className="flex items-center gap-2">
@@ -69,6 +80,7 @@ export function TasksList() {
 					<FlipButton
 						frontText="Farthest"
 						backText="Soonest"
+						flipped={sortDueAsc as boolean}
 						onClick={handleSortByDue}
 						className="rounded-lg shadow"
 					/>
@@ -81,7 +93,12 @@ export function TasksList() {
 				</h4>
 			</div>
 
-			<TabsContent value={status} className="grid grid-cols-3 gap-5" dir="ltr">
+			<TabsContent
+				value={status}
+				key={sortDueAsc ? "asc" : "desc"}
+				className="grid grid-cols-3 gap-5"
+				dir="ltr"
+			>
 				{displayedTasks.map(task => (
 					<TaskItem key={task.id} item={task} />
 				))}

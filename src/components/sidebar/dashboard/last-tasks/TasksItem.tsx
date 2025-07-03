@@ -15,6 +15,7 @@ import { Card } from "@/components/ui/card"
 
 import { ProgressBar } from "./ProgressBar"
 import type { ITask as CardType } from "./types"
+import { EDIT_TASK_URL } from "@/constants"
 
 interface Props {
 	item: CardType
@@ -96,7 +97,7 @@ export function TaskItem({ item }: Props) {
 						/>
 					</div>
 					<div className="border-primary/75 flex size-9 items-center justify-center rounded-full border-[1.5px]">
-						<Link href={`/dashboard/task/${item.id}/edit`}>
+						<Link href={EDIT_TASK_URL(item.id)}>
 							<BrushIcon
 								className="cursor-pointer"
 								animateOnHover

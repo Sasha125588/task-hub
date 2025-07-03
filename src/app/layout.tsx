@@ -1,6 +1,7 @@
 import { Analytics } from "@vercel/analytics/next"
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
+import { NuqsAdapter } from "nuqs/adapters/next/app"
 import type { ReactNode } from "react"
 
 import { ScrollProgress } from "@/components/animate-ui/components/scroll-progress"
@@ -48,7 +49,7 @@ export default function RootLayout({ children }: Props) {
 					disableTransitionOnChange
 				>
 					<ScrollProgress />
-					{children}
+					<NuqsAdapter>{children}</NuqsAdapter>
 					<Analytics />
 				</ThemeProvider>
 			</body>

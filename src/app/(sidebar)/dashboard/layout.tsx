@@ -4,7 +4,7 @@ interface Props {
 	children: ReactNode
 	modal: ReactNode
 }
-export default function ModalLayout({ children, modal }: Props) {
+export default function DashboardLayout({ children, modal }: Props) {
 	return (
 		<div>
 			{modal}

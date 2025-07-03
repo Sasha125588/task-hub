@@ -36,8 +36,9 @@ export function ProgressBar({ progress }: Props) {
 		<div className="bg-primary/12 font-geist-sans relative h-12 w-full overflow-hidden rounded-full">
 			<div
 				className={cn(
-					"animate-stripes flex h-full cursor-default items-center justify-center rounded-full bg-[length:56px_56px] font-medium text-white",
-					colorProgressBar
+					"flex h-full cursor-default items-center justify-center rounded-full bg-[length:56px_56px] font-medium text-white",
+					colorProgressBar,
+					{ "animate-stripes": clamped < 100 }
 				)}
 				style={{
 					width: `${clamped}%`,

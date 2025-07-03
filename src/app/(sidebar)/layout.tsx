@@ -11,7 +11,7 @@ interface Props {
 	children: ReactNode
 }
 
-export default function DashboardLayout({ children }: Props) {
+export default function SidebarLayout({ children }: Props) {
 	return (
 		<SidebarProvider
 			style={

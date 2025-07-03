@@ -1,9 +1,9 @@
-import { TasksList } from "./TasksList"
+import { TaskList } from "./TaskList"
 
 export function LastTasks() {
 	return (
 		<div>
-			<TasksList />
+			<TaskList />
 		</div>
 	)
 }
