@@ -1,5 +1,6 @@
 import { Image as ImageIcon } from "lucide-react"
 import { motion } from "motion/react"
+import Link from "next/link"
 
 import {
 	AvatarGroup,
@@ -95,12 +96,14 @@ export function TaskItem({ item }: Props) {
 						/>
 					</div>
 					<div className="border-primary/75 flex size-9 items-center justify-center rounded-full border-[1.5px]">
-						<BrushIcon
-							className="cursor-pointer"
-							animateOnHover
-							size={19}
-							color="var(--primary)"
-						/>
+						<Link href={`/dashboard/${item.id}`}>
+							<BrushIcon
+								className="cursor-pointer"
+								animateOnHover
+								size={19}
+								color="var(--primary)"
+							/>
+						</Link>
 					</div>
 				</div>
 			</div>
