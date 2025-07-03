@@ -1,4 +1,9 @@
+import type { Metadata } from "next"
 import { type ReactNode } from "react"
+
+export const metadata: Metadata = {
+	title: "Dashboard"
+}
 
 interface Props {
 	children: ReactNode
