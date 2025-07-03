@@ -1,4 +1,4 @@
-import type { PropsWithChildren } from "react"
+import type { ReactNode } from "react"
 
 import {
 	SidebarInset,
@@ -7,7 +7,11 @@ import {
 import { Header } from "@/components/layout/sidebar/Header"
 import { AppSidebar } from "@/components/layout/sidebar/Sidebar"
 
-export default function DashboardLayout({ children }: PropsWithChildren) {
+interface Props {
+	children: ReactNode
+}
+
+export default function DashboardLayout({ children }: Props) {
 	return (
 		<SidebarProvider
 			style={

@@ -1,16 +1,14 @@
 import type { ReactNode } from "react"
 
-export default function DashboardLayout({
-	children,
-	task
-}: {
+interface Props {
 	children: ReactNode
-	task: ReactNode
-}) {
+	modal: ReactNode
+}
+export default function ModalLayout({ children, modal }: Props) {
 	return (
-		<>
-			{task}
+		<div>
+			{modal}
 			{children}
-		</>
+		</div>
 	)
 }

@@ -96,7 +96,7 @@ export function TaskItem({ item }: Props) {
 						/>
 					</div>
 					<div className="border-primary/75 flex size-9 items-center justify-center rounded-full border-[1.5px]">
-						<Link href={`/dashboard/${item.id}`}>
+						<Link href={`/dashboard/task/${item.id}/edit`}>
 							<BrushIcon
 								className="cursor-pointer"
 								animateOnHover

@@ -1,7 +1,7 @@
 import { Analytics } from "@vercel/analytics/next"
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
-import type { PropsWithChildren } from "react"
+import type { ReactNode } from "react"
 
 import { ScrollProgress } from "@/components/animate-ui/components/scroll-progress"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -31,7 +31,11 @@ export const metadata: Metadata = {
 	description: "Manage your progress"
 }
 
-export default function RootLayout({ children }: PropsWithChildren) {
+interface Props {
+	children: ReactNode
+}
+
+export default function RootLayout({ children }: Props) {
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<body

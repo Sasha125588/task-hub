@@ -11,7 +11,7 @@ export function TaskModal({ children }: { children: React.ReactNode }) {
 				{children}
 				<button
 					className="mt-4 rounded bg-white/20 px-4 py-2 hover:bg-white/30"
-					onClick={() => router.push("/dashboard")}
+					onClick={() => router.back()}
 				>
 					Close modal
 				</button>
