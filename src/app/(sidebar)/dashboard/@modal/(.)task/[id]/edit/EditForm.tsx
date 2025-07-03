@@ -4,7 +4,7 @@ interface Props {
 	id: string
 }
 
-export function EditForm({ id }: Props) {
+export function TastEditForm({ id }: Props) {
 	return (
 		<TaskModal>
 			<div>Task Page. Task id: {id}</div>

@@ -1,11 +1,17 @@
-import { EditForm } from "./EditForm"
+import { Suspense } from "react"
+
+import { TastEditForm } from "./EditForm"
 
 interface Props {
 	params: Promise<{ id: string }>
 }
 
-export default async function TaskModal({ params }: Props) {
+export default async function TaskEditModal({ params }: Props) {
 	const { id } = await params
 
-	return <EditForm id={id} />
+	return (
+		<Suspense fallback="Loading edit form...">
+			<TastEditForm id={id} />
+		</Suspense>
+	)
 }
