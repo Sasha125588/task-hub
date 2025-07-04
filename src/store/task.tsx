@@ -16,9 +16,17 @@ $tasks.on(taskUpdated, (tasks, updatedTask) =>
 	})
 )
 
-const sortTypeFromLS = localStorage.getItem("sortType") as "asc" | "desc" | null
+const getSortTypeFromLS = (): "asc" | "desc" => {
+	if (typeof window === "undefined") return "asc"
+	return localStorage.getItem("sortType") === "desc" ? "desc" : "asc"
+}
 
-export const $sortType = createStore<"asc" | "desc">(sortTypeFromLS || "asc")
+export const $sortType = createStore<"asc" | "desc">(getSortTypeFromLS())
 export const sortTypeUpdated = createEvent<"asc" | "desc">()
 
-$sortType.on(sortTypeUpdated, (_, newSortType) => newSortType)
+$sortType.on(sortTypeUpdated, (_, newSortType) => {
+	if (typeof window !== "undefined") {
+		localStorage.setItem("sortType", newSortType)
+	}
+	return newSortType
+})

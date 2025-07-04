@@ -64,7 +64,6 @@ export function TaskList() {
 		const newSortType = sortType === "asc" ? "desc" : "asc"
 		console.log(sortType)
 		sortTypeUpdated(newSortType)
-		localStorage.setItem("sortType", newSortType)
 	}
 
 	return (
