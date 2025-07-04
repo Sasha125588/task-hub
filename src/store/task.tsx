@@ -1,11 +1,15 @@
 import { createEvent, createStore } from "effector"
 import { produce } from "immer"
 
-import { TASKS } from "@/components/sidebar/dashboard/last-tasks/data"
 import type { ITask } from "@/components/sidebar/dashboard/last-tasks/types"
+
+import { TASKS } from "@/constants"
 
 export const $tasks = createStore<ITask[]>(TASKS)
 export const taskUpdated = createEvent<Partial<ITask> & { id: string }>()
+export const $getTaskByID = $tasks.map(
+	tasks => (id: string) => tasks.find(task => task.id === id)
+)
 
 $tasks.on(taskUpdated, (tasks, updatedTask) =>
 	produce(tasks, draft => {
