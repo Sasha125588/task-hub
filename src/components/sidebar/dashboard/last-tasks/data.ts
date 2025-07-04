@@ -1,20 +1,19 @@
 import {
+	Bot,
 	Camera,
 	Coffee,
 	Globe,
+	Hammer,
 	Music,
 	Palette,
 	Shield,
+	Star,
 	Zap
 } from "lucide-react"
 
-import { Bot } from "@/components/animate-ui/icons/bot-icon"
-import { Hammer } from "@/components/animate-ui/icons/hammer-icon"
-import { Star } from "@/components/animate-ui/icons/star"
-
 import type { ITask } from "./types"
 
-export const Tasks: ITask[] = [
+export const TASKS: ITask[] = [
 	{
 		id: "1",
 		image: Star,
@@ -34,11 +33,9 @@ export const Tasks: ITask[] = [
 				name: "JH"
 			}
 		],
-		progress: {
-			value: 65,
-			status: "in-progress",
-			color: "bg-blue-500"
-		},
+		progress: 65,
+		status: "in-progress",
+
 		comments: 8,
 		attachments: 12,
 		links: 3
@@ -58,11 +55,9 @@ export const Tasks: ITask[] = [
 				name: "AW"
 			}
 		],
-		progress: {
-			value: 100,
-			status: "completed",
-			color: "bg-emerald-500"
-		},
+
+		progress: 100,
+		status: "completed",
 		comments: 15,
 		attachments: 4,
 		links: 7
@@ -86,11 +81,9 @@ export const Tasks: ITask[] = [
 				name: "SK"
 			}
 		],
-		progress: {
-			value: 85,
-			status: "in-progress",
-			color: "bg-amber-500"
-		},
+
+		progress: 85,
+		status: "in-progress",
 		comments: 6,
 		attachments: 9,
 		links: 5
@@ -110,11 +103,9 @@ export const Tasks: ITask[] = [
 				name: "CN"
 			}
 		],
-		progress: {
-			value: 0,
-			status: "not-started",
-			color: "bg-gray-400"
-		},
+
+		progress: 0,
+		status: "not-started",
 		comments: 2,
 		attachments: 1,
 		links: 0
@@ -130,11 +121,9 @@ export const Tasks: ITask[] = [
 				name: "GR"
 			}
 		],
-		progress: {
-			value: 30,
-			status: "in-progress",
-			color: "bg-rose-500"
-		},
+
+		progress: 30,
+		status: "in-progress",
 		comments: 12,
 		attachments: 3,
 		links: 8
@@ -158,11 +147,9 @@ export const Tasks: ITask[] = [
 				name: "AW"
 			}
 		],
-		progress: {
-			value: 45,
-			status: "in-progress",
-			color: "bg-purple-500"
-		},
+
+		progress: 45,
+		status: "in-progress",
 		comments: 18,
 		attachments: 7,
 		links: 4
@@ -182,11 +169,8 @@ export const Tasks: ITask[] = [
 				name: "GR"
 			}
 		],
-		progress: {
-			value: 0,
-			status: "not-started",
-			color: "bg-gray-400"
-		},
+		progress: 0,
+		status: "not-started",
 		comments: 0,
 		attachments: 2,
 		links: 1
@@ -206,11 +190,8 @@ export const Tasks: ITask[] = [
 				name: "JH"
 			}
 		],
-		progress: {
-			value: 100,
-			status: "completed",
-			color: "bg-emerald-500"
-		},
+		progress: 100,
+		status: "completed",
 		comments: 9,
 		attachments: 15,
 		links: 6
@@ -234,11 +215,8 @@ export const Tasks: ITask[] = [
 				name: "CN"
 			}
 		],
-		progress: {
-			value: 20,
-			status: "in-progress",
-			color: "bg-indigo-500"
-		},
+		progress: 20,
+		status: "in-progress",
 		comments: 5,
 		attachments: 8,
 		links: 3
@@ -254,11 +232,8 @@ export const Tasks: ITask[] = [
 				name: "AW"
 			}
 		],
-		progress: {
-			value: 75,
-			status: "in-progress",
-			color: "bg-orange-500"
-		},
+		progress: 75,
+		status: "in-progress",
 		comments: 11,
 		attachments: 5,
 		links: 2

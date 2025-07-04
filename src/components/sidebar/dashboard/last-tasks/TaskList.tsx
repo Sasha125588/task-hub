@@ -1,5 +1,6 @@
 "use client"
 
+import { useUnit } from "effector-react"
 import { parseAsBoolean, parseAsStringLiteral, useQueryState } from "nuqs"
 import { useMemo } from "react"
 
@@ -11,63 +12,66 @@ import {
 	TabsTrigger
 } from "@/components/animate-ui/radix/tabs"
 
-import { TaskItem } from "./TasksItem"
-import { Tasks } from "./data"
+import { $sortType, $tasks, sortTypeUpdated } from "@/store/task"
 
-export const TTaskStatus = [
+import { TaskItem } from "./TasksItem"
+import type { TastStatuses } from "./types"
+import { DISPLAYED_TASKS_LIMIT } from "@/constants"
+
+export const TaskStatusFilter = [
 	"all",
 	"not-started",
 	"completed",
 	"in-progress"
 ] as const
 
-type TaskStatus = (typeof TTaskStatus)[number]
-
-const TASKS_LIMIT = 6
-
 export function TaskList() {
-	const [status, setStatus] = useQueryState<TaskStatus>(
+	const tasks = useUnit($tasks)
+	const sortType = useUnit($sortType)
+	const [status, setStatus] = useQueryState<TastStatuses | "all">(
 		"status",
-		parseAsStringLiteral(TTaskStatus).withDefault("all")
+		parseAsStringLiteral(TaskStatusFilter).withDefault("all")
 	)
-	const [sortDueAsc, setSortDueAsc] = useQueryState("sort", parseAsBoolean)
 	const [showAll, setShowAll] = useQueryState("show-all", parseAsBoolean)
 
 	const filteredTasks = useMemo(() => {
 		const filtered =
-			status === "all"
-				? Tasks
-				: Tasks.filter(task => task.progress.status === status)
+			status === "all" ? tasks : tasks.filter(task => task.status === status)
 
-		const sorted = filtered.sort((a, b) => {
+		const sorted = [...filtered].sort((a, b) => {
 			const aDue = a.dueInDays ?? Infinity
 			const bDue = b.dueInDays ?? Infinity
 
-			return sortDueAsc ? aDue - bDue : bDue - aDue
+			return sortType === "asc" ? aDue - bDue : bDue - aDue
 		})
 
 		return sorted
-	}, [status, sortDueAsc])
+	}, [status, tasks, sortType])
 
 	const displayedTasks = useMemo(() => {
-		return showAll ? filteredTasks : filteredTasks.slice(0, TASKS_LIMIT)
-	}, [filteredTasks, showAll, sortDueAsc])
+		return showAll
+			? filteredTasks
+			: filteredTasks.slice(0, DISPLAYED_TASKS_LIMIT)
+	}, [filteredTasks, showAll])
 
-	const hasMoreTasks = filteredTasks.length > TASKS_LIMIT
+	const hasMoreTasks = filteredTasks.length > DISPLAYED_TASKS_LIMIT
 
 	const toggleShowAll = () => {
 		setShowAll(prev => !prev)
 	}
 
-	const handleSortByDue = () => {
-		setSortDueAsc(prev => !prev)
+	const changeSortType = () => {
+		const newSortType = sortType === "asc" ? "desc" : "asc"
+		console.log(sortType)
+		sortTypeUpdated(newSortType)
+		localStorage.setItem("sortType", newSortType)
 	}
 
 	return (
 		<Tabs
 			defaultValue={status}
 			dir="rtl"
-			onValueChange={value => setStatus(value as TaskStatus)}
+			onValueChange={value => setStatus(value as TastStatuses | "all")}
 		>
 			<div className="flex items-center justify-between">
 				<div className="flex items-center gap-2">
@@ -80,8 +84,8 @@ export function TaskList() {
 					<FlipButton
 						frontText="Farthest"
 						backText="Soonest"
-						flipped={sortDueAsc as boolean}
-						onClick={handleSortByDue}
+						flipped={sortType == "asc"}
+						onClick={changeSortType}
 						className="rounded-lg shadow"
 					/>
 				</div>
@@ -93,12 +97,7 @@ export function TaskList() {
 				</h4>
 			</div>
 
-			<TabsContent
-				value={status}
-				key={sortDueAsc ? "asc" : "desc"}
-				className="grid grid-cols-3 gap-5"
-				dir="ltr"
-			>
+			<TabsContent value={status} className="grid grid-cols-3 gap-5" dir="ltr">
 				{displayedTasks.map(task => (
 					<TaskItem key={task.id} item={task} />
 				))}

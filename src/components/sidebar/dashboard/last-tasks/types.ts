@@ -1,28 +1,26 @@
 import type { LucideProps } from "lucide-react"
-import type { ComponentType } from "react"
-
-import type { HammerProps } from "@/components/animate-ui/icons/hammer-icon"
-import type { StarProps } from "@/components/animate-ui/icons/star"
+import type { ForwardRefExoticComponent, RefAttributes } from "react"
 
 export interface User {
 	name: string
 	src: string
 }
 
+export type TastStatuses = "not-started" | "completed" | "in-progress"
+
 export interface ITask {
 	id: string
 	title: string
 	startTime?: string
 	endTime?: string
+	image: ForwardRefExoticComponent<
+		Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>
+	>
 
-	image: ComponentType<StarProps & LucideProps & HammerProps>
 	dueInDays: number
 	users: User[]
-	progress: {
-		value: number
-		status: "not-started" | "completed" | "in-progress"
-		color: string
-	}
+	progress: number
+	status: TastStatuses
 	comments: number
 	attachments: number
 	links: number
