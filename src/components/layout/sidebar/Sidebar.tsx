@@ -23,27 +23,9 @@ import {
 
 import { Account } from "./Account"
 import { SidebarItem } from "./SidebarItem"
+import type { SidebarData } from "./types"
 
-export interface DataBlock {
-	title: string
-	url?: string
-	component?: React.ReactNode
-	items?: Item[]
-}
-
-interface DataStructure {
-	navMain: DataBlock[]
-}
-
-interface Item {
-	title: string
-	icon: React.ReactNode
-	url?: string
-	color?: string
-}
-
-// This is sample data.
-const data: DataStructure = {
+const data: SidebarData = {
 	navMain: [
 		{
 			title: "Main Menu",
@@ -91,27 +73,32 @@ const data: DataStructure = {
 				{
 					title: "Landing Page",
 					icon: <Square />,
-					color: "text-purple-500"
+					color: "text-purple-500",
+					url: "/projects/landing"
 				},
 				{
 					title: "Mobile App",
 					icon: <Smartphone />,
-					color: "text-pink-500"
+					color: "text-pink-500",
+					url: "/projects/mobile"
 				},
 				{
 					title: "Dashboard",
 					icon: <BarChart />,
-					color: "text-yellow-500"
+					color: "text-yellow-500",
+					url: "/projects/dashboard"
 				},
 				{
 					title: "Flyer",
 					icon: <FileImage />,
-					color: "text-orange-500"
+					color: "text-orange-500",
+					url: "/projects/flyer"
 				},
 				{
 					title: "Branding",
 					icon: <Palette />,
-					color: "text-teal-600"
+					color: "text-teal-600",
+					url: "/projects/branding"
 				}
 			]
 		}

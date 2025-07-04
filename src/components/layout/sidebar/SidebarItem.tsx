@@ -1,6 +1,8 @@
 "use client"
 
+import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { match } from "path-to-regexp"
 import * as React from "react"
 
 import {
@@ -12,12 +14,11 @@ import {
 	SidebarMenuItem
 } from "@/components/animate-ui/radix/sidebar"
 
-import type { DataBlock } from "./Sidebar"
+import type { SidebarSection } from "./types"
 
-export function SidebarItem({ item }: { item: DataBlock }) {
+export function SidebarItem({ item }: { item: SidebarSection }) {
 	const pathname = usePathname()
-	const pageName = "/" + pathname.split("/")[1]
-	console.log(pageName)
+	const pageName = pathname === "/" ? "/" : "/" + pathname.split("/")[1]
 	return (
 		<SidebarGroup key={item.title}>
 			<SidebarGroupLabel className="my-0 py-0">
@@ -35,14 +36,14 @@ export function SidebarItem({ item }: { item: DataBlock }) {
 										size="lg"
 										className="px-3"
 										asChild
-										isActive={pageName === item.url}
+										isActive={!!match(item.url)(pageName)}
 									>
-										<a href={item.url} className="flex items-center gap-3">
+										<Link href={item.url} className="flex items-center gap-3">
 											<div className={`m-0 flex h-5 w-5 items-center p-0`}>
 												{item.icon}
 											</div>
 											<p>{item.title}</p>
-										</a>
+										</Link>
 									</SidebarMenuButton>
 								</SidebarMenuItem>
 							)
