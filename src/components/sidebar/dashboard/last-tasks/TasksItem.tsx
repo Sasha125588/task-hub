@@ -35,12 +35,12 @@ export function TaskItem({ item }: Props) {
 			/>
 			<CardContent className="flex flex-col gap-4">
 				<div className="flex items-center justify-between">
-					<div className="flex items-center gap-2">
-						<div className="bg-primary/10 flex size-10 items-center justify-center rounded-lg shadow-md">
+					<div className="flex min-w-0 items-center gap-2">
+						<div className="bg-primary/10 flex size-10 shrink-0 items-center justify-center rounded-lg shadow-md">
 							<item.image size={24} />
 						</div>
-						<div>
-							<h3 className="w-[180px] truncate text-sm font-medium">
+						<div className="@container w-[250px]">
+							<h3 className="truncate text-sm font-medium @[400px]:whitespace-normal @[600px]:truncate">
 								{item.title}
 							</h3>
 							<p className="text-muted-foreground text-xs">
