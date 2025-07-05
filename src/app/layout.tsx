@@ -6,6 +6,7 @@ import type { ReactNode } from "react"
 
 import { ScrollProgress } from "@/components/animate-ui/components/scroll-progress"
 import { ThemeProvider } from "@/components/theme-provider"
+import { Toaster } from "@/components/ui/sonner"
 
 import "./globals.css"
 import { PAGES_CONFIG } from "@/configs/pages.config"
@@ -52,6 +53,7 @@ export default function RootLayout({ children }: Props) {
 					<NuqsAdapter>
 						{children}
 						<div id="modal-root" />
+						<Toaster />
 					</NuqsAdapter>
 					<Analytics />
 				</ThemeProvider>

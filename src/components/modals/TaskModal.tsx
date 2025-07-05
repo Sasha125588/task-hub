@@ -1,27 +1,32 @@
 "use client"
 
+import { DialogTitle } from "@radix-ui/react-dialog"
 import { useRouter } from "next/navigation"
 import { createPortal } from "react-dom"
 
-export function TaskModal({ children }: { children: React.ReactNode }) {
+import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog"
+
+interface Props {
+	children: React.ReactNode
+	id: string
+}
+
+export function TaskModal({ children, id }: Props) {
 	const router = useRouter()
 
-	const onDismiss = () => {
+	const CloseModal = () => {
 		router.back()
 	}
 
 	return createPortal(
-		<div className="fixed inset-0 z-50 flex h-full items-center justify-center bg-black/50 duration-200">
-			<div className="animate-in zoom-in-95 mx-4 flex w-full max-w-sm flex-col rounded-lg bg-blue-500 p-6 text-white shadow-lg duration-200">
+		<Dialog open={Boolean(id)} onOpenChange={CloseModal}>
+			<DialogContent className="w-sm overflow-hidden">
+				<DialogHeader>
+					<DialogTitle>Task edit form</DialogTitle>
+				</DialogHeader>
 				{children}
-				<button
-					className="mt-4 rounded-lg bg-white/20 px-4 py-2 hover:bg-white/30"
-					onClick={onDismiss}
-				>
-					Close modal
-				</button>
-			</div>
-		</div>,
+			</DialogContent>
+		</Dialog>,
 		document.getElementById("modal-root")!
 	)
 }

@@ -1,4 +1,4 @@
-import { LastTasks } from "./last-tasks/LastTasks"
+import { TaskList } from "./last-tasks/TaskList"
 import { Statistic } from "./statistics/Statistic"
 
 export function DashboardContent() {
@@ -8,7 +8,7 @@ export function DashboardContent() {
 				<Statistic />
 			</div>
 			<div>
-				<LastTasks />
+				<TaskList />
 			</div>
 		</div>
 	)

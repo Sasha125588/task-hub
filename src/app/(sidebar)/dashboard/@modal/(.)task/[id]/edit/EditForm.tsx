@@ -7,7 +7,7 @@ interface Props {
 
 export function TastEdit({ id }: Props) {
 	return (
-		<TaskModal>
+		<TaskModal id={id}>
 			<TaskEditForm id={id} />
 		</TaskModal>
 	)

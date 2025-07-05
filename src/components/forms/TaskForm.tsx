@@ -1,9 +1,12 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
+import { format } from "date-fns"
 import { useUnit } from "effector-react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
+import { toast } from "sonner"
 import { z } from "zod"
 
 import { Button } from "@/components/ui/button"
@@ -41,6 +44,7 @@ const formSchema = z.object({
 })
 
 export function TaskEditForm({ id }: Props) {
+	const router = useRouter()
 	const updateTask = useUnit(taskUpdated)
 	const getTaskByID = useUnit($getTaskByID)
 	const task = getTaskByID(id)!
@@ -90,7 +94,18 @@ export function TaskEditForm({ id }: Props) {
 						</FormItem>
 					)}
 				/>
-				<Button type="submit">Submit</Button>
+				<Button
+					className="cursor-pointer"
+					onClick={() => {
+						toast("Task updated successfully", {
+							description: `${format(new Date(), "Pp")}`
+						})
+						router.back()
+					}}
+					type="submit"
+				>
+					Submit
+				</Button>
 			</form>
 		</Form>
 	)
