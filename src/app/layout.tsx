@@ -8,7 +8,7 @@ import { ScrollProgress } from "@/components/animate-ui/components/scroll-progre
 import { ThemeProvider } from "@/components/theme-provider"
 
 import "./globals.css"
-import { SITE_NAME } from "@/constants"
+import { PAGES_CONFIG } from "@/configs/pages.config"
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -26,8 +26,8 @@ export const metadata: Metadata = {
 		shortcut: "/images/favicon.ico"
 	},
 	title: {
-		absolute: SITE_NAME,
-		template: `${SITE_NAME} - %s`
+		absolute: PAGES_CONFIG.SITE_NAME,
+		template: `${PAGES_CONFIG.SITE_NAME} - %s`
 	},
 	description: "Manage your progress"
 }
