@@ -22,8 +22,21 @@ interface Props {
 	item: ITask
 }
 
+const getDaysUntilDue = (dueDate: Date) => {
+	if (!dueDate) return "No due date"
+
+	const now = new Date()
+	const due = new Date(dueDate)
+	const diffTime = due.getTime() - now.getTime()
+	const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+
+	return diffDays
+}
+
 export function TaskItem({ item }: Props) {
 	const EDIT_TASK_URL = TASK_CONFIG.EDIT_TASK_URL
+	const dueDate = getDaysUntilDue(item.dueDate)
+
 	return (
 		<Card className="relative overflow-visible">
 			<GlowingEffect
@@ -44,7 +57,7 @@ export function TaskItem({ item }: Props) {
 								{item.title}
 							</h3>
 							<p className="text-muted-foreground text-xs">
-								Due: {item.dueDate.getDate()} days
+								Due: {dueDate} days
 							</p>
 						</div>
 					</div>

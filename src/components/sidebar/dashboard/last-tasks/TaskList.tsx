@@ -40,8 +40,8 @@ export function TaskList() {
 			status === "all" ? tasks : tasks.filter(task => task.status === status)
 
 		const sorted = [...filtered].sort((a, b) => {
-			const aDue = a.dueDate.getDate() ?? Infinity
-			const bDue = b.dueDate.getDate() ?? Infinity
+			const aDue = a.dueDate ? a.dueDate.getTime() : Infinity
+			const bDue = b.dueDate ? b.dueDate.getTime() : Infinity
 
 			return sortType === "asc" ? aDue - bDue : bDue - aDue
 		})
