@@ -6,6 +6,8 @@ import type { ITask } from "@/components/sidebar/dashboard/last-tasks/types"
 import { TASKS } from "@/shared/data/tasks.data"
 
 export const $tasks = createStore<ITask[]>(TASKS)
+
+export const taskDeleted = createEvent<string>()
 export const taskUpdated = createEvent<Partial<ITask> & { id: string }>()
 export const $getTaskByID = $tasks.map(
 	tasks => (id: string) => tasks.find(task => task.id === id)
@@ -20,12 +22,17 @@ $tasks.on(taskUpdated, (tasks, updatedTask) =>
 	})
 )
 
-const getSortTypeFromLS = (): "asc" | "desc" => {
+$tasks.on(taskDeleted, (tasks, taskId) =>
+	tasks.filter(task => task.id !== taskId)
+)
+
+const getSortTypeFromLS = () => {
 	if (typeof window === "undefined") return "asc"
 	return localStorage.getItem("sortType") === "desc" ? "desc" : "asc"
 }
 
 export const $sortType = createStore<"asc" | "desc">(getSortTypeFromLS())
+
 export const sortTypeUpdated = createEvent<"asc" | "desc">()
 
 $sortType.on(sortTypeUpdated, (_, newSortType) => {

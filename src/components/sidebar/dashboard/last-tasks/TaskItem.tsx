@@ -1,3 +1,4 @@
+import { useUnit } from "effector-react"
 import { Image as ImageIcon } from "lucide-react"
 import { motion } from "motion/react"
 import Link from "next/link"
@@ -17,23 +18,15 @@ import { GlowingEffect } from "@/components/ui/glowing-effect"
 import { ProgressBar } from "./ProgressBar"
 import type { ITask } from "./types"
 import { TASK_CONFIG } from "@/configs/task.config"
+import { getDaysUntilDue } from "@/lib/utils"
+import { taskDeleted } from "@/stores/task/store"
 
 interface Props {
 	item: ITask
 }
 
-const getDaysUntilDue = (dueDate: Date) => {
-	if (!dueDate) return "No due date"
-
-	const now = new Date()
-	const due = new Date(dueDate)
-	const diffTime = due.getTime() - now.getTime()
-	const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
-
-	return diffDays
-}
-
 export function TaskItem({ item }: Props) {
+	const deleteTask = useUnit(taskDeleted)
 	const EDIT_TASK_URL = TASK_CONFIG.EDIT_TASK_URL
 	const dueDate = getDaysUntilDue(item.dueDate)
 
@@ -111,7 +104,10 @@ export function TaskItem({ item }: Props) {
 						</div>
 					</div>
 					<div className="flex gap-3">
-						<div className="bg-primary dark:bg-chart-3 flex size-9 items-center justify-center rounded-full">
+						<div
+							onClick={() => deleteTask(item.id)}
+							className="bg-primary dark:bg-chart-3 flex size-9 items-center justify-center rounded-full"
+						>
 							<PlusIcon
 								color="white"
 								className="cursor-pointer"
