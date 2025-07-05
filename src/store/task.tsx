@@ -3,7 +3,7 @@ import { produce } from "immer"
 
 import type { ITask } from "@/components/sidebar/dashboard/last-tasks/types"
 
-import { TASKS } from "@/data"
+import { TASKS } from "@/shared/data/tasks.data"
 
 export const $tasks = createStore<ITask[]>(TASKS)
 export const taskUpdated = createEvent<Partial<ITask> & { id: string }>()

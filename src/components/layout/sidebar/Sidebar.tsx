@@ -9,7 +9,7 @@ import {
 
 import { Account } from "./Account"
 import { SidebarItem } from "./SidebarItem"
-import { SIDEBAR_MENU_DATA } from "@/data"
+import { SIDEBAR_MENU_DATA } from "@/shared/data/sidebar-menu.data"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 	return (
