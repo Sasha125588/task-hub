@@ -17,7 +17,7 @@ export interface ITask {
 		Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>
 	>
 
-	dueInDays: number
+	dueDate: Date
 	users: User[]
 	progress: number
 	status: TastStatuses

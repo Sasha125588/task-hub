@@ -18,7 +18,7 @@ export const TASKS: ITask[] = [
 		id: "1",
 		image: Star,
 		title: "E-commerce Mobile App Design",
-		dueInDays: 7,
+		dueDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
 		users: [
 			{
 				src: "https://pbs.twimg.com/profile_images/1909615404789506048/MTqvRsjo_400x400.jpg",
@@ -35,7 +35,6 @@ export const TASKS: ITask[] = [
 		],
 		progress: 65,
 		status: "in-progress",
-
 		comments: 8,
 		attachments: 12,
 		links: 3
@@ -44,7 +43,7 @@ export const TASKS: ITask[] = [
 		id: "2",
 		image: Bot,
 		title: "AI Chatbot Integration",
-		dueInDays: 2,
+		dueDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
 		users: [
 			{
 				src: "https://pbs.twimg.com/profile_images/1593304942210478080/TUYae5z7_400x400.jpg",
@@ -55,7 +54,6 @@ export const TASKS: ITask[] = [
 				name: "AW"
 			}
 		],
-
 		progress: 100,
 		status: "completed",
 		comments: 15,
@@ -66,7 +64,7 @@ export const TASKS: ITask[] = [
 		id: "3",
 		image: Hammer,
 		title: "Backend API Development",
-		dueInDays: 4,
+		dueDate: new Date(Date.now() + 21 * 24 * 60 * 60 * 1000),
 		users: [
 			{
 				src: "https://pbs.twimg.com/profile_images/1783856060249595904/8TfcCN0r_400x400.jpg",
@@ -81,7 +79,6 @@ export const TASKS: ITask[] = [
 				name: "SK"
 			}
 		],
-
 		progress: 85,
 		status: "in-progress",
 		comments: 6,
@@ -92,7 +89,7 @@ export const TASKS: ITask[] = [
 		id: "4",
 		image: Palette,
 		title: "Brand Identity Redesign",
-		dueInDays: 10,
+		dueDate: new Date(Date.now() + 35 * 24 * 60 * 60 * 1000),
 		users: [
 			{
 				src: "https://pbs.twimg.com/profile_images/1677042510839857154/Kq4tpySA_400x400.jpg",
@@ -103,7 +100,6 @@ export const TASKS: ITask[] = [
 				name: "CN"
 			}
 		],
-
 		progress: 0,
 		status: "not-started",
 		comments: 2,
@@ -114,14 +110,13 @@ export const TASKS: ITask[] = [
 		id: "5",
 		image: Zap,
 		title: "Performance Optimization",
-		dueInDays: 1,
+		dueDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
 		users: [
 			{
 				src: "https://pbs.twimg.com/profile_images/1783856060249595904/8TfcCN0r_400x400.jpg",
 				name: "GR"
 			}
 		],
-
 		progress: 30,
 		status: "in-progress",
 		comments: 12,
@@ -132,7 +127,7 @@ export const TASKS: ITask[] = [
 		id: "6",
 		image: Shield,
 		title: "Security Audit & Testing",
-		dueInDays: 6,
+		dueDate: new Date(Date.now() + 27 * 24 * 60 * 60 * 1000),
 		users: [
 			{
 				src: "https://pbs.twimg.com/profile_images/1534700564810018816/anAuSfkp_400x400.jpg",
@@ -147,7 +142,6 @@ export const TASKS: ITask[] = [
 				name: "AW"
 			}
 		],
-
 		progress: 45,
 		status: "in-progress",
 		comments: 18,
@@ -158,7 +152,7 @@ export const TASKS: ITask[] = [
 		id: "7",
 		image: Globe,
 		title: "Multi-language Support",
-		dueInDays: 14,
+		dueDate: new Date(Date.now() + 60 * 24 * 60 * 60 * 1000),
 		users: [
 			{
 				src: "https://pbs.twimg.com/profile_images/1593304942210478080/TUYae5z7_400x400.jpg",
@@ -179,7 +173,7 @@ export const TASKS: ITask[] = [
 		id: "8",
 		image: Camera,
 		title: "Image Processing Pipeline",
-		dueInDays: 8,
+		dueDate: new Date(Date.now() + 18 * 24 * 60 * 60 * 1000),
 		users: [
 			{
 				src: "https://pbs.twimg.com/profile_images/1677042510839857154/Kq4tpySA_400x400.jpg",
@@ -200,7 +194,7 @@ export const TASKS: ITask[] = [
 		id: "9",
 		image: Music,
 		title: "Audio Streaming Feature",
-		dueInDays: 12,
+		dueDate: new Date(Date.now() + 42 * 24 * 60 * 60 * 1000),
 		users: [
 			{
 				src: "https://pbs.twimg.com/profile_images/1909615404789506048/MTqvRsjo_400x400.jpg",
@@ -225,7 +219,7 @@ export const TASKS: ITask[] = [
 		id: "10",
 		image: Coffee,
 		title: "User Onboarding Experience",
-		dueInDays: 3,
+		dueDate: new Date(Date.now() + 9 * 24 * 60 * 60 * 1000),
 		users: [
 			{
 				src: "https://pbs.twimg.com/profile_images/1677042510839857154/Kq4tpySA_400x400.jpg",

@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useUnit } from "effector-react"
 import Link from "next/link"
 import { useForm } from "react-hook-form"
-import * as z from "zod/v4"
+import { z } from "zod"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -18,6 +18,8 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
+import { DatePicker } from "../shared/DatePicker"
+
 import { $getTaskByID, taskUpdated } from "@/stores/task/store"
 
 interface Props {
@@ -27,18 +29,27 @@ interface Props {
 const formSchema = z.object({
 	title: z.string().min(2, {
 		message: "Title must be at least 2 characters."
-	})
+	}),
+	dueDate: z
+		.date({
+			required_error: "Due date is required.",
+			invalid_type_error: "Please select a valid date."
+		})
+		.refine(date => date > new Date(), {
+			message: "Due date must be in the future."
+		})
 })
 
 export function TaskEditForm({ id }: Props) {
 	const updateTask = useUnit(taskUpdated)
 	const getTaskByID = useUnit($getTaskByID)
-	const task = getTaskByID(id)
+	const task = getTaskByID(id)!
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
-			title: task?.title || ""
+			title: task.title,
+			dueDate: task.dueDate
 		}
 	})
 
@@ -54,13 +65,27 @@ export function TaskEditForm({ id }: Props) {
 					name="title"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>Username</FormLabel>
+							<FormLabel>Title</FormLabel>
 							<FormControl>
 								<Input placeholder="shadcn" {...field} />
 							</FormControl>
 							<FormDescription>
 								<Link href="/dashboard">Task Page. Task id: {id}</Link>
 							</FormDescription>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+				<FormField
+					control={form.control}
+					name="dueDate"
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Due Date</FormLabel>
+							<FormControl>
+								<DatePicker dateP={field.value} onChange={field.onChange} />
+							</FormControl>
+
 							<FormMessage />
 						</FormItem>
 					)}

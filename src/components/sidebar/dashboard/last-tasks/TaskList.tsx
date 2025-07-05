@@ -12,7 +12,7 @@ import {
 	TabsTrigger
 } from "@/components/animate-ui/radix/tabs"
 
-import { TaskItem } from "./TasksItem"
+import { TaskItem } from "./TaskItem"
 import { TASK_CONFIG } from "@/configs/task.config"
 import { $sortType, $tasks, sortTypeUpdated } from "@/stores/task/store"
 
@@ -40,8 +40,8 @@ export function TaskList() {
 			status === "all" ? tasks : tasks.filter(task => task.status === status)
 
 		const sorted = [...filtered].sort((a, b) => {
-			const aDue = a.dueInDays ?? Infinity
-			const bDue = b.dueInDays ?? Infinity
+			const aDue = a.dueDate.getDate() ?? Infinity
+			const bDue = b.dueDate.getDate() ?? Infinity
 
 			return sortType === "asc" ? aDue - bDue : bDue - aDue
 		})
@@ -69,7 +69,6 @@ export function TaskList() {
 	return (
 		<Tabs
 			defaultValue={status}
-			value={status}
 			dir="rtl"
 			onValueChange={value => setStatus(value as TTaskStatusFilter)}
 		>

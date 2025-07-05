@@ -11,7 +11,7 @@ export function TaskModal({ children }: { children: React.ReactNode }) {
 	}
 
 	return createPortal(
-		<div className="animate-in fade-in-0 fixed inset-0 z-50 flex h-full items-center justify-center bg-black/50 duration-200">
+		<div className="fixed inset-0 z-50 flex h-full items-center justify-center bg-black/50 duration-200">
 			<div className="animate-in zoom-in-95 mx-4 flex w-full max-w-sm flex-col rounded-lg bg-blue-500 p-6 text-white shadow-lg duration-200">
 				{children}
 				<button

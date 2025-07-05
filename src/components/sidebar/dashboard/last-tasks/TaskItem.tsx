@@ -15,11 +15,11 @@ import { Card, CardContent } from "@/components/ui/card"
 import { GlowingEffect } from "@/components/ui/glowing-effect"
 
 import { ProgressBar } from "./ProgressBar"
-import type { ITask as CardType } from "./types"
+import type { ITask } from "./types"
 import { TASK_CONFIG } from "@/configs/task.config"
 
 interface Props {
-	item: CardType
+	item: ITask
 }
 
 export function TaskItem({ item }: Props) {
@@ -44,7 +44,7 @@ export function TaskItem({ item }: Props) {
 								{item.title}
 							</h3>
 							<p className="text-muted-foreground text-xs">
-								Due: {item.dueInDays} days
+								Due: {item.dueDate.getDate()} days
 							</p>
 						</div>
 					</div>
