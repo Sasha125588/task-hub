@@ -22,7 +22,7 @@ export function TaskModal({ children, id }: Props) {
 		<Dialog open={Boolean(id)} onOpenChange={CloseModal}>
 			<DialogContent className="w-sm overflow-hidden">
 				<DialogHeader>
-					<DialogTitle>Task edit form</DialogTitle>
+					<DialogTitle className="text-xl font-semibold">Edit Task</DialogTitle>
 				</DialogHeader>
 				{children}
 			</DialogContent>
