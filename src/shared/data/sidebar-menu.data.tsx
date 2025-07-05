@@ -15,15 +15,7 @@ import {
 
 import type { SidebarData } from "@/components/layout/sidebar/types"
 
-import {
-	DASHBOARD_URL,
-	INSIGHT_URL,
-	MESSAGE_URL,
-	REPORT_URL,
-	SCHEDULE_URL,
-	SETTINGS_URL,
-	TEAM_URL
-} from "@/constants"
+import { PAGES_CONFIG } from "@/configs/pages.config"
 
 export const SIDEBAR_MENU_DATA: SidebarData = {
 	navMain: [
@@ -32,37 +24,37 @@ export const SIDEBAR_MENU_DATA: SidebarData = {
 			items: [
 				{
 					title: "Dashboard",
-					url: DASHBOARD_URL,
+					url: PAGES_CONFIG.DASHBOARD_URL,
 					icon: <LayoutDashboard />
 				},
 				{
 					title: "Message",
-					url: MESSAGE_URL,
+					url: PAGES_CONFIG.MESSAGE_URL,
 					icon: <MessageCircle />
 				},
 				{
 					title: "Insight",
-					url: INSIGHT_URL,
+					url: PAGES_CONFIG.INSIGHT_URL,
 					icon: <BarChart3 />
 				},
 				{
 					title: "Team",
-					url: TEAM_URL,
+					url: PAGES_CONFIG.TEAM_URL,
 					icon: <Users />
 				},
 				{
 					title: "Schedule",
-					url: SCHEDULE_URL,
+					url: PAGES_CONFIG.SCHEDULE_URL,
 					icon: <Calendar />
 				},
 				{
 					title: "Report",
-					url: REPORT_URL,
+					url: PAGES_CONFIG.REPORT_URL,
 					icon: <FileText />
 				},
 				{
 					title: "Settings",
-					url: SETTINGS_URL,
+					url: PAGES_CONFIG.SETTINGS_URL,
 					icon: <Settings />
 				}
 			]

@@ -2,7 +2,7 @@ import Image from "next/image"
 
 import { Card, CardContent } from "@/components/ui/card"
 
-import type { ICardItem } from "./Cards"
+import type { ICardItem } from "./types"
 
 export function CardItem({ item }: { item: ICardItem }) {
 	return (
