@@ -12,11 +12,10 @@ import {
 	TabsTrigger
 } from "@/components/animate-ui/radix/tabs"
 
-import { $sortType, $tasks, sortTypeUpdated } from "@/store/task"
-
 import { TaskItem } from "./TasksItem"
 import type { TastStatuses } from "./types"
-import { DISPLAYED_TASKS_LIMIT } from "@/constants"
+import { TASK_CONFIG } from "@/configs/task.config"
+import { $sortType, $tasks, sortTypeUpdated } from "@/stores/task/store"
 
 export const TaskStatusFilter = [
 	"all",
@@ -26,6 +25,7 @@ export const TaskStatusFilter = [
 ] as const
 
 export function TaskList() {
+	const DISPLAYED_TASKS_LIMIT = TASK_CONFIG.DISPLAYED_TASKS_LIMIT
 	const tasks = useUnit($tasks)
 	const sortType = useUnit($sortType)
 	const [status, setStatus] = useQueryState<TastStatuses | "all">(
@@ -52,7 +52,7 @@ export function TaskList() {
 		return showAll
 			? filteredTasks
 			: filteredTasks.slice(0, DISPLAYED_TASKS_LIMIT)
-	}, [filteredTasks, showAll])
+	}, [DISPLAYED_TASKS_LIMIT, filteredTasks, showAll])
 
 	const hasMoreTasks = filteredTasks.length > DISPLAYED_TASKS_LIMIT
 

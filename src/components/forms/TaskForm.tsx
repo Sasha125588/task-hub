@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
-import { $getTaskByID, taskUpdated } from "@/store/task"
+import { $getTaskByID, taskUpdated } from "@/stores/task/store"
 
 interface Props {
 	id: string

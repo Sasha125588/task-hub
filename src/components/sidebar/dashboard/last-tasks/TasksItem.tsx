@@ -16,13 +16,14 @@ import { GlowingEffect } from "@/components/ui/glowing-effect"
 
 import { ProgressBar } from "./ProgressBar"
 import type { ITask as CardType } from "./types"
-import { EDIT_TASK_URL } from "@/constants"
+import { TASK_CONFIG } from "@/configs/task.config"
 
 interface Props {
 	item: CardType
 }
 
 export function TaskItem({ item }: Props) {
+	const EDIT_TASK_URL = TASK_CONFIG.EDIT_TASK_URL
 	return (
 		<Card className="relative overflow-visible">
 			<GlowingEffect
