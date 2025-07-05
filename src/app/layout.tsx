@@ -49,7 +49,10 @@ export default function RootLayout({ children }: Props) {
 					disableTransitionOnChange
 				>
 					<ScrollProgress />
-					<NuqsAdapter>{children}</NuqsAdapter>
+					<NuqsAdapter>
+						{children}
+						<div id="modal-root" />
+					</NuqsAdapter>
 					<Analytics />
 				</ThemeProvider>
 			</body>

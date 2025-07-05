@@ -13,7 +13,6 @@ import {
 } from "@/components/animate-ui/radix/tabs"
 
 import { TaskItem } from "./TasksItem"
-import type { TastStatuses } from "./types"
 import { TASK_CONFIG } from "@/configs/task.config"
 import { $sortType, $tasks, sortTypeUpdated } from "@/stores/task/store"
 
@@ -24,11 +23,13 @@ export const TaskStatusFilter = [
 	"in-progress"
 ] as const
 
+type TTaskStatusFilter = (typeof TaskStatusFilter)[number]
+
 export function TaskList() {
 	const DISPLAYED_TASKS_LIMIT = TASK_CONFIG.DISPLAYED_TASKS_LIMIT
 	const tasks = useUnit($tasks)
 	const sortType = useUnit($sortType)
-	const [status, setStatus] = useQueryState<TastStatuses | "all">(
+	const [status, setStatus] = useQueryState<TTaskStatusFilter>(
 		"status",
 		parseAsStringLiteral(TaskStatusFilter).withDefault("all")
 	)
@@ -62,15 +63,15 @@ export function TaskList() {
 
 	const changeSortType = () => {
 		const newSortType = sortType === "asc" ? "desc" : "asc"
-		console.log(sortType)
 		sortTypeUpdated(newSortType)
 	}
 
 	return (
 		<Tabs
 			defaultValue={status}
+			value={status}
 			dir="rtl"
-			onValueChange={value => setStatus(value as TastStatuses | "all")}
+			onValueChange={value => setStatus(value as TTaskStatusFilter)}
 		>
 			<div className="flex items-center justify-between">
 				<div className="flex items-center gap-2">

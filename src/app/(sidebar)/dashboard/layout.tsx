@@ -12,8 +12,8 @@ interface Props {
 export default function DashboardLayout({ children, modal }: Props) {
 	return (
 		<div>
-			{modal}
 			{children}
+			{modal}
 		</div>
 	)
 }
