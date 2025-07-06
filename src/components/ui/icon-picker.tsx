@@ -29,7 +29,9 @@ export const useIconPicker = (): UseIconPickerReturn => {
 			/^[A-Z]/.test(key)
 		)
 		const validIcons = capitalizedObjects.filter(
-			([key]) => !["createLucideIcon", "default", "Icon"].includes(key)
+			([key]) =>
+				!["createLucideIcon", "default", "Icon"].includes(key) &&
+				key.endsWith("Icon")
 		)
 
 		const result: Icons[] = []
@@ -50,8 +52,7 @@ export const useIconPicker = (): UseIconPickerReturn => {
 
 	const filteredIcons = useMemo(() => {
 		if (search === "") {
-			const shuffled = [...icons].sort(() => 0.5 - Math.random())
-			return shuffled.slice(0, 100)
+			return icons.slice(0, 100)
 		}
 		return icons.filter(
 			icon =>

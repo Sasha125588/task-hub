@@ -1,10 +1,3 @@
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
-
-export function cn(...inputs: ClassValue[]) {
-	return twMerge(clsx(inputs))
-}
-
 export const getDaysUntilDue = (dueDate: Date) => {
 	if (!dueDate) return "No due date"
 

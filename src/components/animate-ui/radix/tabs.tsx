@@ -9,7 +9,7 @@ import {
 	MotionHighlightItem
 } from "@/components/animate-ui/effects/motion-highlight"
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils/utils"
 
 type TabsProps = React.ComponentProps<typeof TabsPrimitive.Root>
 

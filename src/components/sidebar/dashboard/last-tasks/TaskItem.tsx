@@ -19,7 +19,7 @@ import { IconRenderer } from "@/components/ui/icon-picker"
 import { ProgressBar } from "./ProgressBar"
 import type { ITask } from "./types"
 import { TASK_CONFIG } from "@/configs/task.config"
-import { getDaysUntilDue } from "@/lib/utils"
+import { getDaysUntilDue } from "@/lib/utils/getDaysUntilDue"
 import { taskDeleted } from "@/stores/task/store"
 
 interface Props {
