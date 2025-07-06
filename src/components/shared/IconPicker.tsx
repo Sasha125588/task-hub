@@ -16,13 +16,13 @@ import { Input } from "@/components/ui/input"
 import { IconRenderer, useIconPicker } from "../ui/icon-picker"
 
 interface Props {
-	icon?: string
-	onChange: (icon: string) => void
+	iconForm?: string
+	onChangeFrom: (icon: string) => void
 }
 
-export const IconPickerDialog = ({ icon, onChange }: Props) => {
+export const IconPickerDialog = ({ iconForm, onChangeFrom }: Props) => {
 	const [open, setOpen] = useState(false)
-	const [selected, setSelected] = useState<string | undefined>(icon)
+	const [selected, setSelected] = useState<string | undefined>(iconForm)
 
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
@@ -47,7 +47,7 @@ export const IconPickerDialog = ({ icon, onChange }: Props) => {
 					onChange={icon => {
 						setSelected(icon)
 						setOpen(false)
-						onChange?.(icon)
+						onChangeFrom?.(icon)
 					}}
 				/>
 			</DialogContent>

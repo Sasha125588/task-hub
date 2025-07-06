@@ -42,7 +42,7 @@ const formSchema = z.object({
 		.refine(date => date > new Date(), {
 			message: "Due date must be in the future."
 		}),
-	icon: z.any()
+	iconName: z.string().optional()
 })
 
 export function TaskEditForm({ id }: Props) {
@@ -56,12 +56,16 @@ export function TaskEditForm({ id }: Props) {
 		defaultValues: {
 			title: task.title,
 			dueDate: task.dueDate,
-			icon: task.imageName
+			iconName: task.iconName
 		}
 	})
 
 	function onSubmit(values: z.infer<typeof formSchema>) {
 		updateTask({ id, ...values })
+		toast("Task updated successfully", {
+			description: `${format(new Date(), "Pp")}`
+		})
+		router.back()
 	}
 
 	return (
@@ -90,40 +94,32 @@ export function TaskEditForm({ id }: Props) {
 						<FormItem>
 							<FormLabel>Due Date</FormLabel>
 							<FormControl>
-								<DatePicker dateP={field.value} onChange={field.onChange} />
+								<DatePicker
+									dateForm={field.value}
+									onChangeForm={field.onChange}
+								/>
 							</FormControl>
-
 							<FormMessage />
 						</FormItem>
 					)}
 				/>
 				<FormField
 					control={form.control}
-					name="icon"
+					name="iconName"
 					render={({ field }) => (
 						<FormItem>
 							<FormLabel>Select Icon</FormLabel>
 							<FormControl>
 								<IconPickerDialog
-									icon={field.value}
-									onChange={field.onChange}
+									iconForm={field.value}
+									onChangeFrom={field.onChange}
 								/>
 							</FormControl>
-
 							<FormMessage />
 						</FormItem>
 					)}
 				/>
-				<Button
-					className="cursor-pointer"
-					onClick={() => {
-						toast("Task updated successfully", {
-							description: `${format(new Date(), "Pp")}`
-						})
-						router.back()
-					}}
-					type="submit"
-				>
+				<Button className="cursor-pointer" type="submit">
 					Submit
 				</Button>
 			</form>

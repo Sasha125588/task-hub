@@ -1,5 +1,4 @@
-import type { LucideProps } from "lucide-react"
-import type { ForwardRefExoticComponent, RefAttributes } from "react"
+import type { LucideIcon } from "lucide-react"
 
 export interface User {
 	name: string
@@ -11,10 +10,8 @@ export type TastStatuses = "not-started" | "completed" | "in-progress"
 export interface ITask {
 	id: string
 	title: string
-	image: ForwardRefExoticComponent<
-		Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>
-	>
-	imageName: string
+	icon: LucideIcon
+	iconName: string
 	startTime?: string
 	endTime?: string
 

@@ -29,11 +29,11 @@ function isValidDate(date: Date | undefined) {
 }
 
 interface Props {
-	dateP: Date
-	onChange: (date: Date | undefined) => void
+	dateForm: Date
+	onChangeForm: (date: Date | undefined) => void
 }
 
-export function DatePicker({ dateP, onChange }: Props) {
+export function DatePicker({ dateForm: dateP, onChangeForm: onChange }: Props) {
 	const [open, setOpen] = React.useState(false)
 	const [date, setDate] = React.useState<Date | undefined>(dateP)
 	const [value, setValue] = React.useState(formatDate(date))

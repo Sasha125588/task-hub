@@ -22,25 +22,20 @@ export const useIconPicker = (): UseIconPickerReturn => {
 
 	const icons: Icons[] = useMemo(() => {
 		const allExports = Object.entries(LucideIcons)
-
 		const objectExports = allExports.filter(
 			([, value]) => typeof value === "object" && value !== null
 		)
-
 		const capitalizedObjects = objectExports.filter(([key]) =>
 			/^[A-Z]/.test(key)
 		)
-
 		const validIcons = capitalizedObjects.filter(
 			([key]) => !["createLucideIcon", "default", "Icon"].includes(key)
 		)
 
 		const result: Icons[] = []
-
 		validIcons.forEach(([iconName, IconComponent]) => {
 			try {
 				const friendlyName = iconName.replace(/([A-Z])/g, " $1").trim()
-
 				result.push({
 					name: iconName,
 					friendly_name: friendlyName,
@@ -50,7 +45,6 @@ export const useIconPicker = (): UseIconPickerReturn => {
 				console.error(`Error processing icon ${iconName}:`, error)
 			}
 		})
-
 		return result
 	}, [])
 
@@ -59,7 +53,6 @@ export const useIconPicker = (): UseIconPickerReturn => {
 			const shuffled = [...icons].sort(() => 0.5 - Math.random())
 			return shuffled.slice(0, 100)
 		}
-
 		return icons.filter(
 			icon =>
 				icon.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -78,7 +71,8 @@ export const IconRenderer: React.FC<IconRendererProps> = ({
 	icon,
 	...rest
 }) => {
-	const IconComponent = LucideIcons[icon as keyof typeof LucideIcons]
+	// Получаем компонент иконки из Lucide Icons
+	const IconComponent = (LucideIcons as any)[icon] as LucideIcon | undefined
 
 	if (!IconComponent) {
 		return (
@@ -97,8 +91,8 @@ export const IconRenderer: React.FC<IconRendererProps> = ({
 	}
 
 	try {
-		const ValidIcon = IconComponent as unknown as LucideIcon
-		return <ValidIcon {...rest} />
+		// Динамически рендерим компонент иконки
+		return React.createElement(IconComponent, rest)
 	} catch (error) {
 		console.error(`Error rendering icon "${icon}":`, error)
 		return (

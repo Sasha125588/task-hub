@@ -14,6 +14,7 @@ import { SquareArrowOutUpRight } from "@/components/animate-ui/icons/square-arro
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardContent } from "@/components/ui/card"
 import { GlowingEffect } from "@/components/ui/glowing-effect"
+import { IconRenderer } from "@/components/ui/icon-picker"
 
 import { ProgressBar } from "./ProgressBar"
 import type { ITask } from "./types"
@@ -43,7 +44,7 @@ export function TaskItem({ item }: Props) {
 				<div className="flex items-center justify-between">
 					<div className="flex min-w-0 items-center gap-2">
 						<div className="bg-primary/10 flex size-10 shrink-0 items-center justify-center rounded-lg shadow-md">
-							<item.image size={24} />
+							<IconRenderer className="size-6" icon={item.iconName} />
 						</div>
 						<div className="@container w-[250px]">
 							<h3 className="truncate text-sm font-medium @[400px]:whitespace-normal @[600px]:truncate">
