@@ -24,10 +24,10 @@ import { taskDeleted } from "@/stores/task/store"
 interface Props {
 	item: ITask
 }
+const EDIT_TASK_URL = TASK_CONFIG.EDIT_TASK_URL
 
 export function TaskItem({ item }: Props) {
 	const deleteTask = useUnit(taskDeleted)
-	const EDIT_TASK_URL = TASK_CONFIG.EDIT_TASK_URL
 	const dueDate = getDaysUntilDue(item.dueDate)
 
 	return (

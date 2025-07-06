@@ -17,6 +17,7 @@ export const TASKS: ITask[] = [
 	{
 		id: "1",
 		image: Star,
+		imageName: "Star",
 		title: "E-commerce Mobile App Design",
 		dueDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
 		users: [
@@ -42,6 +43,7 @@ export const TASKS: ITask[] = [
 	{
 		id: "2",
 		image: Bot,
+		imageName: "Bot",
 		title: "AI Chatbot Integration",
 		dueDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
 		users: [
@@ -63,6 +65,7 @@ export const TASKS: ITask[] = [
 	{
 		id: "3",
 		image: Hammer,
+		imageName: "Hammer",
 		title: "Backend API Development",
 		dueDate: new Date(Date.now() + 21 * 24 * 60 * 60 * 1000),
 		users: [
@@ -88,6 +91,7 @@ export const TASKS: ITask[] = [
 	{
 		id: "4",
 		image: Palette,
+		imageName: "Palette",
 		title: "Brand Identity Redesign",
 		dueDate: new Date(Date.now() + 35 * 24 * 60 * 60 * 1000),
 		users: [
@@ -109,6 +113,7 @@ export const TASKS: ITask[] = [
 	{
 		id: "5",
 		image: Zap,
+		imageName: "Zap",
 		title: "Performance Optimization",
 		dueDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
 		users: [
@@ -126,6 +131,7 @@ export const TASKS: ITask[] = [
 	{
 		id: "6",
 		image: Shield,
+		imageName: "Shield",
 		title: "Security Audit & Testing",
 		dueDate: new Date(Date.now() + 27 * 24 * 60 * 60 * 1000),
 		users: [
@@ -151,6 +157,7 @@ export const TASKS: ITask[] = [
 	{
 		id: "7",
 		image: Globe,
+		imageName: "Globe",
 		title: "Multi-language Support",
 		dueDate: new Date(Date.now() + 60 * 24 * 60 * 60 * 1000),
 		users: [
@@ -172,6 +179,7 @@ export const TASKS: ITask[] = [
 	{
 		id: "8",
 		image: Camera,
+		imageName: "Camera",
 		title: "Image Processing Pipeline",
 		dueDate: new Date(Date.now() + 18 * 24 * 60 * 60 * 1000),
 		users: [
@@ -193,6 +201,7 @@ export const TASKS: ITask[] = [
 	{
 		id: "9",
 		image: Music,
+		imageName: "Music",
 		title: "Audio Streaming Feature",
 		dueDate: new Date(Date.now() + 42 * 24 * 60 * 60 * 1000),
 		users: [
@@ -218,6 +227,7 @@ export const TASKS: ITask[] = [
 	{
 		id: "10",
 		image: Coffee,
+		imageName: "Coffee",
 		title: "User Onboarding Experience",
 		dueDate: new Date(Date.now() + 9 * 24 * 60 * 60 * 1000),
 		users: [

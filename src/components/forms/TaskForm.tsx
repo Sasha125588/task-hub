@@ -22,6 +22,7 @@ import {
 import { Input } from "@/components/ui/input"
 
 import { DatePicker } from "../shared/DatePicker"
+import { IconPickerDialog } from "../shared/IconPicker"
 
 import { $getTaskByID, taskUpdated } from "@/stores/task/store"
 
@@ -40,7 +41,8 @@ const formSchema = z.object({
 		})
 		.refine(date => date > new Date(), {
 			message: "Due date must be in the future."
-		})
+		}),
+	icon: z.any()
 })
 
 export function TaskEditForm({ id }: Props) {
@@ -53,7 +55,8 @@ export function TaskEditForm({ id }: Props) {
 		resolver: zodResolver(formSchema),
 		defaultValues: {
 			title: task.title,
-			dueDate: task.dueDate
+			dueDate: task.dueDate,
+			icon: task.imageName
 		}
 	})
 
@@ -88,6 +91,23 @@ export function TaskEditForm({ id }: Props) {
 							<FormLabel>Due Date</FormLabel>
 							<FormControl>
 								<DatePicker dateP={field.value} onChange={field.onChange} />
+							</FormControl>
+
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+				<FormField
+					control={form.control}
+					name="icon"
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Select Icon</FormLabel>
+							<FormControl>
+								<IconPickerDialog
+									icon={field.value}
+									onChange={field.onChange}
+								/>
 							</FormControl>
 
 							<FormMessage />

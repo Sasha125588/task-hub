@@ -25,15 +25,17 @@ export const TaskStatusFilter = [
 
 type TTaskStatusFilter = (typeof TaskStatusFilter)[number]
 
+const DISPLAYED_TASKS_LIMIT = TASK_CONFIG.DISPLAYED_TASKS_LIMIT
+
 export function TaskList() {
-	const DISPLAYED_TASKS_LIMIT = TASK_CONFIG.DISPLAYED_TASKS_LIMIT
 	const tasks = useUnit($tasks)
 	const sortType = useUnit($sortType)
+
 	const [status, setStatus] = useQueryState<TTaskStatusFilter>(
 		"status",
 		parseAsStringLiteral(TaskStatusFilter).withDefault("all")
 	)
-	const [showAll, setShowAll] = useQueryState("show-all", parseAsBoolean)
+	const [isShowAll, setIsShowAll] = useQueryState("show-all", parseAsBoolean)
 
 	const filteredTasks = useMemo(() => {
 		const filtered =
@@ -50,15 +52,15 @@ export function TaskList() {
 	}, [status, tasks, sortType])
 
 	const displayedTasks = useMemo(() => {
-		return showAll
+		return isShowAll
 			? filteredTasks
 			: filteredTasks.slice(0, DISPLAYED_TASKS_LIMIT)
-	}, [DISPLAYED_TASKS_LIMIT, filteredTasks, showAll])
+	}, [filteredTasks, isShowAll])
 
 	const hasMoreTasks = filteredTasks.length > DISPLAYED_TASKS_LIMIT
 
 	const toggleShowAll = () => {
-		setShowAll(prev => !prev)
+		setIsShowAll(!isShowAll)
 	}
 
 	const changeSortType = () => {
@@ -107,12 +109,12 @@ export function TaskList() {
 					<button
 						onClick={toggleShowAll}
 						className={`cursor-pointer ${
-							showAll
+							isShowAll
 								? "text-accent-foreground hover:text-accent-foreground/80"
 								: "text-primary hover:text-primary/80"
 						}`}
 					>
-						{showAll ? "Show less" : `Show all ${filteredTasks.length} tasks`}
+						{isShowAll ? "Show less" : `Show all ${filteredTasks.length} tasks`}
 					</button>
 				</div>
 			)}
