@@ -71,8 +71,9 @@ export const IconRenderer: React.FC<IconRendererProps> = ({
 	icon,
 	...rest
 }) => {
-	// Получаем компонент иконки из Lucide Icons
-	const IconComponent = (LucideIcons as any)[icon] as LucideIcon | undefined
+	const IconComponent = (LucideIcons as Record<string, unknown>)[icon] as
+		| LucideIcon
+		| undefined
 
 	if (!IconComponent) {
 		return (
