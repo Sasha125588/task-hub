@@ -1,6 +1,7 @@
 "use client"
 
 import { useUnit } from "effector-react"
+import { AnimatePresence, motion } from "motion/react"
 import { parseAsBoolean, parseAsStringLiteral, useQueryState } from "nuqs"
 import { useMemo } from "react"
 
@@ -26,6 +27,18 @@ export const TaskStatusFilter = [
 type TTaskStatusFilter = (typeof TaskStatusFilter)[number]
 
 const DISPLAYED_TASKS_LIMIT = TASK_CONFIG.DISPLAYED_TASKS_LIMIT
+
+interface ITabs {
+	title: string
+	value: string
+}
+
+const TABS: ITabs[] = [
+	{ title: "All", value: "all" },
+	{ title: "Completed", value: "completed" },
+	{ title: "In Progress", value: "in-progress" },
+	{ title: "Not started", value: "not-started" }
+]
 
 export function TaskList() {
 	const tasks = useUnit($tasks)
@@ -77,10 +90,13 @@ export function TaskList() {
 			<div className="flex items-center justify-between">
 				<div className="flex items-center gap-2">
 					<TabsList dir="ltr">
-						<TabsTrigger value="all">All</TabsTrigger>
-						<TabsTrigger value="completed">Completed</TabsTrigger>
-						<TabsTrigger value="in-progress">In Progress</TabsTrigger>
-						<TabsTrigger value="not-started">Not started</TabsTrigger>
+						{TABS.map(tab => {
+							return (
+								<TabsTrigger key={tab.value} value={tab.value}>
+									{tab.title}
+								</TabsTrigger>
+							)
+						})}
 					</TabsList>
 					<FlipButton
 						frontText="Farthest"
@@ -99,9 +115,53 @@ export function TaskList() {
 			</div>
 
 			<TabsContent value={status} className="grid grid-cols-3 gap-5" dir="ltr">
-				{displayedTasks.map(task => (
-					<TaskItem key={task.id} item={task} />
-				))}
+				<AnimatePresence mode="sync">
+					{displayedTasks.map((task, index) => (
+						<motion.div
+							key={task.id}
+							initial={{
+								opacity: 0,
+								y: 40,
+								scale: 0.8,
+								filter: "blur(8px)"
+							}}
+							animate={{
+								opacity: 1,
+								y: 0,
+								scale: 1,
+								filter: "blur(0px)",
+								transition: {
+									type: "spring",
+									stiffness: 300,
+									damping: 20,
+									delay: index * 0.1,
+									filter: { duration: 0.4 }
+								}
+							}}
+							exit={{
+								opacity: 0,
+								y: -30,
+								scale: 0.85,
+								filter: "blur(4px)",
+								transition: {
+									duration: 0.4,
+									ease: [0.4, 0, 1, 1]
+								}
+							}}
+							layout
+							layoutId={task.id}
+							whileHover={{
+								y: -8,
+								scale: 1.03,
+								boxShadow: "0 20px 40px rgba(0,0,0,0.1)",
+								transition: { duration: 0.2 }
+							}}
+							className="will-change-transform"
+						>
+							<TaskItem item={task} />
+						</motion.div>
+					))}
+				</AnimatePresence>
 			</TabsContent>
 
 			{hasMoreTasks && (
@@ -114,7 +174,11 @@ export function TaskList() {
 								: "text-primary hover:text-primary/80"
 						}`}
 					>
-						{isShowAll ? "Show less" : `Show all ${filteredTasks.length} tasks`}
+						{isShowAll ? (
+							<div>Show less</div>
+						) : (
+							<div>Show all {filteredTasks.length} tasks</div>
+						)}
 					</button>
 				</div>
 			)}
