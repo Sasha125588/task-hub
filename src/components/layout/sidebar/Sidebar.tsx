@@ -13,7 +13,7 @@ import { SIDEBAR_MENU_DATA } from "@/shared/data/sidebar-menu.data"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 	return (
-		<Sidebar collapsible="offcanvas" {...props}>
+		<Sidebar collapsible="offcanvas" className="overflow-hidden" {...props}>
 			<SidebarHeader className="mb-0 pb-0">
 				<Account
 					user={{
