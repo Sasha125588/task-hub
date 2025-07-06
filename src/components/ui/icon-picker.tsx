@@ -17,6 +17,8 @@ interface UseIconPickerReturn {
 	icons: Icons[]
 }
 
+const EXCLUDED_EXPORTS = ["createLucideIcon", "default", "Icon"]
+
 export const useIconPicker = (): UseIconPickerReturn => {
 	const [search, setSearch] = useState<string>("")
 
@@ -29,9 +31,7 @@ export const useIconPicker = (): UseIconPickerReturn => {
 			/^[A-Z]/.test(key)
 		)
 		const validIcons = capitalizedObjects.filter(
-			([key]) =>
-				!["createLucideIcon", "default", "Icon"].includes(key) &&
-				key.endsWith("Icon")
+			([key]) => !EXCLUDED_EXPORTS.includes(key) && key.endsWith("Icon")
 		)
 
 		const result: Icons[] = []
@@ -49,15 +49,15 @@ export const useIconPicker = (): UseIconPickerReturn => {
 		})
 		return result
 	}, [])
-
 	const filteredIcons = useMemo(() => {
 		if (search === "") {
 			return icons.slice(0, 100)
 		}
+		const searchLower = search.toLowerCase()
 		return icons.filter(
 			icon =>
-				icon.name.toLowerCase().includes(search.toLowerCase()) ||
-				icon.friendly_name.toLowerCase().includes(search.toLowerCase())
+				icon.name.toLowerCase().includes(searchLower) ||
+				icon.friendly_name.toLowerCase().includes(searchLower)
 		)
 	}, [icons, search])
 
@@ -68,10 +68,7 @@ interface IconRendererProps extends React.ComponentPropsWithoutRef<"svg"> {
 	icon: string
 }
 
-export const IconRenderer: React.FC<IconRendererProps> = ({
-	icon,
-	...rest
-}) => {
+export const IconRenderer = ({ icon, ...rest }: IconRendererProps) => {
 	const IconComponent = (LucideIcons as Record<string, unknown>)[icon] as
 		| LucideIcon
 		| undefined
@@ -93,7 +90,6 @@ export const IconRenderer: React.FC<IconRendererProps> = ({
 	}
 
 	try {
-		// Динамически рендерим компонент иконки
 		return React.createElement(IconComponent, rest)
 	} catch (error) {
 		console.error(`Error rendering icon "${icon}":`, error)
