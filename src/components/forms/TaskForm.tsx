@@ -22,7 +22,7 @@ import {
 import { Input } from "@/components/ui/input"
 
 import { DatePicker } from "../shared/DatePicker"
-import { IconPickerDialog } from "../shared/IconPicker"
+import { IconPicker } from "../shared/IconPicker"
 
 import { $getTaskByID, taskUpdated } from "@/stores/task/store"
 
@@ -110,10 +110,7 @@ export function TaskEditForm({ id }: Props) {
 						<FormItem>
 							<FormLabel>Select Icon</FormLabel>
 							<FormControl>
-								<IconPickerDialog
-									iconForm={field.value}
-									onChangeFrom={field.onChange}
-								/>
+								<IconPicker value={field.value} onChange={field.onChange} />
 							</FormControl>
 							<FormMessage />
 						</FormItem>

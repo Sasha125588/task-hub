@@ -11,10 +11,10 @@ import { BrushIcon } from "@/components/animate-ui/icons/brush-icon"
 import { MessageSquareMore } from "@/components/animate-ui/icons/message-square-more-icon"
 import { PlusIcon } from "@/components/animate-ui/icons/plus-icon"
 import { SquareArrowOutUpRight } from "@/components/animate-ui/icons/square-arrow-out-up-right-icon"
+import { IconDisplay } from "@/components/shared/IconPicker"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardContent } from "@/components/ui/card"
 import { GlowingEffect } from "@/components/ui/glowing-effect"
-import { IconRenderer } from "@/components/ui/render-icon"
 
 import { ProgressBar } from "./ProgressBar"
 import type { ITask } from "./types"
@@ -44,7 +44,7 @@ export function TaskItem({ item }: Props) {
 				<div className="flex items-center justify-between">
 					<div className="flex min-w-0 items-center gap-2">
 						<div className="bg-primary/10 flex size-10 shrink-0 items-center justify-center rounded-lg shadow-md">
-							<IconRenderer className="size-6" icon={item.iconName} />
+							<IconDisplay iconName={item.iconName} />
 						</div>
 						<div className="@container w-[250px]">
 							<h3 className="truncate text-sm font-medium @[400px]:whitespace-normal @[600px]:truncate">
