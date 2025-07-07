@@ -7,6 +7,10 @@ class TaskConfig {
 		backText: "Soonest"
 	} as const
 
+	STORAGE_KEYS = {
+		SORT_TYPE: "sortType"
+	} as const
+
 	EDIT_TASK_URL = (id: string) =>
 		PAGES_CONFIG.DASHBOARD_URL + `/task/${id}/edit`
 }

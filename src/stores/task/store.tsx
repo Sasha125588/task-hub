@@ -3,38 +3,25 @@ import { produce } from "immer"
 
 import type { ITask } from "@/components/sidebar/dashboard/last-tasks/types"
 
+import { TASK_CONFIG } from "@/configs/task.config"
 import { TASKS } from "@/shared/data/tasks.data"
+import type { TaskSortType, TaskStatuses } from "@/types/task.types"
 
-const STORAGE_KEYS = {
-	SORT_TYPE: "sortType"
-} as const
-
-export const TaskStatusFilter = [
-	"all",
-	"not-started",
-	"completed",
-	"in-progress"
-] as const
-
-type TSortType = "asc" | "desc"
-
-export type TTaskStatusFilter = (typeof TaskStatusFilter)[number]
+const SORT_TYPE = TASK_CONFIG.STORAGE_KEYS.SORT_TYPE
 
 // UTILITIES
 const getSortTypeFromLS = () => {
 	if (typeof window === "undefined") return "asc"
-	return localStorage.getItem(STORAGE_KEYS.SORT_TYPE) === "desc"
-		? "desc"
-		: "asc"
+	return localStorage.getItem(SORT_TYPE) === "desc" ? "desc" : "asc"
 }
 
-const saveSortTypeToLS = (sortType: TSortType): void => {
+const saveSortTypeToLS = (sortType: TaskSortType): void => {
 	if (typeof window !== "undefined") {
-		localStorage.setItem(STORAGE_KEYS.SORT_TYPE, sortType)
+		localStorage.setItem(SORT_TYPE, sortType)
 	}
 }
 
-const sortTasks = (tasks: ITask[], sortType: TSortType): ITask[] => {
+const sortTasks = (tasks: ITask[], sortType: TaskSortType): ITask[] => {
 	return [...tasks].sort((a, b) => {
 		const aDue = a.dueDate ? a.dueDate.getTime() : Infinity
 		const bDue = b.dueDate ? b.dueDate.getTime() : Infinity
@@ -43,8 +30,8 @@ const sortTasks = (tasks: ITask[], sortType: TSortType): ITask[] => {
 }
 
 // STORES
-export const $sortType = createStore<TSortType>(getSortTypeFromLS())
-export const $statusType = createStore<TTaskStatusFilter>("all")
+export const $sortType = createStore<TaskSortType>(getSortTypeFromLS())
+export const $statusType = createStore<TaskStatuses>("all")
 export const $tasks = createStore<ITask[]>(TASKS)
 
 // COMBINE STORES
@@ -60,8 +47,8 @@ export const $filteredTasks = combine(
 )
 
 // EVENTS
-export const sortTypeUpdated = createEvent<TSortType>()
-export const statusTypeUpdated = createEvent<TTaskStatusFilter>()
+export const sortTypeUpdated = createEvent<TaskSortType>()
+export const statusTypeUpdated = createEvent<TaskStatuses>()
 export const taskDeleted = createEvent<string>()
 export const taskUpdated = createEvent<Partial<ITask> & { id: string }>()
 export const $getTaskByID = $tasks.map(
@@ -99,4 +86,6 @@ export const $numTasksByStatus = $tasks.map(tasks => {
 	}
 
 	tasks.forEach(task => stats[task.status]++)
+
+	return stats
 })
