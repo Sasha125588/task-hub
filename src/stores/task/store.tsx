@@ -34,6 +34,14 @@ const saveSortTypeToLS = (sortType: TSortType): void => {
 	}
 }
 
+const sortTasks = (tasks: ITask[], sortType: TSortType): ITask[] => {
+	return [...tasks].sort((a, b) => {
+		const aDue = a.dueDate ? a.dueDate.getTime() : Infinity
+		const bDue = b.dueDate ? b.dueDate.getTime() : Infinity
+		return sortType === "asc" ? aDue - bDue : bDue - aDue
+	})
+}
+
 // STORES
 export const $sortType = createStore<TSortType>(getSortTypeFromLS())
 export const $statusType = createStore<TTaskStatusFilter>("all")
@@ -92,11 +100,3 @@ export const $numTasksByStatus = $tasks.map(tasks => {
 
 	tasks.forEach(task => stats[task.status]++)
 })
-
-const sortTasks = (tasks: ITask[], sortType: TSortType): ITask[] => {
-	return [...tasks].sort((a, b) => {
-		const aDue = a.dueDate ? a.dueDate.getTime() : Infinity
-		const bDue = b.dueDate ? b.dueDate.getTime() : Infinity
-		return sortType === "asc" ? aDue - bDue : bDue - aDue
-	})
-}
