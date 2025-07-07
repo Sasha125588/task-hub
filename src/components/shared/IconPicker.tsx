@@ -13,7 +13,8 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 
-import { IconRenderer, useIconPicker } from "../ui/icon-picker"
+import { useIconPicker } from "../ui/icon-picker"
+import { IconRenderer } from "../ui/render-icon"
 
 interface Props {
 	iconForm?: string

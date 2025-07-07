@@ -14,7 +14,7 @@ import { SquareArrowOutUpRight } from "@/components/animate-ui/icons/square-arro
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardContent } from "@/components/ui/card"
 import { GlowingEffect } from "@/components/ui/glowing-effect"
-import { IconRenderer } from "@/components/ui/icon-picker"
+import { IconRenderer } from "@/components/ui/render-icon"
 
 import { ProgressBar } from "./ProgressBar"
 import type { ITask } from "./types"
