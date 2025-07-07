@@ -15,16 +15,15 @@ import {
 
 import { TaskItem } from "./TaskItem"
 import { TASK_CONFIG } from "@/configs/task.config"
-import { $sortType, $tasks, sortTypeUpdated } from "@/stores/task/store"
-
-export const TaskStatusFilter = [
-	"all",
-	"not-started",
-	"completed",
-	"in-progress"
-] as const
-
-type TTaskStatusFilter = (typeof TaskStatusFilter)[number]
+import {
+	$filteredTasks,
+	$sortType,
+	$statusType,
+	type TTaskStatusFilter,
+	TaskStatusFilter,
+	sortTypeUpdated,
+	statusTypeUpdated
+} from "@/stores/task/store"
 
 const DISPLAYED_TASKS_LIMIT = TASK_CONFIG.DISPLAYED_TASKS_LIMIT
 
@@ -38,39 +37,25 @@ const TABS: ITabs[] = [
 	{ title: "Completed", value: "completed" },
 	{ title: "In Progress", value: "in-progress" },
 	{ title: "Not started", value: "not-started" }
-]
+] as const
 
 export function TaskList() {
-	const tasks = useUnit($tasks)
+	const tasks = useUnit($filteredTasks)
 	const sortType = useUnit($sortType)
+	const statusType = useUnit($statusType)
+	const updateStatusType = useUnit(statusTypeUpdated)
 
-	const [status, setStatus] = useQueryState<TTaskStatusFilter>(
+	const [, setUrlStatus] = useQueryState<TTaskStatusFilter>(
 		"status",
 		parseAsStringLiteral(TaskStatusFilter).withDefault("all")
 	)
 	const [isShowAll, setIsShowAll] = useQueryState("show-all", parseAsBoolean)
 
-	const filteredTasks = useMemo(() => {
-		const filtered =
-			status === "all" ? tasks : tasks.filter(task => task.status === status)
-
-		const sorted = [...filtered].sort((a, b) => {
-			const aDue = a.dueDate ? a.dueDate.getTime() : Infinity
-			const bDue = b.dueDate ? b.dueDate.getTime() : Infinity
-
-			return sortType === "asc" ? aDue - bDue : bDue - aDue
-		})
-
-		return sorted
-	}, [status, tasks, sortType])
-
 	const displayedTasks = useMemo(() => {
-		return isShowAll
-			? filteredTasks
-			: filteredTasks.slice(0, DISPLAYED_TASKS_LIMIT)
-	}, [filteredTasks, isShowAll])
+		return isShowAll ? tasks : tasks.slice(0, DISPLAYED_TASKS_LIMIT)
+	}, [tasks, isShowAll])
 
-	const hasMoreTasks = filteredTasks.length > DISPLAYED_TASKS_LIMIT
+	const hasMoreTasks = tasks.length > DISPLAYED_TASKS_LIMIT
 
 	const toggleShowAll = () => {
 		setIsShowAll(!isShowAll)
@@ -81,12 +66,14 @@ export function TaskList() {
 		sortTypeUpdated(newSortType)
 	}
 
+	const changeStatusType = (value: string) => {
+		const newType = value as TTaskStatusFilter
+		setUrlStatus(newType)
+		updateStatusType(newType)
+	}
+
 	return (
-		<Tabs
-			defaultValue={status}
-			dir="rtl"
-			onValueChange={value => setStatus(value as TTaskStatusFilter)}
-		>
+		<Tabs defaultValue={statusType} dir="rtl" onValueChange={changeStatusType}>
 			<div className="flex items-center justify-between">
 				<div className="flex items-center gap-2">
 					<TabsList dir="ltr">
@@ -99,8 +86,8 @@ export function TaskList() {
 						})}
 					</TabsList>
 					<FlipButton
-						frontText="Farthest"
-						backText="Soonest"
+						frontText={TASK_CONFIG.FLIP_BUTTON_CONFIG.frontText}
+						backText={TASK_CONFIG.FLIP_BUTTON_CONFIG.backText}
 						flipped={sortType == "asc"}
 						onClick={changeSortType}
 						className="rounded-lg shadow"
@@ -108,13 +95,11 @@ export function TaskList() {
 				</div>
 				<h4 className="font-geist-sans scroll-m-20 text-xl font-semibold tracking-tight">
 					Last Tasks{" "}
-					<span className="text-accent-foreground/60">
-						({filteredTasks.length})
-					</span>
+					<span className="text-accent-foreground/60">({tasks.length})</span>
 				</h4>
 			</div>
 
-			<TabsContent value={status} dir="ltr">
+			<TabsContent value={statusType} dir="ltr">
 				<motion.div layout className="grid grid-cols-3 gap-5">
 					<AnimatePresence initial={false}>
 						{displayedTasks.map(task => (
@@ -154,7 +139,7 @@ export function TaskList() {
 						{isShowAll ? (
 							<div>Show less</div>
 						) : (
-							<div>Show all {filteredTasks.length} tasks</div>
+							<div>Show all {tasks.length} tasks</div>
 						)}
 					</button>
 				</div>
