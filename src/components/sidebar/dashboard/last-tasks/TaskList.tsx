@@ -114,54 +114,31 @@ export function TaskList() {
 				</h4>
 			</div>
 
-			<TabsContent value={status} className="grid grid-cols-3 gap-5" dir="ltr">
-				<AnimatePresence mode="sync">
-					{displayedTasks.map((task, index) => (
-						<motion.div
-							key={task.id}
-							initial={{
-								opacity: 0,
-								y: 40,
-								scale: 0.8,
-								filter: "blur(8px)"
-							}}
-							animate={{
-								opacity: 1,
-								y: 0,
-								scale: 1,
-								filter: "blur(0px)",
-								transition: {
-									type: "spring",
-									stiffness: 300,
-									damping: 20,
-									delay: index * 0.1,
-									filter: { duration: 0.4 }
-								}
-							}}
-							exit={{
-								opacity: 0,
-								y: -30,
-								scale: 0.85,
-								filter: "blur(4px)",
-								transition: {
-									duration: 0.4,
-									ease: [0.4, 0, 1, 1]
-								}
-							}}
-							layout
-							layoutId={task.id}
-							whileHover={{
-								y: -8,
-								scale: 1.03,
-								boxShadow: "0 20px 40px rgba(0,0,0,0.1)",
-								transition: { duration: 0.2 }
-							}}
-							className="will-change-transform"
-						>
-							<TaskItem item={task} />
-						</motion.div>
-					))}
-				</AnimatePresence>
+			<TabsContent value={status} dir="ltr">
+				<motion.div layout className="grid grid-cols-3 gap-5">
+					<AnimatePresence initial={false}>
+						{displayedTasks.map(task => (
+							<motion.div
+								key={task.id}
+								initial={{ opacity: 0 }}
+								animate={{ opacity: 1 }}
+								exit={{
+									opacity: 0,
+									scale: 0.9
+								}}
+								layout
+								whileHover={{ y: -2 }}
+								transition={{
+									duration: 0.2,
+									ease: "easeOut",
+									layout: { duration: 0.3 }
+								}}
+							>
+								<TaskItem item={task} />
+							</motion.div>
+						))}
+					</AnimatePresence>
+				</motion.div>
 			</TabsContent>
 
 			{hasMoreTasks && (

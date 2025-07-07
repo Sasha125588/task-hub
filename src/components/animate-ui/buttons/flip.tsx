@@ -74,6 +74,8 @@ function FlipButton({
 
 	return (
 		<motion.button
+			role="button"
+			aria-pressed={flipped}
 			data-slot="flip-button"
 			initial="initial"
 			animate={currentState}
