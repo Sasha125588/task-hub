@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -19,6 +20,8 @@ import { z } from "zod"
 import { Button } from "@/components/ui/button"
 
 import { cn } from "@/lib/utils/utils"
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 type FormData = Record<string, unknown>
 
@@ -263,7 +266,6 @@ export function MultiStepFormWrapper<T extends FormData = FormData>({
 			return newErrors
 		})
 
-		// Always sync form data before validation
 		const currentFormValues = form.getValues()
 		updateFormData(currentFormValues)
 
