@@ -23,6 +23,10 @@ import { cn } from "@/lib/utils/utils"
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 type FormData = Record<string, unknown>
 
 interface MultiStepFormContextType<T extends FormData = FormData> {
@@ -80,7 +84,7 @@ export interface MultiStepFormWrapperProps<T extends FormData = FormData> {
 	showStepIndicator?: boolean
 	showStepTitle?: boolean
 	allowSkipSteps?: boolean
-	navigationPosition?: "'bottom'" | "'top'"
+	navigationPosition?: "bottom" | "top"
 	nextButtonText?: string
 	prevButtonText?: string
 	completeButtonText?: string
@@ -110,7 +114,7 @@ export function MultiStepFormWrapper<T extends FormData = FormData>({
 	showStepIndicator = true,
 	showStepTitle = true,
 	allowSkipSteps = false,
-	navigationPosition = "'bottom'",
+	navigationPosition = "bottom",
 	nextButtonText = "Next",
 	prevButtonText = "Back",
 	completeButtonText = "Complete",
@@ -133,11 +137,11 @@ export function MultiStepFormWrapper<T extends FormData = FormData>({
 		(initialData: Partial<T>, schema?: z.ZodType<T>): DefaultValues<T> => {
 			const defaultValues = { ...initialData } as Record<string, any>
 
-			if (schema && "'shape'" in schema) {
+			if (schema && "shape" in schema) {
 				const shapes = (schema as any).shape
 				Object.keys(shapes).forEach(key => {
 					if (defaultValues[key] === undefined) {
-						defaultValues[key] = "''"
+						defaultValues[key] = ""
 					}
 				})
 			}
@@ -156,7 +160,7 @@ export function MultiStepFormWrapper<T extends FormData = FormData>({
 
 	const form = useForm<T>({
 		defaultValues: prepareDefaultValues(initialData, schema),
-		resolver: schema ? zodResolver(schema) : undefined,
+		resolver: schema ? zodResolver(schema as any) : undefined,
 		mode: "onChange"
 	})
 
@@ -178,7 +182,7 @@ export function MultiStepFormWrapper<T extends FormData = FormData>({
 			try {
 				localStorage.setItem(persistKey, JSON.stringify(formData))
 			} catch (error) {
-				console.warn("'Failed to save form data localStorage:'", error)
+				console.warn("Failed to save form data localStorage:", error)
 			}
 		}, autoSaveDelay)
 
@@ -199,7 +203,7 @@ export function MultiStepFormWrapper<T extends FormData = FormData>({
 				})
 			}
 		} catch (error) {
-			console.warn("'Failed to load form data from localStorage:'", error)
+			console.warn("Failed to load form data from localStorage:", error)
 		}
 	}, [persistKey, form])
 
@@ -246,7 +250,7 @@ export function MultiStepFormWrapper<T extends FormData = FormData>({
 			try {
 				localStorage.removeItem(persistKey)
 			} catch (error) {
-				console.warn("'Failed to clear persisted form data:'", error)
+				console.warn("Failed to clear persisted form data:", error)
 			}
 		}
 	}, [initialData, schema, form, persistKey, prepareDefaultValues])
@@ -278,7 +282,7 @@ export function MultiStepFormWrapper<T extends FormData = FormData>({
 					const formErrors = form.formState.errors
 					const errorMessage =
 						CurrentStepComponent?.props.validationMessage ||
-						"'Please fix the validation errors'"
+						"Please fix the validation errors"
 					setStepErrors(prev => ({ ...prev, [currentStep]: errorMessage }))
 					onStepValidationError?.(currentStep, formErrors)
 					return
@@ -287,7 +291,7 @@ export function MultiStepFormWrapper<T extends FormData = FormData>({
 				console.error("Step schema validation error:", error)
 				setStepErrors(prev => ({
 					...prev,
-					[currentStep]: "'Validation failed'"
+					[currentStep]: "Validation failed"
 				}))
 				return
 			} finally {
@@ -299,8 +303,7 @@ export function MultiStepFormWrapper<T extends FormData = FormData>({
 				const isValid = await validate({ ...formData, ...currentFormValues })
 				if (!isValid) {
 					const errorMessage =
-						CurrentStepComponent?.props.validationMessage ||
-						"'Validation failed'"
+						CurrentStepComponent?.props.validationMessage || "Validation failed"
 					setStepErrors(prev => ({ ...prev, [currentStep]: errorMessage }))
 					return
 				}
@@ -308,7 +311,7 @@ export function MultiStepFormWrapper<T extends FormData = FormData>({
 				console.error("Validation error:", error)
 				setStepErrors(prev => ({
 					...prev,
-					[currentStep]: "'Validation failed'"
+					[currentStep]: "Validation failed"
 				}))
 				return
 			} finally {
@@ -331,7 +334,7 @@ export function MultiStepFormWrapper<T extends FormData = FormData>({
 				console.error("Error in onComplete callback:", error)
 				setStepErrors(prev => ({
 					...prev,
-					[currentStep]: "'Failed to complete form submission'"
+					[currentStep]: "Failed to complete form submission"
 				}))
 				setIsComplete(false)
 				return
@@ -551,7 +554,7 @@ export function MultiStepFormWrapper<T extends FormData = FormData>({
 					</div>
 				)}
 
-				{navigationPosition === "'top'" && renderNavigation()}
+				{navigationPosition === "top" && renderNavigation()}
 
 				<div
 					className={cn(
@@ -567,7 +570,7 @@ export function MultiStepFormWrapper<T extends FormData = FormData>({
 					{CurrentStepComponent}
 				</div>
 
-				{navigationPosition === "'bottom'" && renderNavigation()}
+				{navigationPosition === "bottom" && renderNavigation()}
 			</MultiStepFormContext.Provider>
 		</div>
 	)
