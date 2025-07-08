@@ -11,7 +11,7 @@ import {
 	Zap
 } from "lucide-react"
 
-import type { ITask } from "@/components/sidebar/dashboard/last-tasks/types"
+import type { ITask } from "@/types/task.types"
 
 export const TASKS: ITask[] = [
 	{
