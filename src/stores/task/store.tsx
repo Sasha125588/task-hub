@@ -65,6 +65,10 @@ export const subTaskCreated = createEvent<{
 	subTask: subTask
 	taskId: string
 }>()
+export const subTasksReorderer = createEvent<{
+	taskId: string
+	subTasks: subTask[]
+}>()
 
 $sortType.on(sortTypeUpdated, (_, newSortType) => {
 	saveSortTypeToLS(newSortType)
@@ -79,7 +83,11 @@ $tasks.on(taskUpdated, (tasks, updatedTask) =>
 	produce(tasks, draft => {
 		const task = draft.find(t => t.id === updatedTask.id)
 		if (task) {
-			Object.assign(task, updatedTask)
+			Object.assign(task, {
+				title: updatedTask.title,
+				dueDate: updatedTask.dueDate,
+				iconName: updatedTask.iconName
+			})
 		}
 	})
 )
@@ -98,6 +106,15 @@ $tasks.on(subTaskCreated, (tasks, { taskId, subTask }) =>
 				task.subTasks = []
 			}
 			task.subTasks.push(subTask)
+		}
+	})
+)
+
+$tasks.on(subTasksReorderer, (tasks, { taskId, subTasks }) =>
+	produce(tasks, draft => {
+		const task = draft.find(t => t.id === taskId)
+		if (task) {
+			task.subTasks = subTasks
 		}
 	})
 )

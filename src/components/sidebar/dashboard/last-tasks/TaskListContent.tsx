@@ -34,13 +34,11 @@ export function TaskListContent() {
 
 	return (
 		<TabsContent value={statusType} dir="ltr">
-			<motion.div layout className="grid grid-cols-3 gap-5">
+			<div className="grid grid-cols-3 gap-5">
 				<AnimatePresence initial={false}>
 					{displayedTasks.map(task => (
 						<motion.div
 							key={task.id}
-							initial={{ opacity: 0 }}
-							animate={{ opacity: 1 }}
 							exit={{
 								opacity: 0,
 								scale: 0.9
@@ -49,7 +47,6 @@ export function TaskListContent() {
 							whileHover={{ y: -2 }}
 							transition={{
 								duration: 0.2,
-								ease: "easeOut",
 								layout: { duration: 0.3 }
 							}}
 						>
@@ -57,7 +54,7 @@ export function TaskListContent() {
 						</motion.div>
 					))}
 				</AnimatePresence>
-			</motion.div>
+			</div>
 			{hasMoreTasks && (
 				<div className="font-geist-sans mt-5 text-center font-medium">
 					<button

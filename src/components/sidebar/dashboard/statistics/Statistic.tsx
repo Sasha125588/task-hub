@@ -1,6 +1,6 @@
 import { ChartAreaDefault } from "@/components/ui/chart-area-default"
 
-import { Cards } from "./Cards"
+import { Cards } from "./CardList"
 
 export function Statistic() {
 	return (

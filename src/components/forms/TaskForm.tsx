@@ -3,7 +3,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { format } from "date-fns"
 import { useUnit } from "effector-react"
-import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -13,7 +12,6 @@ import { Button } from "@/components/ui/button"
 import {
 	Form,
 	FormControl,
-	FormDescription,
 	FormField,
 	FormItem,
 	FormLabel,
@@ -86,9 +84,7 @@ export function TaskEditForm() {
 								<FormControl>
 									<Input placeholder="shadcn" {...field} />
 								</FormControl>
-								<FormDescription>
-									<Link href="/dashboard">Task Page. Task id: {id}</Link>
-								</FormDescription>
+
 								<FormMessage />
 							</FormItem>
 						)}

@@ -1,15 +1,4 @@
-import {
-	Bot,
-	Camera,
-	Coffee,
-	Globe,
-	Hammer,
-	Music,
-	Palette,
-	Shield,
-	Star,
-	Zap
-} from "lucide-react"
+import { Camera, Globe, Hammer, Music, Shield, Star, Zap } from "lucide-react"
 
 import type { ITask } from "@/types/task.types"
 
@@ -41,28 +30,6 @@ export const TASKS: ITask[] = [
 		links: 3
 	},
 	{
-		id: "2",
-		icon: Bot,
-		iconName: "Bot",
-		title: "AI Chatbot Integration",
-		dueDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
-		users: [
-			{
-				src: "https://pbs.twimg.com/profile_images/1593304942210478080/TUYae5z7_400x400.jpg",
-				name: "CN"
-			},
-			{
-				src: "https://pbs.twimg.com/profile_images/1677042510839857154/Kq4tpySA_400x400.jpg",
-				name: "AW"
-			}
-		],
-		progress: 100,
-		status: "completed",
-		comments: 15,
-		attachments: 4,
-		links: 7
-	},
-	{
 		id: "3",
 		icon: Hammer,
 		iconName: "Hammer",
@@ -87,28 +54,6 @@ export const TASKS: ITask[] = [
 		comments: 6,
 		attachments: 9,
 		links: 5
-	},
-	{
-		id: "4",
-		icon: Palette,
-		iconName: "Palette",
-		title: "Brand Identity Redesign",
-		dueDate: new Date(Date.now() + 35 * 24 * 60 * 60 * 1000),
-		users: [
-			{
-				src: "https://pbs.twimg.com/profile_images/1677042510839857154/Kq4tpySA_400x400.jpg",
-				name: "AW"
-			},
-			{
-				src: "https://pbs.twimg.com/profile_images/1593304942210478080/TUYae5z7_400x400.jpg",
-				name: "CN"
-			}
-		],
-		progress: 0,
-		status: "not-started",
-		comments: 2,
-		attachments: 1,
-		links: 0
 	},
 	{
 		id: "5",
@@ -223,23 +168,5 @@ export const TASKS: ITask[] = [
 		comments: 5,
 		attachments: 8,
 		links: 3
-	},
-	{
-		id: "10",
-		icon: Coffee,
-		iconName: "Coffee",
-		title: "User Onboarding Experience",
-		dueDate: new Date(Date.now() + 9 * 24 * 60 * 60 * 1000),
-		users: [
-			{
-				src: "https://pbs.twimg.com/profile_images/1677042510839857154/Kq4tpySA_400x400.jpg",
-				name: "AW"
-			}
-		],
-		progress: 75,
-		status: "in-progress",
-		comments: 11,
-		attachments: 5,
-		links: 2
 	}
 ]

@@ -56,7 +56,7 @@ export function TaskListHeader() {
 			</div>
 			<h4 className="font-geist-sans text-xl font-semibold tracking-tight">
 				<HoverCard>
-					<HoverCardTrigger className="scroll-m-20 pr-1">
+					<HoverCardTrigger className="cursor-pointer scroll-m-20 pr-1">
 						Last Tasks
 					</HoverCardTrigger>
 					<HoverCardContent>
