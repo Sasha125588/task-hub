@@ -16,11 +16,12 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardContent } from "@/components/ui/card"
 import { GlowingEffect } from "@/components/ui/glowing-effect"
 
-import { ProgressBar } from "./ProgressBar"
-import type { ITask } from "./types"
+import { ProgressBar } from "../../../shared/ProgressBar"
+
 import { TASK_CONFIG } from "@/configs/task.config"
 import { getDaysUntilDue } from "@/lib/utils/getDaysUntilDue"
 import { taskDeleted } from "@/stores/task/store"
+import type { ITask } from "@/types/task.types"
 
 interface Props {
 	item: ITask

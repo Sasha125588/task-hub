@@ -1,11 +1,14 @@
 import { combine, createEvent, createStore } from "effector"
 import { produce } from "immer"
 
-import type { ITask } from "@/components/sidebar/dashboard/last-tasks/types"
-
 import { TASK_CONFIG } from "@/configs/task.config"
 import { TASKS } from "@/shared/data/tasks.data"
-import type { TaskSortType, TaskStatuses } from "@/types/task.types"
+import type {
+	ITask,
+	TStatusFilter,
+	TaskSortType,
+	subTask
+} from "@/types/task.types"
 
 const SORT_TYPE = TASK_CONFIG.STORAGE_KEYS.SORT_TYPE
 
@@ -31,8 +34,9 @@ const sortTasks = (tasks: ITask[], sortType: TaskSortType): ITask[] => {
 
 // STORES
 export const $sortType = createStore<TaskSortType>(getSortTypeFromLS())
-export const $statusType = createStore<TaskStatuses>("all")
+export const $statusType = createStore<TStatusFilter>("all")
 export const $tasks = createStore<ITask[]>(TASKS)
+export const $curTaskId = createStore<string>("")
 
 // COMBINE STORES
 export const $sortedTasks = combine($tasks, $sortType, (tasks, sortType) =>
@@ -48,12 +52,19 @@ export const $filteredTasks = combine(
 
 // EVENTS
 export const sortTypeUpdated = createEvent<TaskSortType>()
-export const statusTypeUpdated = createEvent<TaskStatuses>()
+export const statusTypeUpdated = createEvent<TStatusFilter>()
 export const taskDeleted = createEvent<string>()
 export const taskUpdated = createEvent<Partial<ITask> & { id: string }>()
 export const $getTaskByID = $tasks.map(
-	tasks => (id: string) => tasks.find(task => task.id === id)
+	tasks =>
+		(id: string): ITask | undefined =>
+			tasks.find(task => task.id === id)
 )
+export const curTaskIdUpdated = createEvent<string>()
+export const subTaskCreated = createEvent<{
+	subTask: subTask
+	taskId: string
+}>()
 
 $sortType.on(sortTypeUpdated, (_, newSortType) => {
 	saveSortTypeToLS(newSortType)
@@ -75,6 +86,20 @@ $tasks.on(taskUpdated, (tasks, updatedTask) =>
 
 $tasks.on(taskDeleted, (tasks, taskId) =>
 	tasks.filter(task => task.id !== taskId)
+)
+
+$curTaskId.on(curTaskIdUpdated, (_, newId) => newId)
+
+$tasks.on(subTaskCreated, (tasks, { taskId, subTask }) =>
+	produce(tasks, draft => {
+		const task = draft.find(t => t.id === taskId)
+		if (task) {
+			if (!task.subTasks) {
+				task.subTasks = []
+			}
+			task.subTasks.push(subTask)
+		}
+	})
 )
 
 export const $numTasksByStatus = $tasks.map(tasks => {

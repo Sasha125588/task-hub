@@ -23,12 +23,9 @@ import { Input } from "@/components/ui/input"
 
 import { DatePicker } from "../shared/DatePicker"
 import { IconPicker } from "../shared/IconPicker"
+import { SubTaskList } from "../sidebar/dashboard/last-tasks/form/SubTaskList"
 
-import { $getTaskByID, taskUpdated } from "@/stores/task/store"
-
-interface Props {
-	id: string
-}
+import { $curTaskId, $getTaskByID, taskUpdated } from "@/stores/task/store"
 
 const formSchema = z.object({
 	title: z.string().min(2, {
@@ -42,10 +39,14 @@ const formSchema = z.object({
 		.refine(date => date > new Date(), {
 			message: "Due date must be in the future."
 		}),
-	iconName: z.string().optional()
+	iconName: z.string().optional(),
+	subTasks: z.any()
 })
 
-export function TaskEditForm({ id }: Props) {
+export function TaskEditForm() {
+	const id = useUnit($curTaskId)
+	console.log("CURRENT TASK ID", id)
+
 	const router = useRouter()
 	const updateTask = useUnit(taskUpdated)
 	const getTaskByID = useUnit($getTaskByID)
@@ -56,7 +57,8 @@ export function TaskEditForm({ id }: Props) {
 		defaultValues: {
 			title: task.title,
 			dueDate: task.dueDate,
-			iconName: task.iconName
+			iconName: task.iconName,
+			subTasks: task.subTasks
 		}
 	})
 
@@ -70,55 +72,75 @@ export function TaskEditForm({ id }: Props) {
 
 	return (
 		<Form {...form}>
-			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-				<FormField
-					control={form.control}
-					name="title"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Title</FormLabel>
-							<FormControl>
-								<Input placeholder="shadcn" {...field} />
-							</FormControl>
-							<FormDescription>
-								<Link href="/dashboard">Task Page. Task id: {id}</Link>
-							</FormDescription>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-				<FormField
-					control={form.control}
-					name="dueDate"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Due Date</FormLabel>
-							<FormControl>
-								<DatePicker
-									dateForm={field.value}
-									onChangeForm={field.onChange}
-								/>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-				<FormField
-					control={form.control}
-					name="iconName"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Select Icon</FormLabel>
-							<FormControl>
-								<IconPicker value={field.value} onChange={field.onChange} />
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-				<Button className="cursor-pointer" type="submit">
-					Submit
-				</Button>
+			<form
+				onSubmit={form.handleSubmit(onSubmit)}
+				className="grid grid-cols-2 gap-8"
+			>
+				<div className="space-y-8">
+					<FormField
+						control={form.control}
+						name="title"
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Title</FormLabel>
+								<FormControl>
+									<Input placeholder="shadcn" {...field} />
+								</FormControl>
+								<FormDescription>
+									<Link href="/dashboard">Task Page. Task id: {id}</Link>
+								</FormDescription>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
+						control={form.control}
+						name="dueDate"
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Due Date</FormLabel>
+								<FormControl>
+									<DatePicker
+										dateForm={field.value}
+										onChangeForm={field.onChange}
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
+						control={form.control}
+						name="iconName"
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Select Icon</FormLabel>
+								<FormControl>
+									<IconPicker value={field.value} onChange={field.onChange} />
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<Button className="cursor-pointer" type="submit">
+						Submit
+					</Button>
+				</div>
+				<div className="space-y-8">
+					<FormField
+						control={form.control}
+						name="subTasks"
+						render={() => (
+							<FormItem>
+								<FormLabel className="pb-3.5"></FormLabel>
+								<FormControl>
+									<SubTaskList id={id} />
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+				</div>
 			</form>
 		</Form>
 	)
