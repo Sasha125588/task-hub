@@ -18,7 +18,7 @@ import { GlowingEffect } from "@/components/ui/glowing-effect"
 
 import { ProgressBar } from "../../../shared/ProgressBar"
 
-import { TASK_CONFIG } from "@/configs/task.config"
+import { PAGES_CONFIG } from "@/configs/pages.config"
 import { getDaysUntilDue } from "@/lib/utils/getDaysUntilDue"
 import { taskDeleted } from "@/stores/task/store"
 import type { ITask } from "@/types/task.types"
@@ -26,7 +26,6 @@ import type { ITask } from "@/types/task.types"
 interface Props {
 	item: ITask
 }
-const EDIT_TASK_URL = TASK_CONFIG.EDIT_TASK_URL
 
 export function TaskItem({ item }: Props) {
 	const deleteTask = useUnit(taskDeleted)
@@ -118,7 +117,7 @@ export function TaskItem({ item }: Props) {
 							/>
 						</div>
 						<div className="border-primary/75 flex size-9 items-center justify-center rounded-full border-[1.5px]">
-							<Link href={EDIT_TASK_URL(item.id)}>
+							<Link href={PAGES_CONFIG.EDIT_TASK_URL(item.id)}>
 								<BrushIcon
 									className="cursor-pointer"
 									animateOnHover

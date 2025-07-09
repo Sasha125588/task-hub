@@ -5,8 +5,9 @@ import { NuqsAdapter } from "nuqs/adapters/next/app"
 import type { ReactNode } from "react"
 
 import { ScrollProgress } from "@/components/animate-ui/components/scroll-progress"
-import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/sonner"
+
+import { ThemeProvider } from "@/providers/theme-provider"
 
 import "./globals.css"
 import { PAGES_CONFIG } from "@/configs/pages.config"

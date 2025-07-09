@@ -1,4 +1,4 @@
-import type { ITabs } from "@/types/task-list.types"
+import type { ITabs } from "@/components/sidebar/dashboard/last-tasks/TaskList"
 
 export const TABS: ITabs[] = [
 	{ title: "All", value: "all" },

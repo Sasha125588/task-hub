@@ -14,6 +14,11 @@ import {
 	type TaskStatuses
 } from "@/types/task.types"
 
+export interface ITabs {
+	title: string
+	value: string
+}
+
 export function TaskList() {
 	const statusType = useUnit($statusType)
 	const updateStatusType = useUnit(statusTypeUpdated)

@@ -1,3 +1,4 @@
+import type { Metadata } from "next"
 import type { ReactNode } from "react"
 
 import {
@@ -7,11 +8,16 @@ import {
 import { Header } from "@/components/layout/sidebar/Header"
 import { AppSidebar } from "@/components/layout/sidebar/Sidebar"
 
-interface Props {
-	children: ReactNode
+export const metadata: Metadata = {
+	title: "Dashboard"
 }
 
-export default function SidebarLayout({ children }: Props) {
+interface Props {
+	children: ReactNode
+	modal: ReactNode
+}
+
+export default function DashboardLayout({ children, modal }: Props) {
 	return (
 		<SidebarProvider
 			style={
@@ -24,7 +30,10 @@ export default function SidebarLayout({ children }: Props) {
 			<AppSidebar variant="inset" />
 			<SidebarInset>
 				<Header />
-				<main className="h-full px-5 py-5">{children}</main>
+				<main className="h-full px-5 py-5">
+					{modal}
+					{children}
+				</main>
 			</SidebarInset>
 		</SidebarProvider>
 	)
