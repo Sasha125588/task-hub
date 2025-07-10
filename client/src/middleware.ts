@@ -3,7 +3,10 @@ import type { NextRequest } from "next/server";
 import { isValidEmail } from "./lib/utils/auth";
 
 export function middleware(request: NextRequest) {
-  if (request.nextUrl.pathname === "/confirm") {
+  const { pathname } = request.nextUrl;
+
+  // Обработка страницы подтверждения
+  if (pathname === "/confirm") {
     const email = request.nextUrl.searchParams.get("email");
     const password = request.nextUrl.searchParams.get("password");
     const confirmToken = request.nextUrl.searchParams.get("token");
@@ -11,6 +14,10 @@ export function middleware(request: NextRequest) {
     if (!email || !password || !isValidEmail(email) || !confirmToken) {
       return NextResponse.redirect(new URL("/signup", request.url));
     }
+  }
+
+  if (pathname === "/") {
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 
   return NextResponse.next();
