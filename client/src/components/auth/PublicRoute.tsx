@@ -1,19 +1,15 @@
 "use client";
 
 import { useEffect, type PropsWithChildren } from "react";
-import { useRouter } from "next/navigation";
-import { useAuth } from "@/providers/AuthProvider";
+import { useAuth } from "@/hooks/useAuth";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 
 export function PublicRoute({ children }: PropsWithChildren) {
-  const { user, isLoading } = useAuth();
-  const router = useRouter();
+  const { user, isLoading, checkAuth } = useAuth();
 
   useEffect(() => {
-    if (!isLoading && user) {
-      router.push("/dashboard");
-    }
-  }, [user, isLoading, router]);
+    checkAuth();
+  }, [checkAuth]);
 
   if (isLoading) {
     return <LoadingSpinner />;

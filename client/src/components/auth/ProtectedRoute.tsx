@@ -1,19 +1,15 @@
 "use client";
 
 import { useEffect, type PropsWithChildren } from "react";
-import { useRouter } from "next/navigation";
-import { useAuth } from "@/providers/AuthProvider";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { useAuth } from "@/hooks/useAuth";
 
 export function ProtectedRoute({ children }: PropsWithChildren) {
-  const { user, isLoading } = useAuth();
-  const router = useRouter();
+  const { user, isLoading, checkAuth } = useAuth();
 
   useEffect(() => {
-    if (!isLoading && !user) {
-      router.push("/login");
-    }
-  }, [user, isLoading, router]);
+    checkAuth();
+  }, [checkAuth]);
 
   if (isLoading) {
     return <LoadingSpinner />;

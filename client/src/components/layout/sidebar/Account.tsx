@@ -28,23 +28,20 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useAuth } from "@/providers/AuthProvider";
-import { useRouter } from "next/navigation";
+import { useAuth } from "@/hooks/useAuth";
 
 export function Account() {
   const { isMobile } = useSidebar();
-  const { signOut } = useAuth();
-  const router = useRouter();
-  const { user, isLoading } = useAuth();
+  const { signOut, user, isLoading } = useAuth();
 
   const handleSignOut = async () => {
     try {
       await signOut();
-      router.push("/login");
       toast.success("Logged out successfully");
     } catch (error) {
-      console.error("Failed to log out", error);
-      toast.error("Failed to log out");
+      const errMsg =
+        error instanceof Error ? error.message : "Failed to log out";
+      toast.error(errMsg);
     }
   };
 

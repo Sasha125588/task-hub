@@ -1,4 +1,4 @@
-import type { AuthUser } from "@aws-amplify/auth";
+import type { AuthUser, JWT } from "@aws-amplify/auth";
 
 export interface User {
   cognitoInfo: AuthUser;
@@ -15,20 +15,31 @@ export interface AuthState {
   error: string | null;
 }
 
-export interface SignUpFormData {
+export interface SignInInput {
+  email: string;
+  password: string;
+}
+
+export interface SignInOutput {
+  isSignedInComplete: boolean;
+  accesToken?: JWT;
+}
+
+export interface SignUpInput {
   email: string;
   password: string;
   username: string;
 }
 
-export interface SignInResult {
-  isSignedIn: boolean;
-  error?: string;
-  nextStep?: {
-    signInStep: string;
-  };
+export interface SignUpOutput {
+  isSignUpComplete: boolean;
 }
 
-export interface SignUpResult {
-  isSignUpComplete: boolean;
+export interface ConfirmSignUpInput {
+  email: string;
+  code: string;
+}
+
+export interface ConfirmSignUpOutput {
+  isConfirmSignUpComplete: boolean;
 }

@@ -18,16 +18,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useAuth } from "@/providers/AuthProvider";
 import { authAPI } from "@/services/api/auth.api";
-
-const confirmSignUpSchema = z.object({
-  code: z
-    .string()
-    .min(6, "Code must be 6 characters")
-    .max(6, "Code must be 6 characters")
-    .regex(/^\d+$/, "Code must contain only numbers"),
-});
+import { confirmSignUpSchema } from "@/lib/schemas/confirm-sign-up";
+import { useAuth } from "@/hooks/useAuth";
 
 type ConfirmSignUpForm = z.infer<typeof confirmSignUpSchema>;
 
@@ -39,17 +32,7 @@ export function ConfirmSignUpForm() {
   const password = searchParams.get("password");
   const confirmationToken = searchParams.get("token");
 
-  console.log("ConfirmForm: URL params:", {
-    email: email ? "present" : "missing",
-    password: password ? "present" : "missing",
-    token: confirmationToken ? "present" : "missing",
-  });
-
   const storedToken = sessionStorage.getItem("confirmationToken");
-  console.log(
-    "ConfirmForm: Stored token:",
-    storedToken ? "present" : "missing"
-  );
 
   const { signIn, isLoading } = useAuth();
 
@@ -61,14 +44,12 @@ export function ConfirmSignUpForm() {
   });
 
   if (!email || !password || !confirmationToken) {
-    console.log("ConfirmForm: Missing required parameters");
     toast.error("Invalid confirmation link. Please try signing up again.");
     router.push("/signup");
     return null;
   }
 
   if (confirmationToken !== storedToken) {
-    console.log("ConfirmForm: Token mismatch");
     toast.error("Invalid confirmation session. Please try signing up again.");
     router.push("/signup");
     return null;
@@ -76,17 +57,14 @@ export function ConfirmSignUpForm() {
 
   const onSubmit = async (data: ConfirmSignUpForm) => {
     try {
-      console.log("ConfirmForm: Starting confirmation...");
       const loadingToast = toast.loading("Confirming email...");
 
-      const { isSignUpComplete } = await authAPI.confirmSignUp(
+      const { isConfirmSignUpComplete } = await authAPI.confirmSignUp({
         email,
-        data.code
-      );
+        code: data.code,
+      });
 
-      console.log("ConfirmForm: Confirmation result:", { isSignUpComplete });
-
-      if (isSignUpComplete) {
+      if (isConfirmSignUpComplete) {
         toast.success("Email confirmed successfully!", {
           id: loadingToast,
         });
@@ -94,24 +72,22 @@ export function ConfirmSignUpForm() {
         sessionStorage.removeItem("confirmationToken");
 
         try {
-          console.log("ConfirmForm: Attempting auto-login...");
-          const { isSignedIn } = await signIn(email, password);
+          const { isSignedInComplete } = await signIn({ email, password });
 
-          if (isSignedIn) {
-            console.log("ConfirmForm: Auto-login successful");
+          if (isSignedInComplete) {
             toast.success("Successfully logged in!");
             router.push("/dashboard");
           }
         } catch (error) {
-          console.error("ConfirmForm: Auto-login failed:", error);
           toast.error(
-            "Failed to sign in automatically. Please try logging in manually."
+            error instanceof Error
+              ? error.message
+              : "Failed to sign in automatically. Please try logging in manually."
           );
           router.push("/login");
         }
       }
     } catch (error) {
-      console.error("ConfirmForm: Confirmation error:", error);
       toast.error(
         error instanceof Error ? error.message : "Failed to confirm email"
       );

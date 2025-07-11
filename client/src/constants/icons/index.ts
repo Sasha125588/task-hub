@@ -1,4 +1,3 @@
-// Re-export types and utilities
 export * from "./types";
 
 import { ACTION_ICONS } from "./actions";
@@ -6,7 +5,6 @@ import { BUSINESS_ICONS } from "./business";
 import { COMMUNICATION_ICONS } from "./communication";
 import { DESIGN_ICONS } from "./design";
 import { DEVICE_ICONS } from "./devices";
-// Import all icon categories
 
 import { ENTERTAINMENT_ICONS } from "./entertainment";
 import { FILE_ICONS } from "./files";
@@ -19,7 +17,6 @@ import { TRANSPORTATION_ICONS } from "./transportation";
 
 import type { IconCategory, IconData } from "./types";
 
-// Combine all icons
 export const ICON_REGISTRY: IconData[] = [
   ...NAVIGATION_ICONS,
   ...ACTION_ICONS,
@@ -36,7 +33,6 @@ export const ICON_REGISTRY: IconData[] = [
   ...STATUS_ICONS,
 ];
 
-// Create icon map for fast lookup
 const ICON_MAP = new Map(ICON_REGISTRY.map((icon) => [icon.name, icon]));
 
 export const getIcon = (name: string): IconData | undefined =>

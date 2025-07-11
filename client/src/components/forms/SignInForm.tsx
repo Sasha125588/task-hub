@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useAuth } from "@/providers/AuthProvider";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -22,29 +21,17 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils/common";
 import { SocialLoginButtons } from "../common/SocialLoginButtons";
 import Link from "next/link";
+import { loginFormSchema } from "@/lib/schemas/sign-in";
+import { useAuth } from "@/hooks/useAuth";
 
-const loginFormSchema = z.object({
-  email: z
-    .string()
-    .min(1, { message: "Email is required" })
-    .email({ message: "Must be a valid email" }),
-  password: z
-    .string()
-    .min(8, { message: "Password must be at least 8 characters" })
-    .regex(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
-      "Password must contain at least one uppercase letter, one lowercase letter, and one number"
-    ),
-});
+type SignInFormValues = z.infer<typeof loginFormSchema>;
 
-type LoginFormValues = z.infer<typeof loginFormSchema>;
-
-export function LoginForm({
+export function SignInForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
   const { signIn, isLoading } = useAuth();
-  const form = useForm<LoginFormValues>({
+  const form = useForm<SignInFormValues>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
       email: "",
@@ -52,25 +39,22 @@ export function LoginForm({
     },
   });
 
-  const onSubmit = async (values: LoginFormValues) => {
+  const onSubmit = async (values: SignInFormValues) => {
     if (isLoading) return;
 
     try {
-      console.log("LoginForm: Starting login process...");
       const loadingToast = toast.loading("Logging in...");
+      const { isSignedInComplete } = await signIn({
+        email: values.email,
+        password: values.password,
+      });
 
-      console.log("LoginForm: Calling signIn...");
-      const { isSignedIn } = await signIn(values.email, values.password);
-      console.log("LoginForm: SignIn result:", { isSignedIn });
-
-      if (isSignedIn) {
+      if (isSignedInComplete) {
         toast.success("Successfully logged in!", {
           id: loadingToast,
         });
-        console.log("LoginForm: Redirecting to dashboard...");
         window.location.href = "/dashboard";
       } else {
-        console.log("LoginForm: Login failed");
         toast.error(
           "Login failed. Please check your credentials and try again.",
           {
@@ -80,8 +64,6 @@ export function LoginForm({
         form.setValue("password", "");
       }
     } catch (err) {
-      console.error("LoginForm: Login error:", err);
-
       let errorMessage = "Failed to login. Please try again.";
       if (err instanceof Error) {
         errorMessage = err.message;

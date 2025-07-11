@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useAuth } from "@/providers/AuthProvider";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
@@ -22,29 +21,8 @@ import { Input } from "@/components/ui/input";
 import { SocialLoginButtons } from "@/components/common/SocialLoginButtons";
 
 import { cn } from "@/lib/utils/common";
-
-const signUpFormSchema = z
-  .object({
-    email: z
-      .string()
-      .min(1, { message: "Email is required" })
-      .email({ message: "Must be a valid email" }),
-    username: z
-      .string()
-      .min(3, { message: "Username must be at least 3 characters" }),
-    password: z
-      .string()
-      .min(8, { message: "Password must be at least 8 characters" })
-      .regex(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
-        "Password must contain at least one uppercase letter, one lowercase letter, and one number"
-      ),
-    confirmPassword: z.string(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ["confirmPassword"],
-  });
+import { signUpFormSchema } from "@/lib/schemas/sign-up";
+import { useAuth } from "@/hooks/useAuth";
 
 type SignUpFormValues = z.infer<typeof signUpFormSchema>;
 
@@ -65,21 +43,13 @@ export function SignUpForm({
 
   async function onSubmit(values: SignUpFormValues) {
     try {
-      console.log("SignUpForm: Starting signup process...");
       const loadingToast = toast.loading("Creating your account...");
 
-      console.log("SignUpForm: Calling signUp with:", {
+      const { isSignUpComplete } = await signUp({
         email: values.email,
+        password: values.password,
         username: values.username,
       });
-
-      const { isSignUpComplete } = await signUp(
-        values.email,
-        values.password,
-        values.username
-      );
-
-      console.log("SignUpForm: SignUp result:", { isSignUpComplete });
 
       if (!isSignUpComplete) {
         toast.success(
@@ -88,14 +58,8 @@ export function SignUpForm({
             id: loadingToast,
           }
         );
-        // Перенаправление обрабатывается в AuthProvider
       }
     } catch (err) {
-      console.error("SignUpForm: SignUp error:", err);
-      console.error("SignUpForm: Error details:", {
-        message: err instanceof Error ? err.message : "Unknown error",
-        stack: err instanceof Error ? err.stack : undefined,
-      });
       toast.error(
         err instanceof Error
           ? err.message

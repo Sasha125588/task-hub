@@ -8,55 +8,20 @@ import {
   fetchUserAttributes,
 } from "aws-amplify/auth";
 
-import type { SignInResult } from "@/types/auth.types";
-import type { SignUpFormData } from "@/types/auth.types";
+import type {
+  ConfirmSignUpInput,
+  ConfirmSignUpOutput,
+  SignInInput,
+  SignInOutput,
+  SignUpInput,
+  SignUpOutput,
+} from "@/types/auth.types";
 
 import "../../configs/amplify.config";
-import { validateAuthParameters } from "../../lib/utils/auth";
-
-const handleAuthError = (error: unknown, defaultMessage: string): never => {
-  console.error(defaultMessage, error);
-
-  if (error instanceof Error) {
-    if (
-      error.message.includes("incorrect username or password") ||
-      error.message.includes("NotAuthorizedException")
-    ) {
-      throw new Error("Incorrect email or password");
-    }
-    if (
-      error.message.includes("User does not exist") ||
-      error.message.includes("UserNotFoundException")
-    ) {
-      throw new Error("User not found");
-    }
-    if (error.message.includes("Password attempts exceeded")) {
-      throw new Error("Too many failed attempts. Please try again later");
-    }
-    if (
-      error.message.includes("User is not confirmed") ||
-      error.message.includes("NotConfirmedException")
-    ) {
-      throw new Error("Please confirm your email before logging in");
-    }
-    if (error.message.includes("UserUnAuthenticatedException")) {
-      throw new Error(
-        "Authentication configuration error. Please check your AWS Cognito setup."
-      );
-    }
-    if (error.message.includes("InvalidParameterException")) {
-      throw new Error("Invalid parameters provided. Please check your input.");
-    }
-    if (error.message.includes("UsernameExistsException")) {
-      throw new Error("User with this email already exists.");
-    }
-    throw error;
-  }
-  throw new Error(defaultMessage);
-};
+import { handleAuthError, validateAuthParameters } from "../../lib/utils/auth";
 
 export const authAPI = {
-  async signIn(email: string, password: string): Promise<SignInResult> {
+  async signIn({ email, password }: SignInInput): Promise<SignInOutput> {
     try {
       if (!validateAuthParameters(email, password)) {
         throw new Error("Invalid authentication parameters");
@@ -67,30 +32,37 @@ export const authAPI = {
         password,
       });
 
+      const session = await fetchAuthSession();
+      const accesToken = session.tokens?.accessToken;
+
       if (!signInResult) {
         throw new Error("No response from sign in");
       }
 
-      return { isSignedIn: signInResult.isSignedIn };
+      return { isSignedInComplete: signInResult.isSignedIn, accesToken };
     } catch (error) {
       console.error("AuthAPI: Sign in failed:", error);
       return handleAuthError(error, "Sign in failed");
     }
   },
 
-  async signUp(data: SignUpFormData): Promise<{ isSignUpComplete: boolean }> {
+  async signUp({
+    email,
+    username,
+    password,
+  }: SignUpInput): Promise<SignUpOutput> {
     try {
-      if (!validateAuthParameters(data.email, data.password)) {
+      if (!validateAuthParameters(email, password)) {
         throw new Error("Invalid authentication parameters");
       }
 
       const signUpResult = await signUp({
-        username: data.email,
-        password: data.password,
+        username: email,
+        password: password,
         options: {
           userAttributes: {
-            email: data.email,
-            name: data.username || data.email,
+            email: email,
+            name: username || email,
           },
           autoSignIn: false,
         },
@@ -104,12 +76,11 @@ export const authAPI = {
         isSignUpComplete: signUpResult.isSignUpComplete,
       };
     } catch (error) {
-      console.error("AuthAPI: Sign up failed:", error);
       return handleAuthError(error, "Sign up failed");
     }
   },
 
-  async signOut(): Promise<void> {
+  async signOut() {
     try {
       await signOut({ global: true });
     } catch (error) {
@@ -117,10 +88,10 @@ export const authAPI = {
     }
   },
 
-  async confirmSignUp(
-    email: string,
-    code: string
-  ): Promise<{ isSignUpComplete: boolean }> {
+  async confirmSignUp({
+    email,
+    code,
+  }: ConfirmSignUpInput): Promise<ConfirmSignUpOutput> {
     try {
       const confirmSignUpResult = await confirmSignUp({
         username: email,
@@ -130,7 +101,7 @@ export const authAPI = {
       if (!confirmSignUpResult) {
         throw new Error("No response from sign up");
       }
-      return { isSignUpComplete: confirmSignUpResult.isSignUpComplete };
+      return { isConfirmSignUpComplete: confirmSignUpResult.isSignUpComplete };
     } catch (error) {
       return handleAuthError(error, "Confirmation failed");
     }

@@ -8,7 +8,6 @@ import { ScrollProgress } from "@/components/animate-ui/components/scroll-progre
 import { Toaster } from "@/components/ui/sonner";
 
 import { ThemeProvider } from "@/providers/theme-provider";
-import { AuthProvider } from "@/providers/AuthProvider";
 
 import "./globals.css";
 import { PAGES_CONFIG } from "@/configs/pages.config";
@@ -43,6 +42,7 @@ export default function RootLayout({ children }: Props) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body
+        id="modal-root"
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider
@@ -51,15 +51,12 @@ export default function RootLayout({ children }: Props) {
           enableSystem
           disableTransitionOnChange
         >
-          <AuthProvider>
-            <ScrollProgress />
-            <NuqsAdapter>
-              {children}
-              <div id="modal-root" />
-              <Toaster />
-            </NuqsAdapter>
-            <Analytics />
-          </AuthProvider>
+          <ScrollProgress />
+          <NuqsAdapter>
+            {children}
+            <Toaster />
+          </NuqsAdapter>
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>

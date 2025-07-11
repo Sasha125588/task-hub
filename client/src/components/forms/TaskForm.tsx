@@ -21,25 +21,10 @@ import { Input } from "@/components/ui/input";
 
 import { DatePicker } from "../common/DatePicker";
 import { IconPicker } from "../common/IconPicker";
-import { SubTaskList } from "../pages/dashboard/last-tasks/form/SubTaskList";
+import { SubTaskList } from "../pages/dashboard/last-tasks/sub-tasks/SubTaskList";
 
 import { $curTaskId, $getTaskByID, taskUpdated } from "@/stores/task/store";
-
-const formSchema = z.object({
-  title: z.string().min(2, {
-    message: "Title must be at least 2 characters.",
-  }),
-  dueDate: z
-    .date({
-      required_error: "Due date is required.",
-      invalid_type_error: "Please select a valid date.",
-    })
-    .refine((date) => date > new Date(), {
-      message: "Due date must be in the future.",
-    }),
-  iconName: z.string().optional(),
-  subTasks: z.any(),
-});
+import { taskFormSchema } from "@/lib/schemas/task";
 
 export function TaskEditForm() {
   const id = useUnit($curTaskId);
@@ -49,8 +34,8 @@ export function TaskEditForm() {
   const getTaskByID = useUnit($getTaskByID);
   const task = getTaskByID(id)!;
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof taskFormSchema>>({
+    resolver: zodResolver(taskFormSchema),
     defaultValues: {
       title: task.title,
       dueDate: task.dueDate,
@@ -59,7 +44,7 @@ export function TaskEditForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof taskFormSchema>) {
     updateTask({ id, ...values });
     toast("Task updated successfully", {
       description: `${format(new Date(), "Pp")}`,
