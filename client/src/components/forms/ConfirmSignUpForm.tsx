@@ -19,10 +19,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { authAPI } from "@/services/api/auth.api";
-import { confirmSignUpSchema } from "@/lib/schemas/confirm-sign-up";
+import { confirmSignUpSchema } from "@/lib/schemas/confirm-signup";
 import { useAuth } from "@/hooks/useAuth";
 
-type ConfirmSignUpForm = z.infer<typeof confirmSignUpSchema>;
+type ConfirmSignUpFormValues = z.infer<typeof confirmSignUpSchema>;
 
 export function ConfirmSignUpForm() {
   const router = useRouter();
@@ -36,7 +36,7 @@ export function ConfirmSignUpForm() {
 
   const { signIn, isLoading } = useAuth();
 
-  const form = useForm<ConfirmSignUpForm>({
+  const form = useForm<ConfirmSignUpFormValues>({
     resolver: zodResolver(confirmSignUpSchema),
     defaultValues: {
       code: "",
@@ -46,22 +46,22 @@ export function ConfirmSignUpForm() {
   if (!email || !password || !confirmationToken) {
     toast.error("Invalid confirmation link. Please try signing up again.");
     router.push("/signup");
-    return null;
+    return;
   }
 
   if (confirmationToken !== storedToken) {
     toast.error("Invalid confirmation session. Please try signing up again.");
     router.push("/signup");
-    return null;
+    return;
   }
 
-  const onSubmit = async (data: ConfirmSignUpForm) => {
+  const onSubmit = async ({ code }: ConfirmSignUpFormValues) => {
     try {
       const loadingToast = toast.loading("Confirming email...");
 
       const { isConfirmSignUpComplete } = await authAPI.confirmSignUp({
         email,
-        code: data.code,
+        code,
       });
 
       if (isConfirmSignUpComplete) {
@@ -77,6 +77,13 @@ export function ConfirmSignUpForm() {
           if (isSignedInComplete) {
             toast.success("Successfully logged in!");
             router.push("/dashboard");
+          } else {
+            toast.error(
+              "Failed to sign in automatically. Please try logging in manually.",
+              {
+                id: loadingToast,
+              }
+            );
           }
         } catch (error) {
           toast.error(
@@ -84,7 +91,7 @@ export function ConfirmSignUpForm() {
               ? error.message
               : "Failed to sign in automatically. Please try logging in manually."
           );
-          router.push("/login");
+          router.push("/signin");
         }
       }
     } catch (error) {

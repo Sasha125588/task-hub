@@ -1,6 +1,4 @@
-import type { ITabs } from "@/components/pages/dashboard/last-tasks/TaskList";
-
-export const TABS: ITabs[] = [
+export const TABS = [
   { title: "All", value: "all" },
   { title: "Completed", value: "completed" },
   { title: "In Progress", value: "in-progress" },

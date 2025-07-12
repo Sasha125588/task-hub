@@ -1,6 +1,6 @@
 import { useUnit } from "effector-react";
 
-import { FlipButton } from "@/components/animate-ui/buttons/flip";
+import { FlipButton as ChangeSortTypeButton } from "@/components/animate-ui/buttons/flip";
 import {
   HoverCard,
   HoverCardContent,
@@ -14,19 +14,16 @@ import {
   $numTasksByStatus,
   $sortType,
   $statusType,
-  sortTypeUpdated,
+  sortTypeUpdated as updateSortType,
 } from "@/stores/task/store";
 import type { TaskStatuses } from "@/types/task.types";
 
-const FRONT_TEXT = TASK_CONFIG.FLIP_BUTTON_CONFIG.frontText;
-const BACK_TEXT = TASK_CONFIG.FLIP_BUTTON_CONFIG.backText;
+const FRONT_TEXT = TASK_CONFIG.CHANGE_SORT_TYPE_BUTTON_TEXT.frontText;
+const BACK_TEXT = TASK_CONFIG.CHANGE_SORT_TYPE_BUTTON_TEXT.backText;
 
 export function TaskListHeader() {
-  const updateSortType = useUnit(sortTypeUpdated);
   const statusType = useUnit($statusType);
-
   const sortType = useUnit($sortType);
-
   const numOfTasksByStatus = useUnit($numTasksByStatus);
 
   const changeSortType = () => {
@@ -46,7 +43,7 @@ export function TaskListHeader() {
             );
           })}
         </TabsList>
-        <FlipButton
+        <ChangeSortTypeButton
           frontText={FRONT_TEXT}
           backText={BACK_TEXT}
           flipped={sortType == "asc"}

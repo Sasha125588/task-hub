@@ -20,16 +20,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { SocialLoginButtons } from "@/components/common/SocialLoginButtons";
 
-import { cn } from "@/lib/utils/common";
-import { signUpFormSchema } from "@/lib/schemas/sign-up";
+import { signUpFormSchema } from "@/lib/schemas/signup";
 import { useAuth } from "@/hooks/useAuth";
 
 type SignUpFormValues = z.infer<typeof signUpFormSchema>;
 
-export function SignUpForm({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
+export function SignUpForm() {
   const { signUp, isLoading } = useAuth();
   const form = useForm<SignUpFormValues>({
     resolver: zodResolver(signUpFormSchema),
@@ -41,28 +37,32 @@ export function SignUpForm({
     },
   });
 
-  async function onSubmit(values: SignUpFormValues) {
+  async function onSubmit({ email, password, username }: SignUpFormValues) {
     try {
       const loadingToast = toast.loading("Creating your account...");
 
       const { isSignUpComplete } = await signUp({
-        email: values.email,
-        password: values.password,
-        username: values.username,
+        email,
+        password,
+        username,
       });
 
-      if (!isSignUpComplete) {
+      if (isSignUpComplete) {
         toast.success(
           "Account created! Please check your email for verification code.",
           {
             id: loadingToast,
           }
         );
+      } else {
+        toast.error("Failed to create account. Please try again.", {
+          id: loadingToast,
+        });
       }
-    } catch (err) {
+    } catch (error) {
       toast.error(
-        err instanceof Error
-          ? err.message
+        error instanceof Error
+          ? error.message
           : "Failed to create account. Please try again."
       );
     }
@@ -70,13 +70,7 @@ export function SignUpForm({
 
   return (
     <div className="flex min-h-screen items-center justify-center p-4">
-      <div
-        className={cn(
-          "flex w-full max-w-4xl flex-col items-center gap-6",
-          className
-        )}
-        {...props}
-      >
+      <div className={"flex w-full max-w-4xl flex-col items-center gap-6"}>
         <Card className="w-full overflow-hidden p-0">
           <CardContent className="grid p-0 md:grid-cols-2">
             <Form {...form}>

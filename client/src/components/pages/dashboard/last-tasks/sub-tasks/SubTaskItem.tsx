@@ -6,7 +6,11 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 import type { subTask } from "@/types/task.types";
 
-export function SubTaskItem({ item }: { item: subTask }) {
+interface Props {
+  item: subTask;
+}
+
+export function SubTaskItem({ item }: Props) {
   const [checked] = useState<boolean>(item.status === "completed");
   const {
     attributes,

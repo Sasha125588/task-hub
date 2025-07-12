@@ -7,21 +7,18 @@ import { Tabs } from "@/components/animate-ui/radix/tabs";
 
 import { TaskListContent } from "./TaskListContent";
 import { TaskListHeader } from "./TaskListHeader";
-import { $statusType, statusTypeUpdated } from "@/stores/task/store";
+import {
+  $statusType,
+  statusTypeUpdated as updateStatusType,
+} from "@/stores/task/store";
 import {
   StatusFilter,
   type TStatusFilter,
   type TaskStatuses,
 } from "@/types/task.types";
 
-export interface ITabs {
-  title: string;
-  value: string;
-}
-
 export function TaskList() {
   const statusType = useUnit($statusType);
-  const updateStatusType = useUnit(statusTypeUpdated);
 
   const [, setUrlStatus] = useQueryState<TStatusFilter>(
     "status",

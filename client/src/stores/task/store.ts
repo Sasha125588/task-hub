@@ -4,7 +4,7 @@ import { produce } from "immer";
 import { TASK_CONFIG } from "@/configs/task.config";
 import { TASKS } from "@/shared/data/tasks.data";
 import type {
-  ITask,
+  Task,
   TStatusFilter,
   TaskSortType,
   subTask,
@@ -18,9 +18,8 @@ const getSortTypeFromLS = () => {
   return localStorage.getItem(SORT_TYPE) === "desc" ? "desc" : "asc";
 };
 
-const sortTasks = (tasks: ITask[], sortType: TaskSortType): ITask[] => {
+const sortTasks = (tasks: Task[], sortType: TaskSortType): Task[] => {
   return [...tasks].sort((a, b) => {
-    // Handle invalid dates
     const aDate =
       a.dueDate instanceof Date && !isNaN(a.dueDate.getTime())
         ? a.dueDate
@@ -40,7 +39,6 @@ const sortTasks = (tasks: ITask[], sortType: TaskSortType): ITask[] => {
   });
 };
 
-// Save sort type with error handling
 const saveSortTypeToLS = (sortType: TaskSortType): void => {
   if (typeof window !== "undefined") {
     try {
@@ -54,7 +52,7 @@ const saveSortTypeToLS = (sortType: TaskSortType): void => {
 // STORES
 export const $sortType = createStore<TaskSortType>(getSortTypeFromLS());
 export const $statusType = createStore<TStatusFilter>("all");
-export const $tasks = createStore<ITask[]>(TASKS);
+export const $tasks = createStore<Task[]>(TASKS);
 export const $curTaskId = createStore<string>("");
 
 // COMBINE STORES
@@ -73,10 +71,10 @@ export const $filteredTasks = combine(
 export const sortTypeUpdated = createEvent<TaskSortType>();
 export const statusTypeUpdated = createEvent<TStatusFilter>();
 export const taskDeleted = createEvent<string>();
-export const taskUpdated = createEvent<Partial<ITask> & { id: string }>();
+export const taskUpdated = createEvent<Partial<Task> & { id: string }>();
 export const $getTaskByID = $tasks.map(
   (tasks) =>
-    (id: string): ITask | undefined =>
+    (id: string): Task | undefined =>
       tasks.find((task) => task.id === id)
 );
 export const curTaskIdUpdated = createEvent<string>();
@@ -102,14 +100,7 @@ $tasks.on(taskUpdated, (tasks, updatedTask) =>
   produce(tasks, (draft) => {
     const task = draft.find((t) => t.id === updatedTask.id);
     if (task) {
-      // Type-safe way to update task properties
-      if (updatedTask.title !== undefined) task.title = updatedTask.title;
-      if (updatedTask.dueDate !== undefined) task.dueDate = updatedTask.dueDate;
-      if (updatedTask.iconName !== undefined)
-        task.iconName = updatedTask.iconName;
-      if (updatedTask.status !== undefined) task.status = updatedTask.status;
-      if (updatedTask.subTasks !== undefined)
-        task.subTasks = updatedTask.subTasks;
+      Object.assign(task, updatedTask);
     }
   })
 );
@@ -127,7 +118,6 @@ $tasks.on(subTaskCreated, (tasks, { taskId, subTask }) =>
       if (!task.subTasks) {
         task.subTasks = [];
       }
-      // Limit number of subtasks to prevent performance issues
       if (task.subTasks.length < 50) {
         task.subTasks.push(subTask);
       } else {

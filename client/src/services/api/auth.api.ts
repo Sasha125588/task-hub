@@ -18,15 +18,11 @@ import type {
 } from "@/types/auth.types";
 
 import "../../configs/amplify.config";
-import { handleAuthError, validateAuthParameters } from "../../lib/utils/auth";
+import { handleAuthError } from "@/lib/utils/auth";
 
 export const authAPI = {
   async signIn({ email, password }: SignInInput): Promise<SignInOutput> {
     try {
-      if (!validateAuthParameters(email, password)) {
-        throw new Error("Invalid authentication parameters");
-      }
-
       const signInResult = await signIn({
         username: email,
         password,
@@ -41,8 +37,7 @@ export const authAPI = {
 
       return { isSignedInComplete: signInResult.isSignedIn, accesToken };
     } catch (error) {
-      console.error("AuthAPI: Sign in failed:", error);
-      return handleAuthError(error, "Sign in failed");
+      throw handleAuthError(error, "Sign in failed");
     }
   },
 
@@ -52,10 +47,6 @@ export const authAPI = {
     password,
   }: SignUpInput): Promise<SignUpOutput> {
     try {
-      if (!validateAuthParameters(email, password)) {
-        throw new Error("Invalid authentication parameters");
-      }
-
       const signUpResult = await signUp({
         username: email,
         password: password,
@@ -76,7 +67,7 @@ export const authAPI = {
         isSignUpComplete: signUpResult.isSignUpComplete,
       };
     } catch (error) {
-      return handleAuthError(error, "Sign up failed");
+      throw handleAuthError(error, "Sign up failed");
     }
   },
 
@@ -84,7 +75,7 @@ export const authAPI = {
     try {
       await signOut({ global: true });
     } catch (error) {
-      return handleAuthError(error, "Sign out failed");
+      throw handleAuthError(error, "Sign out failed");
     }
   },
 
@@ -103,7 +94,7 @@ export const authAPI = {
       }
       return { isConfirmSignUpComplete: confirmSignUpResult.isSignUpComplete };
     } catch (error) {
-      return handleAuthError(error, "Confirmation failed");
+      throw handleAuthError(error, "Confirmation failed");
     }
   },
 
@@ -121,7 +112,7 @@ export const authAPI = {
         session,
       };
     } catch (error) {
-      return handleAuthError(error, "Failed to get current user");
+      throw handleAuthError(error, "Failed to get current user");
     }
   },
 
@@ -129,7 +120,7 @@ export const authAPI = {
     try {
       return await fetchAuthSession();
     } catch (error) {
-      return handleAuthError(error, "Failed to get session");
+      throw handleAuthError(error, "Failed to get session");
     }
   },
 };

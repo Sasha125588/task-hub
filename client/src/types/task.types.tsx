@@ -1,6 +1,6 @@
 import type { LucideIcon } from "lucide-react";
 
-export interface ITask {
+export interface Task {
   id: string;
   title: string;
   icon: LucideIcon;

@@ -16,15 +16,15 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { GlowingEffect } from "@/components/ui/glowing-effect";
 
-import { ProgressBar } from "../../../common/ProgressBar";
+import { ProgressBar } from "@/components/common/ProgressBar";
 
 import { PAGES_CONFIG } from "@/configs/pages.config";
 import { getDaysUntilDue } from "@/lib/utils/date";
 import { taskDeleted } from "@/stores/task/store";
-import type { ITask } from "@/types/task.types";
+import type { Task } from "@/types/task.types";
 
 interface Props {
-  item: ITask;
+  item: Task;
 }
 
 export function TaskItem({ item }: Props) {

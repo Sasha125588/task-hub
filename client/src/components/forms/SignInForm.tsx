@@ -18,19 +18,19 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-import { cn } from "@/lib/utils/common";
 import { SocialLoginButtons } from "../common/SocialLoginButtons";
 import Link from "next/link";
-import { loginFormSchema } from "@/lib/schemas/sign-in";
+import { loginFormSchema } from "@/lib/schemas/signin";
 import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
 
 type SignInFormValues = z.infer<typeof loginFormSchema>;
 
-export function SignInForm({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
+export function SignInForm() {
   const { signIn, isLoading } = useAuth();
+
+  const router = useRouter();
+
   const form = useForm<SignInFormValues>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
@@ -39,21 +39,20 @@ export function SignInForm({
     },
   });
 
-  const onSubmit = async (values: SignInFormValues) => {
-    if (isLoading) return;
-
+  const onSubmit = async ({ email, password }: SignInFormValues) => {
     try {
       const loadingToast = toast.loading("Logging in...");
+
       const { isSignedInComplete } = await signIn({
-        email: values.email,
-        password: values.password,
+        email,
+        password,
       });
 
       if (isSignedInComplete) {
         toast.success("Successfully logged in!", {
           id: loadingToast,
         });
-        window.location.href = "/dashboard";
+        router.push("/dashboard");
       } else {
         toast.error(
           "Login failed. Please check your credentials and try again.",
@@ -61,39 +60,20 @@ export function SignInForm({
             id: loadingToast,
           }
         );
-        form.setValue("password", "");
       }
-    } catch (err) {
-      let errorMessage = "Failed to login. Please try again.";
-      if (err instanceof Error) {
-        errorMessage = err.message;
+    } catch (error) {
+      const errMsg =
+        error instanceof Error
+          ? error.message
+          : "Failed to login. Please try again.";
 
-        if (
-          err.message.includes("network") ||
-          err.message.includes("Network")
-        ) {
-          errorMessage =
-            "Network error. Please check your internet connection.";
-        }
-        if (err.message.includes("not confirmed")) {
-          errorMessage = "Please confirm your email before logging in.";
-        }
-      }
-
-      toast.error(errorMessage);
-      form.setValue("password", "");
+      toast.error(errMsg);
     }
   };
 
   return (
     <div className="flex min-h-screen items-center justify-center p-4">
-      <div
-        className={cn(
-          "flex w-full max-w-4xl flex-col items-center gap-6",
-          className
-        )}
-        {...props}
-      >
+      <div className="flex w-full max-w-4xl flex-col items-center gap-6">
         <Card className="w-full overflow-hidden p-0">
           <CardContent className="grid p-0 md:grid-cols-2">
             <Form {...form}>
