@@ -1,4 +1,13 @@
-import type { JWT } from "@aws-amplify/auth";
+import type { AuthUser, JWT } from "@aws-amplify/auth";
+
+export interface User {
+  cognitoInfo: AuthUser;
+  userInfo: {
+    id: string;
+    name: string;
+    email: string;
+  };
+}
 
 export interface SignInInput {
   email: string;
