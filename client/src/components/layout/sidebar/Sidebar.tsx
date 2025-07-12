@@ -17,7 +17,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader className="mb-0 pb-0">
         <Account />
       </SidebarHeader>
-      <SidebarContent className="gap-2">
+      <SidebarContent className="gap-2 overflow-hidden">
         {SIDEBAR_MENU_DATA.navMain.map((item) => (
           <SidebarItem key={item.title} item={item} />
         ))}

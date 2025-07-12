@@ -2,7 +2,7 @@ import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
-import type { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import { ScrollProgress } from "@/components/animate-ui/components/scroll-progress";
 import { Toaster } from "@/components/ui/sonner";
@@ -11,6 +11,7 @@ import { ThemeProvider } from "@/providers/theme-provider";
 
 import "./globals.css";
 import { PAGES_CONFIG } from "@/configs/pages.config";
+import { AuthLoader } from "@/components/layout/auth/AuthLoader";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,10 +24,6 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  icons: {
-    icon: "/images/favicon.ico",
-    shortcut: "/images/favicon.ico",
-  },
   title: {
     absolute: PAGES_CONFIG.SITE_NAME,
     template: `${PAGES_CONFIG.SITE_NAME} - %s`,
@@ -53,8 +50,10 @@ export default function RootLayout({ children }: Props) {
         >
           <ScrollProgress />
           <NuqsAdapter>
-            {children}
-            <Toaster />
+            <AuthLoader>
+              {children}
+              <Toaster />
+            </AuthLoader>
           </NuqsAdapter>
           <Analytics />
         </ThemeProvider>

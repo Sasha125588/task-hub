@@ -21,14 +21,14 @@ import { Input } from "@/components/ui/input";
 import { SocialLoginButtons } from "../common/SocialLoginButtons";
 import Link from "next/link";
 import { loginFormSchema } from "@/lib/schemas/signin";
-import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
+import { signIn } from "@/lib/better-auth/auth-client";
+import { useState } from "react";
 
 type SignInFormValues = z.infer<typeof loginFormSchema>;
 
 export function SignInForm() {
-  const { signIn, isLoading } = useAuth();
-
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const form = useForm<SignInFormValues>({
@@ -39,37 +39,36 @@ export function SignInForm() {
     },
   });
 
-  const onSubmit = async ({ email, password }: SignInFormValues) => {
-    try {
-      const loadingToast = toast.loading("Logging in...");
+  async function onSubmit({ email, password }: SignInFormValues) {
+    const loadingToast = toast.loading("Logging...");
 
-      const { isSignedIn } = await signIn({
-        email,
-        password,
-      });
-
-      if (isSignedIn) {
-        toast.success("Successfully logged in!", {
-          id: loadingToast,
-        });
-        router.push("/dashboard");
-      } else {
-        toast.error(
-          "Login failed. Please check your credentials and try again.",
-          {
+    await signIn.email({
+      email,
+      password,
+      fetchOptions: {
+        onRequest: () => {
+          setIsLoading(true);
+        },
+        onSuccess: () => {
+          toast.success("Successfully logged in!", {
             id: loadingToast,
-          }
-        );
-      }
-    } catch (error) {
-      const errMsg =
-        error instanceof Error
-          ? error.message
-          : "Failed to login. Please try again.";
-
-      toast.error(errMsg);
-    }
-  };
+          });
+          router.push("/dashboard");
+        },
+        onError: () => {
+          toast.error(
+            "Failed to login. Please check your credentials and try again.",
+            {
+              id: loadingToast,
+            }
+          );
+        },
+        onResponse: () => {
+          setIsLoading(false);
+        },
+      },
+    });
+  }
 
   return (
     <div className="flex min-h-screen items-center justify-center p-4">

@@ -21,12 +21,15 @@ import { Input } from "@/components/ui/input";
 import { SocialLoginButtons } from "@/components/common/SocialLoginButtons";
 
 import { signUpFormSchema } from "@/lib/schemas/signup";
-import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
+import { signUp } from "@/lib/better-auth/auth-client";
+import { useState } from "react";
 
 type SignUpFormValues = z.infer<typeof signUpFormSchema>;
 
 export function SignUpForm() {
-  const { signUp, isLoading } = useAuth();
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
   const form = useForm<SignUpFormValues>({
     resolver: zodResolver(signUpFormSchema),
     defaultValues: {
@@ -38,34 +41,32 @@ export function SignUpForm() {
   });
 
   async function onSubmit({ email, password, username }: SignUpFormValues) {
-    try {
-      const loadingToast = toast.loading("Creating your account...");
+    const loadingToast = toast.loading("Creating your account...");
 
-      const { isSignUp } = await signUp({
-        email,
-        password,
-        username,
-      });
-
-      if (isSignUp) {
-        toast.success(
-          "Account created! Please check your email for verification code.",
-          {
+    await signUp.email({
+      email,
+      password,
+      name: username,
+      fetchOptions: {
+        onRequest: () => {
+          setIsLoading(true);
+        },
+        onSuccess: () => {
+          toast.success("Account created successfully! Welcome to Task Hub!", {
             id: loadingToast,
-          }
-        );
-      } else {
-        toast.error("Failed to create account. Please try again.", {
-          id: loadingToast,
-        });
-      }
-    } catch (error) {
-      toast.error(
-        error instanceof Error
-          ? error.message
-          : "Failed to create account. Please try again."
-      );
-    }
+          });
+          router.push("/dashboard");
+        },
+        onError: () => {
+          toast.error("Failed to create account. Please try again.", {
+            id: loadingToast,
+          });
+        },
+        onResponse: () => {
+          setIsLoading(false);
+        },
+      },
+    });
   }
 
   return (
@@ -183,7 +184,7 @@ export function SignUpForm() {
                   <div className="text-center text-sm">
                     Already have an account?{" "}
                     <Link
-                      href="/login"
+                      href="/signin"
                       className="underline underline-offset-4"
                     >
                       Login

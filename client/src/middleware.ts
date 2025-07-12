@@ -1,40 +1,17 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-
-export function middleware(request: NextRequest) {
+import { NextRequest, NextResponse } from "next/server";
+import { getSessionCookie } from "better-auth/cookies";
+export async function middleware(request: NextRequest) {
+  const sessionCookie = getSessionCookie(request);
   const { pathname } = request.nextUrl;
-  const accessToken = request.cookies.get("accesToken")?.value;
-
-  if (pathname === "/confirm") {
-    const email = request.nextUrl.searchParams.get("email");
-    const password = request.nextUrl.searchParams.get("password");
-    const confirmToken = request.nextUrl.searchParams.get("token");
-
-    if (!email || !password || !confirmToken) {
-      return NextResponse.redirect(new URL("/signup", request.url));
-    }
-  }
-
-  if (
-    accessToken &&
-    (pathname.startsWith("/signin") || pathname.startsWith("/signup"))
-  ) {
+  if (sessionCookie && ["/signin", "/signup"].includes(pathname)) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
-
-  if (
-    !accessToken &&
-    (pathname.startsWith("/dashboard") || pathname.startsWith("/settings"))
-  ) {
+  if (!sessionCookie && pathname.startsWith("/dashboard")) {
     return NextResponse.redirect(new URL("/signin", request.url));
   }
-
-  if (pathname === "/")
-    return NextResponse.redirect(new URL("/signin", request.url));
-
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|images).*)"],
+  matcher: ["/dashboard", "/signin", "/signup"],
 };

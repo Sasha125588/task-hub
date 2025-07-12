@@ -28,24 +28,36 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
+import { signOut, useSession } from "@/lib/better-auth/auth-client";
 
 export function Account() {
+  const router = useRouter();
   const { isMobile } = useSidebar();
-  const { signOut, user, isLoading } = useAuth();
 
-  const handleSignOut = async () => {
-    try {
-      await signOut();
-      toast.success("Logged out successfully");
-    } catch (error) {
-      const errMsg =
-        error instanceof Error ? error.message : "Failed to log out";
-      toast.error(errMsg);
-    }
+  const { data: user, isPending } = useSession();
+  const userName = user?.user.name;
+  const userEmail = user?.user.email;
+
+  const handleSignOut = () => {
+    signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          toast.success("Logged out successfully");
+          router.push("/signin");
+        },
+        onError: () => {
+          toast.error("Failed to log out");
+        },
+      },
+    });
   };
 
-  if (isLoading) {
+  const handleConfirmEmail = (email: string) => {
+    console.log(email);
+  };
+
+  if (isPending) {
     return (
       <SidebarMenu>
         <SidebarHeader className="mb-0 pb-0">
@@ -67,11 +79,11 @@ export function Account() {
     );
   }
 
-  if (!user) {
+  if (!userName || !userEmail) {
     return null;
   }
 
-  const userInitials = user.userInfo.name
+  const userInitials = userName
     .split(" ")
     .map((n: string) => n[0])
     .join("")
@@ -84,9 +96,9 @@ export function Account() {
         <AvatarFallback>{userInitials}</AvatarFallback>
       </Avatar>
       <div className="grid flex-1 text-left text-sm leading-tight">
-        <span className="truncate font-medium">{user.userInfo.name}</span>
+        <span className="truncate font-medium">{userName}</span>
         <span className="truncate text-xs text-muted-foreground">
-          {user.userInfo.email}
+          {userEmail}
         </span>
       </div>
     </div>
@@ -119,9 +131,9 @@ export function Account() {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleConfirmEmail(userEmail)}>
                 <UserIcon className="mr-2 h-4 w-4" />
-                Refresh Profile
+                Confirm Email
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <Sparkles className="mr-2 h-4 w-4" />

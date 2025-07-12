@@ -18,9 +18,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { authAPI } from "@/services/api/auth.api";
 import { confirmSignUpSchema } from "@/lib/schemas/confirm-signup";
-import { useAuth } from "@/hooks/useAuth";
+import { useEffect } from "react";
 
 type ConfirmSignUpFormValues = z.infer<typeof confirmSignUpSchema>;
 
@@ -28,13 +27,13 @@ export function ConfirmSignUpForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const email = searchParams.get("email");
-  const password = searchParams.get("password");
+  const email = searchParams.get("email")!;
   const confirmationToken = searchParams.get("token");
 
-  const storedToken = sessionStorage.getItem("confirmationToken");
-
-  const { signIn, isLoading } = useAuth();
+  const storedToken =
+    typeof window !== "undefined"
+      ? sessionStorage.getItem("confirmationToken")
+      : null;
 
   const form = useForm<ConfirmSignUpFormValues>({
     resolver: zodResolver(confirmSignUpSchema),
@@ -43,66 +42,17 @@ export function ConfirmSignUpForm() {
     },
   });
 
-  if (!email || !password || !confirmationToken) {
-    toast.error("Invalid confirmation link. Please try signing up again.");
-    router.push("/signup");
-    return;
-  }
-
-  if (confirmationToken !== storedToken) {
-    toast.error("Invalid confirmation session. Please try signing up again.");
-    router.push("/signup");
-    return;
-  }
-
-  const onSubmit = async ({ code }: ConfirmSignUpFormValues) => {
-    try {
-      const loadingToast = toast.loading("Confirming email...");
-
-      const { isConfirmSignUp } = await authAPI.confirmSignUp({
-        email,
-        code,
-      });
-
-      if (isConfirmSignUp) {
-        toast.success("Email confirmed successfully!", {
-          id: loadingToast,
-        });
-
-        sessionStorage.removeItem("confirmationToken");
-
-        try {
-          const { isSignedIn } = await signIn({
-            email,
-            password,
-          });
-
-          if (isSignedIn) {
-            toast.success("Successfully logged in!");
-            router.push("/dashboard");
-          } else {
-            toast.error(
-              "Failed to sign in automatically. Please try logging in manually.",
-              {
-                id: loadingToast,
-              }
-            );
-          }
-        } catch (error) {
-          toast.error(
-            error instanceof Error
-              ? error.message
-              : "Failed to sign in automatically. Please try logging in manually."
-          );
-          router.push("/signin");
-        }
-      }
-    } catch (error) {
-      toast.error(
-        error instanceof Error ? error.message : "Failed to confirm email"
-      );
+  useEffect(() => {
+    if (!email || !confirmationToken) {
+      toast.error("Invalid confirmation link. Please try signing up again.");
+      router.push("/signup");
+      return;
     }
-  };
+  }, [email, confirmationToken, router, storedToken]);
+
+  function onSubmit({ code }: ConfirmSignUpFormValues) {
+    console.log(code);
+  }
 
   return (
     <div className="flex min-h-screen items-center justify-center p-4">
@@ -140,7 +90,6 @@ export function ConfirmSignUpForm() {
                         <FormControl>
                           <Input
                             {...field}
-                            disabled={isLoading}
                             placeholder="Enter the 6-digit code"
                             type="number"
                             inputMode="numeric"
@@ -159,8 +108,8 @@ export function ConfirmSignUpForm() {
                       </FormItem>
                     )}
                   />
-                  <Button type="submit" className="w-full" disabled={isLoading}>
-                    {isLoading ? "Confirming..." : "Confirm Email"}
+                  <Button type="submit" className="w-full">
+                    Confirm Email
                   </Button>
                   <div className="text-center text-sm">
                     Didn&apos;t receive the code?{" "}
