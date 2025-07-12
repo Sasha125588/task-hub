@@ -43,12 +43,12 @@ export function SignInForm() {
     try {
       const loadingToast = toast.loading("Logging in...");
 
-      const { isSignedInComplete } = await signIn({
+      const { isSignedIn } = await signIn({
         email,
         password,
       });
 
-      if (isSignedInComplete) {
+      if (isSignedIn) {
         toast.success("Successfully logged in!", {
           id: loadingToast,
         });

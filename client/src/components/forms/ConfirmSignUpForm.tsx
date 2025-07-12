@@ -59,12 +59,12 @@ export function ConfirmSignUpForm() {
     try {
       const loadingToast = toast.loading("Confirming email...");
 
-      const { isConfirmSignUpComplete } = await authAPI.confirmSignUp({
+      const { isConfirmSignUp } = await authAPI.confirmSignUp({
         email,
         code,
       });
 
-      if (isConfirmSignUpComplete) {
+      if (isConfirmSignUp) {
         toast.success("Email confirmed successfully!", {
           id: loadingToast,
         });
@@ -72,9 +72,12 @@ export function ConfirmSignUpForm() {
         sessionStorage.removeItem("confirmationToken");
 
         try {
-          const { isSignedInComplete } = await signIn({ email, password });
+          const { isSignedIn } = await signIn({
+            email,
+            password,
+          });
 
-          if (isSignedInComplete) {
+          if (isSignedIn) {
             toast.success("Successfully logged in!");
             router.push("/dashboard");
           } else {

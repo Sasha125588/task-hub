@@ -9,7 +9,6 @@ import type {
 import { createEffect, createEvent, createStore } from "effector";
 import { loadingReset, loadingUpdated } from "./isLoading";
 import { errorUpdated } from "./error";
-import { generateConfirmationToken } from "@/lib/utils/auth";
 import Cookies from "js-cookie";
 
 // STORES
@@ -72,7 +71,7 @@ signInFx.use(async ({ email, password }) => {
 
     const result = await authAPI.signIn({ email, password });
 
-    if (result.isSignedInComplete) {
+    if (result.isSignedIn) {
       Cookies.set("accesToken", result.accesToken as unknown as string, {
         path: "/",
       });
@@ -97,8 +96,8 @@ signUpFx.use(async ({ email, username, password }) => {
 
     const result = await authAPI.signUp({ email, password, username });
 
-    if (!result.isSignUpComplete) {
-      const confirmationToken = generateConfirmationToken();
+    if (!result.isSignUp) {
+      const confirmationToken = crypto.randomUUID();
       sessionStorage.setItem("confirmationToken", confirmationToken);
 
       const confirmUrl = `/confirm?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}&token=${encodeURIComponent(confirmationToken)}`;

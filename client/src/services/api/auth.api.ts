@@ -17,13 +17,14 @@ import type {
   SignUpOutput,
 } from "@/types/auth.types";
 
-import "../../configs/amplify.config";
+import "@/configs/amplify.config";
+
 import { handleAuthError } from "@/lib/utils/auth";
 
 export const authAPI = {
   async signIn({ email, password }: SignInInput): Promise<SignInOutput> {
     try {
-      const signInResult = await signIn({
+      const { isSignedIn } = await signIn({
         username: email,
         password,
       });
@@ -31,11 +32,7 @@ export const authAPI = {
       const session = await fetchAuthSession();
       const accesToken = session.tokens?.accessToken;
 
-      if (!signInResult) {
-        throw new Error("No response from sign in");
-      }
-
-      return { isSignedInComplete: signInResult.isSignedIn, accesToken };
+      return { isSignedIn, accesToken };
     } catch (error) {
       throw handleAuthError(error, "Sign in failed");
     }
@@ -64,7 +61,7 @@ export const authAPI = {
       }
 
       return {
-        isSignUpComplete: signUpResult.isSignUpComplete,
+        isSignUp: signUpResult.isSignUpComplete,
       };
     } catch (error) {
       throw handleAuthError(error, "Sign up failed");
@@ -92,7 +89,7 @@ export const authAPI = {
       if (!confirmSignUpResult) {
         throw new Error("No response from sign up");
       }
-      return { isConfirmSignUpComplete: confirmSignUpResult.isSignUpComplete };
+      return { isConfirmSignUp: confirmSignUpResult.isSignUpComplete };
     } catch (error) {
       throw handleAuthError(error, "Confirmation failed");
     }

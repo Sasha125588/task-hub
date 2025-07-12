@@ -15,7 +15,7 @@ export interface SignInInput {
 }
 
 export interface SignInOutput {
-  isSignedInComplete: boolean;
+  isSignedIn: boolean;
   accesToken?: JWT;
 }
 
@@ -26,7 +26,7 @@ export interface SignUpInput {
 }
 
 export interface SignUpOutput {
-  isSignUpComplete: boolean;
+  isSignUp: boolean;
 }
 
 export interface ConfirmSignUpInput {
@@ -35,5 +35,5 @@ export interface ConfirmSignUpInput {
 }
 
 export interface ConfirmSignUpOutput {
-  isConfirmSignUpComplete: boolean;
+  isConfirmSignUp: boolean;
 }

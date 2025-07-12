@@ -41,13 +41,13 @@ export function SignUpForm() {
     try {
       const loadingToast = toast.loading("Creating your account...");
 
-      const { isSignUpComplete } = await signUp({
+      const { isSignUp } = await signUp({
         email,
         password,
         username,
       });
 
-      if (isSignUpComplete) {
+      if (isSignUp) {
         toast.success(
           "Account created! Please check your email for verification code.",
           {

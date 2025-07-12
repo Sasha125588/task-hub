@@ -29,6 +29,9 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/signin", request.url));
   }
 
+  if (pathname === "/")
+    return NextResponse.redirect(new URL("/signin", request.url));
+
   return NextResponse.next();
 }
 

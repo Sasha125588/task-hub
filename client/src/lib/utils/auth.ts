@@ -1,5 +1,3 @@
-export const generateConfirmationToken = () => crypto.randomUUID();
-
 // https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_SignUp.html#API_SignUp_Errors
 export const handleAuthError = (error: unknown, defaultMessage: string) => {
   switch (error) {
