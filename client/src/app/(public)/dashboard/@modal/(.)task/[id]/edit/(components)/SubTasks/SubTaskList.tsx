@@ -6,20 +6,21 @@ import {
 	closestCenter,
 	useSensor,
 	useSensors
-} from "@dnd-kit/core"
+} from '@dnd-kit/core'
 import {
 	SortableContext,
 	arrayMove,
 	sortableKeyboardCoordinates,
 	verticalListSortingStrategy
-} from "@dnd-kit/sortable"
-import { useUnit } from "effector-react"
+} from '@dnd-kit/sortable'
+import { useUnit } from 'effector-react'
 
-import { MultiStepForm } from "@/components/ui/multi-step-form"
+import { MultiStepForm } from '@/components/ui/multi-step-form'
 
-import { SubTaskItem } from "./SubTaskItem"
-import { $getTaskByID, subTasksReorderer } from "@/stores/task/store"
-import type { subTask } from "@/types/task.types"
+import type { subTask } from '@/types/task.types'
+
+import { SubTaskItem } from './SubTaskItem'
+import { $getTaskByID, subTasksReorderer } from '@/stores/task/store'
 
 interface Props {
 	id: string
@@ -67,10 +68,13 @@ export function SubTaskList({ id }: Props) {
 				items={subTasks.map(item => item.id)}
 				strategy={verticalListSortingStrategy}
 			>
-				{subTasks?.map(item => {
+				{subTasks.map(item => {
 					return (
 						<div key={item.id}>
-							<SubTaskItem item={item} key={item.id} />
+							<SubTaskItem
+								item={item}
+								key={item.id}
+							/>
 						</div>
 					)
 				})}

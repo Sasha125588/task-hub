@@ -28,7 +28,7 @@ export const useTaskEditForm = (id: string) => {
 	const onSubmit = form.handleSubmit((values: TaskFormValues) => {
 		setLoading(true)
 		updateTask({ id, ...values })
-		toast('Task updated successfully', {
+		toast.success('Task updated successfully', {
 			description: `${format(new Date(), 'Pp')}`
 		})
 		setLoading(false)

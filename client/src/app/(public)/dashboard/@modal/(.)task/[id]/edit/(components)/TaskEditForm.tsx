@@ -2,7 +2,6 @@
 
 import { DatePicker } from '@/components/common/DatePicker'
 import { IconPicker } from '@/components/common/IconPicker'
-import { SubTaskList } from '@/components/pages/dashboard/last-tasks/sub-tasks/SubTaskList'
 import { Button } from '@/components/ui/button'
 import {
 	Form,
@@ -15,6 +14,8 @@ import {
 import { Input } from '@/components/ui/input'
 
 import { useTaskEditForm } from '../(hooks)/useTaskEditForm'
+
+import { SubTaskList } from '@/app/(public)/dashboard/@modal/(.)task/[id]/edit/(components)/SubTasks/SubTaskList'
 
 interface Props {
 	id: string
@@ -38,6 +39,7 @@ export function TaskEditForm({ id }: Props) {
 								<FormLabel>Title</FormLabel>
 								<FormControl>
 									<Input
+										disabled={state.loading}
 										placeholder='Task title'
 										aria-label='Task title'
 										{...field}

@@ -11,7 +11,7 @@ interface Props {
 	id: string
 }
 
-export function TaskModal({ id, children }: PropsWithChildren<Props>) {
+export function TaskEditModal({ id, children }: PropsWithChildren<Props>) {
 	const router = useRouter()
 
 	const closeModal = () => router.back()
