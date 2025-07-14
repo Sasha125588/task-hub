@@ -1,5 +1,28 @@
-import { SignInForm } from "@/components/forms/SignInForm";
+import Image from 'next/image'
+
+import { Card, CardContent } from '@/components/ui/card'
+
+import { SignInForm } from './(components)/signInForm'
 
 export default function SignInPage() {
-  return <SignInForm />;
+	return (
+		<div className='flex items-center justify-center p-4'>
+			<div className='flex w-full max-w-4xl flex-col items-center gap-6'>
+				<Card className='w-full overflow-hidden p-0'>
+					<CardContent className='grid p-0 md:grid-cols-2'>
+						<SignInForm />
+						<div className='relative hidden md:block'>
+							<Image
+								src='/images/login-image.webp'
+								width={500}
+								height={500}
+								alt='Image'
+								className='absolute inset-0 h-full w-full object-cover'
+							/>
+						</div>
+					</CardContent>
+				</Card>
+			</div>
+		</div>
+	)
 }

@@ -11,86 +11,86 @@ import {
 	Smartphone,
 	Square,
 	Users
-} from "lucide-react"
+} from 'lucide-react'
 
-import type { SidebarData } from "@/components/layout/sidebar/types"
+import type { SidebarData } from '@/components/layout/sidebar/types'
 
-import { PAGES_CONFIG } from "@/configs/pages.config"
+import { PAGES_CONFIG } from '@/configs/pages.config'
 
 export const SIDEBAR_MENU_DATA: SidebarData = {
 	navMain: [
 		{
-			title: "Main Menu",
+			title: 'Main Menu',
 			items: [
 				{
-					title: "Dashboard",
+					title: 'Dashboard',
 					url: PAGES_CONFIG.DASHBOARD_URL,
 					icon: <LayoutDashboard />
 				},
 				{
-					title: "Message",
+					title: 'Message',
 					url: PAGES_CONFIG.MESSAGE_URL,
 					icon: <MessageCircle />
 				},
 				{
-					title: "Insight",
+					title: 'Insight',
 					url: PAGES_CONFIG.INSIGHT_URL,
 					icon: <BarChart3 />
 				},
 				{
-					title: "Team",
+					title: 'Team',
 					url: PAGES_CONFIG.TEAM_URL,
 					icon: <Users />
 				},
 				{
-					title: "Schedule",
+					title: 'Schedule',
 					url: PAGES_CONFIG.SCHEDULE_URL,
 					icon: <Calendar />
 				},
 				{
-					title: "Report",
+					title: 'Report',
 					url: PAGES_CONFIG.REPORT_URL,
 					icon: <FileText />
 				},
 				{
-					title: "Settings",
+					title: 'Settings',
 					url: PAGES_CONFIG.SETTINGS_URL,
 					icon: <Settings />
 				}
 			]
 		},
 		{
-			title: "Projects",
+			title: 'Projects',
 			items: [
 				{
-					title: "Landing Page",
+					title: 'Landing Page',
 					icon: <Square />,
-					color: "text-purple-500",
-					url: "/projects/landing"
+					color: 'text-purple-500',
+					url: '/projects/landing'
 				},
 				{
-					title: "Mobile App",
+					title: 'Mobile App',
 					icon: <Smartphone />,
-					color: "text-pink-500",
-					url: "/projects/mobile"
+					color: 'text-pink-500',
+					url: '/projects/mobile'
 				},
 				{
-					title: "Dashboard",
+					title: 'Dashboard',
 					icon: <BarChart />,
-					color: "text-yellow-500",
-					url: "/projects/dashboard"
+					color: 'text-yellow-500',
+					url: '/projects/dashboard'
 				},
 				{
-					title: "Flyer",
+					title: 'Flyer',
 					icon: <FileImage />,
-					color: "text-orange-500",
-					url: "/projects/flyer"
+					color: 'text-orange-500',
+					url: '/projects/flyer'
 				},
 				{
-					title: "Branding",
+					title: 'Branding',
 					icon: <Palette />,
-					color: "text-teal-600",
-					url: "/projects/branding"
+					color: 'text-teal-600',
+					url: '/projects/branding'
 				}
 			]
 		}

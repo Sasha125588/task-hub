@@ -1,0 +1,62 @@
+'use client'
+
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/navigation'
+import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
+
+import { useSignInMutation } from '@/utils/api/hooks'
+
+import { loginFormSchema } from '../constants/signInSchema'
+
+import { getErrorMessage } from '@/lib/helpers/auth'
+
+interface SignInForm {
+	email: string
+	password: string
+}
+
+export const useSignInForm = () => {
+	const router = useRouter()
+	const signInMutation = useSignInMutation()!
+
+	const signInForm = useForm<SignInForm>({
+		resolver: zodResolver(loginFormSchema),
+		defaultValues: {
+			email: '',
+			password: ''
+		}
+	})
+
+	const onSubmit = signInForm.handleSubmit(async values => {
+		const loadingToast = toast.loading('Logging...')
+
+		const { error } = await signInMutation.mutateAsync({
+			email: values.email,
+			password: values.password
+		})
+
+		if (error?.code) {
+			const errMsg = getErrorMessage(error.code)
+			toast.error(`Failed to login. ${errMsg}.`, {
+				id: loadingToast
+			})
+			return
+		}
+
+		toast.success('Successfully logged in!', {
+			id: loadingToast
+		})
+		router.push('/dashboard')
+	})
+
+	const goToSignUp = () => router.push('/signup')
+
+	return {
+		state: {
+			loading: signInMutation.isPending
+		},
+		form: signInForm,
+		functions: { onSubmit, goToSignUp }
+	}
+}
