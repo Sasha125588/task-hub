@@ -27,7 +27,7 @@ interface Props {
 	item: Task
 }
 
-export function TaskItem({ item }: Props) {
+export function LastTasksItem({ item }: Props) {
 	const deleteTask = useUnit(taskDeleted)
 	const dueDate = getDaysUntilDue(item.dueDate)
 
@@ -47,7 +47,7 @@ export function TaskItem({ item }: Props) {
 							<IconDisplay iconName={item.iconName} />
 						</div>
 						<div className='@container w-[250px]'>
-							<h3 className='@[400px]:whitespace-normal @[600px]:truncate truncate text-sm font-medium'>
+							<h3 className='truncate text-sm font-medium @[400px]:whitespace-normal @[600px]:truncate'>
 								{item.title}
 							</h3>
 							<p className='text-muted-foreground text-xs'>
@@ -59,7 +59,7 @@ export function TaskItem({ item }: Props) {
 						{item.users.map((user, idx) => (
 							<Avatar
 								key={idx}
-								className='border-background border-1 size-9'
+								className='border-background size-9 border-1'
 							>
 								<AvatarImage src={user.src} />
 								<AvatarGroupTooltip>

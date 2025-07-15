@@ -1,7 +1,5 @@
 import type { StatisticsCard } from '@/types/statistics.card.types'
 
-import type { Chart } from './types'
-
 export const STATISTICS_CARDS: StatisticsCard[] = [
 	{
 		id: 'active-projects',
@@ -27,53 +25,4 @@ export const STATISTICS_CARDS: StatisticsCard[] = [
 		colorClass: 'bg-[#fbb6ce]',
 		darkColorClass: 'dark:bg-[#de5d8a]'
 	}
-]
-
-export const CHART_DATA: Chart[] = [
-	{ date: '2024-04-01', month: 'April', projects: 372 },
-	{ date: '2024-04-02', month: 'April', projects: 277 },
-	{ date: '2024-04-03', month: 'April', projects: 287 },
-	{ date: '2024-04-04', month: 'April', projects: 502 },
-	{ date: '2024-04-05', month: 'April', projects: 663 },
-	{ date: '2024-04-06', month: 'April', projects: 641 },
-	{ date: '2024-04-07', month: 'April', projects: 425 },
-	{ date: '2024-04-08', month: 'April', projects: 729 },
-	{ date: '2024-04-09', month: 'April', projects: 169 },
-	{ date: '2024-04-10', month: 'April', projects: 451 },
-	{ date: '2024-04-11', month: 'April', projects: 677 },
-	{ date: '2024-04-12', month: 'April', projects: 502 },
-	{ date: '2024-04-13', month: 'April', projects: 722 },
-	{ date: '2024-04-14', month: 'April', projects: 357 },
-	{ date: '2024-05-04', month: 'May', projects: 805 },
-	{ date: '2024-05-05', month: 'May', projects: 871 },
-	{ date: '2024-05-06', month: 'May', projects: 1018 },
-	{ date: '2024-05-07', month: 'May', projects: 688 },
-	{ date: '2024-05-08', month: 'May', projects: 359 },
-	{ date: '2024-05-09', month: 'May', projects: 407 },
-	{ date: '2024-05-10', month: 'May', projects: 623 },
-	{ date: '2024-05-11', month: 'May', projects: 605 },
-	{ date: '2024-05-12', month: 'May', projects: 437 },
-	{ date: '2024-05-13', month: 'May', projects: 357 },
-	{ date: '2024-05-14', month: 'May', projects: 938 },
-	{ date: '2024-05-15', month: 'May', projects: 853 },
-	{ date: '2024-05-16', month: 'May', projects: 738 },
-	{ date: '2024-05-17', month: 'May', projects: 919 },
-	{ date: '2024-05-18', month: 'May', projects: 665 },
-	{ date: '2024-05-19', month: 'May', projects: 415 },
-	{ date: '2024-05-20', month: 'May', projects: 407 },
-	{ date: '2024-05-21', month: 'May', projects: 222 },
-	{ date: '2024-05-22', month: 'May', projects: 201 },
-	{ date: '2024-05-23', month: 'May', projects: 542 },
-	{ date: '2024-06-19', month: 'June', projects: 631 },
-	{ date: '2024-06-20', month: 'June', projects: 858 },
-	{ date: '2024-06-21', month: 'June', projects: 379 },
-	{ date: '2024-06-22', month: 'June', projects: 587 },
-	{ date: '2024-06-23', month: 'June', projects: 1010 },
-	{ date: '2024-06-24', month: 'June', projects: 312 },
-	{ date: '2024-06-25', month: 'June', projects: 331 },
-	{ date: '2024-06-26', month: 'June', projects: 814 },
-	{ date: '2024-06-27', month: 'June', projects: 938 },
-	{ date: '2024-06-28', month: 'June', projects: 349 },
-	{ date: '2024-06-29', month: 'June', projects: 263 },
-	{ date: '2024-06-30', month: 'June', projects: 846 }
 ]

@@ -4,12 +4,12 @@ import { useUnit } from 'effector-react'
 
 import { Card } from '@/components/ui/card'
 
-import { TimelineTasks } from './components/TimelineTasks'
-import { TodayTasksHeader } from './components/TodayTasksHeader'
-import { getCurrentTimePosition } from './helpers'
+import { TodayTasksHeader } from './components/TodayTasksHeader/TodayTasksHeader'
+import { TodayTasksTimeline } from './components/TodayTasksTimeline/TodayTasksTimeline'
+import { getCurrentTimePosition } from './components/TodayTasksTimeline/helpers'
 import { $tasks } from '@/stores/task/store'
 
-export function TodayTasksTimeline() {
+export function TodayTasks() {
 	const tasks = useUnit($tasks)
 	const todayTasks = tasks.filter(
 		task =>
@@ -23,7 +23,7 @@ export function TodayTasksTimeline() {
 	return (
 		<Card className='p-6'>
 			<TodayTasksHeader tasks={todayTasks} />
-			<TimelineTasks
+			<TodayTasksTimeline
 				tasks={todayTasks}
 				currentTimePosition={currentTimePosition}
 			/>

@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 import { Card, CardContent } from '@/components/ui/card'
 
-import { SignInForm } from './(components)/signInForm'
+import { SignInForm } from './(components)/SignInForm/SignInForm'
 
 export default function SignInPage() {
 	return (

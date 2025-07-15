@@ -5,9 +5,8 @@ import { IconDisplay } from '@/components/common/IconPicker'
 
 import type { Task } from '@/types/task.types'
 
-import { timeSlots } from '../constants/data'
-import { getTaskWidth, getTimePosition } from '../helpers'
-
+import { timeSlots } from './constants/data'
+import { getTaskWidth, getTimePosition } from './helpers'
 import { PAGES_CONFIG } from '@/configs/pages.config'
 
 interface Props {
@@ -15,7 +14,7 @@ interface Props {
 	currentTimePosition: number
 }
 
-export function TimelineTasks({ tasks, currentTimePosition }: Props) {
+export function TodayTasksTimeline({ tasks, currentTimePosition }: Props) {
 	const isWithinWorkHours =
 		currentTimePosition >= 0 && currentTimePosition <= 100
 

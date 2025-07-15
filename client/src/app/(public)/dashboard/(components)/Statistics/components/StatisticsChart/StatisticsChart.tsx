@@ -23,9 +23,9 @@ import {
 	SelectValue
 } from '@/components/ui/select'
 
-import { CHART_DATA } from '../constants/data'
+import { CHART_DATA } from './constants/data'
 
-export function ProjectsStatisticChart() {
+export function StatisticsChart() {
 	const [timeRange, setTimeRange] = useState('7d')
 
 	const filteredData = CHART_DATA.filter(item => {

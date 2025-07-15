@@ -13,9 +13,8 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 
-import { useTaskEditForm } from '../(hooks)/useTaskEditForm'
-
-import { SubTaskList } from '@/app/(public)/dashboard/@modal/(.)task/[id]/edit/(components)/SubTasks/SubTaskList'
+import { SubTasks } from './components/SubTasks/SubTasks'
+import { useTaskEditForm } from './hooks/useTaskEditForm'
 
 interface Props {
 	id: string
@@ -97,7 +96,7 @@ export function TaskEditForm({ id }: Props) {
 							<FormItem>
 								<FormLabel className='pb-3.5'></FormLabel>
 								<FormControl>
-									<SubTaskList id={id} />
+									<SubTasks id={id} />
 								</FormControl>
 								<FormMessage />
 							</FormItem>

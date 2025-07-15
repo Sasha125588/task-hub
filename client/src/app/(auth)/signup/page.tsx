@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 import { Card, CardContent } from '@/components/ui/card'
 
-import { SignUpForm } from './(components)/signUpForm'
+import { SignUpForm } from './(components)/SignUpForm/SignUpForm'
 
 export default function SignUpPage() {
 	return (

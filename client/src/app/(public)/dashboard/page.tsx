@@ -2,7 +2,7 @@ import { Suspense } from 'react'
 
 import { LastTasks } from './(components)/LastTasks/LastTasks'
 import { Statistic } from '@/app/(public)/dashboard/(components)/Statistics/Statistic'
-import { TodayTasksTimeline } from '@/app/(public)/dashboard/(components)/TodayTasksTimeline/TodayTasksTimeline'
+import { TodayTasks } from '@/app/(public)/dashboard/(components)/TodayTasks/TodayTasks'
 
 export default function DashboardPage() {
 	return (
@@ -10,7 +10,7 @@ export default function DashboardPage() {
 			<div className='flex w-full flex-col gap-7'>
 				<Statistic />
 				<LastTasks />
-				<TodayTasksTimeline />
+				<TodayTasks />
 			</div>
 		</Suspense>
 	)

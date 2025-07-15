@@ -19,14 +19,14 @@ import { MultiStepForm } from '@/components/ui/multi-step-form'
 
 import type { subTask } from '@/types/task.types'
 
-import { SubTaskItem } from './SubTaskItem'
+import { SubTaskItem } from './components/SubTaskItem/SubTaskItem'
 import { $getTaskByID, subTasksReorderer } from '@/stores/task/store'
 
 interface Props {
 	id: string
 }
 
-export function SubTaskList({ id }: Props) {
+export function SubTasks({ id }: Props) {
 	const getTaskByID = useUnit($getTaskByID)
 	const reorderSubTasks = useUnit(subTasksReorderer)
 	const task = getTaskByID(id)!

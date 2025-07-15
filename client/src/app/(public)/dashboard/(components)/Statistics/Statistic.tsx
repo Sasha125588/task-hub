@@ -7,7 +7,7 @@ import { type Swapy, createSwapy } from 'swapy'
 
 import { Card, CardContent } from '@/components/ui/card'
 
-import { ProjectsStatisticChart } from './components/ProjectsStatisticChart'
+import { StatisticsChart } from './components/StatisticsChart/StatisticsChart'
 import { STATISTICS_CARDS } from './constants/data'
 
 export function Statistic() {
@@ -79,7 +79,7 @@ export function Statistic() {
 					</div>
 				</div>
 				<div className='h-full flex-1'>
-					<ProjectsStatisticChart />
+					<StatisticsChart />
 				</div>
 			</div>
 		</div>

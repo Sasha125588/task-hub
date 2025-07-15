@@ -10,8 +10,7 @@ import { TabsList, TabsTrigger } from '@/components/animate-ui/radix/tabs'
 
 import type { TaskStatuses } from '@/types/task.types'
 
-import { TABS } from '../constants/data'
-
+import { TABS } from './constants/data'
 import { TASK_CONFIG } from '@/configs/task.config'
 import {
 	$numTasksByStatus,
@@ -23,7 +22,7 @@ import {
 const FRONT_TEXT = TASK_CONFIG.CHANGE_SORT_TYPE_BUTTON_TEXT.frontText
 const BACK_TEXT = TASK_CONFIG.CHANGE_SORT_TYPE_BUTTON_TEXT.backText
 
-export function TaskListHeader() {
+export function LastTasksHeader() {
 	const statusType = useUnit($statusType)
 	const sortType = useUnit($sortType)
 	const numOfTasksByStatus = useUnit($numTasksByStatus)

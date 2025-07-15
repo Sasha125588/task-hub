@@ -8,7 +8,7 @@ import type {
 	subTask
 } from '@/types/task.types'
 
-import { TASKS } from '@/app/(public)/dashboard/(components)/LastTasks/constants/data'
+import { TASKS } from '@/app/(public)/dashboard/(components)/LastTasks/components/LastTasksContent/constants/data'
 import { TASK_CONFIG } from '@/configs/task.config'
 
 const SORT_TYPE = TASK_CONFIG.STORAGE_KEYS.SORT_TYPE

@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
-import { taskEditFormSchema } from '../(constants)/taskEditFormSchema'
+import { taskEditFormSchema } from '../constants/taskEditFormSchema'
 
 import { $getTaskByID, taskUpdated as updateTask } from '@/stores/task/store'
 

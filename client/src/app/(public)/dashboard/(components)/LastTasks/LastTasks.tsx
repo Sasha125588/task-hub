@@ -11,8 +11,8 @@ import {
 	type TaskStatuses
 } from '@/types/task.types'
 
-import { TaskListContent } from './components/TaskListContent'
-import { TaskListHeader } from './components/TaskListHeader'
+import { LastTasksContent } from './components/LastTasksContent/LastTasksContent'
+import { LastTasksHeader } from './components/LastTasksHeader/LastTasksHeader'
 import {
 	$statusType,
 	statusTypeUpdated as updateStatusType
@@ -38,8 +38,8 @@ export function LastTasks() {
 			dir='rtl'
 			onValueChange={changeStatusType}
 		>
-			<TaskListHeader />
-			<TaskListContent />
+			<LastTasksHeader />
+			<LastTasksContent />
 		</Tabs>
 	)
 }

@@ -5,7 +5,8 @@ import { useMemo } from 'react'
 
 import { TabsContent } from '@/components/animate-ui/radix/tabs'
 
-import { TaskItem } from './TaskItem'
+import { LastTasksItem } from '../LastTasksItem/LastTasksItem'
+
 import { TASK_CONFIG } from '@/configs/task.config'
 import {
 	$filteredTasks,
@@ -15,7 +16,7 @@ import {
 
 const DISPLAYED_TASKS_LIMIT = TASK_CONFIG.DISPLAYED_TASKS_LIMIT
 
-export function TaskListContent() {
+export function LastTasksContent() {
 	const [isShowAll, setIsShowAll] = useQueryState('show-all', parseAsBoolean)
 
 	const tasks = useUnit($filteredTasks)
@@ -53,7 +54,7 @@ export function TaskListContent() {
 								layout: { duration: 0.3 }
 							}}
 						>
-							<TaskItem item={task} />
+							<LastTasksItem item={task} />
 						</motion.div>
 					))}
 				</AnimatePresence>
