@@ -18,6 +18,12 @@ import {
 
 const DISPLAYED_TASKS_LIMIT = TASK_CONFIG.DISPLAYED_TASKS_LIMIT
 
+const ANIMATION_VARIANTS = {
+	exit: { opacity: 0, scale: 0.9 },
+	whileHover: { y: -2 },
+	transition: { duration: 0.2, layout: { duration: 0.3 } }
+} as const
+
 export function LastTasksContent() {
 	const i18n = useI18n()
 
@@ -47,16 +53,8 @@ export function LastTasksContent() {
 					{displayedTasks.map(task => (
 						<motion.div
 							key={task.id}
-							exit={{
-								opacity: 0,
-								scale: 0.9
-							}}
 							layout
-							whileHover={{ y: -2 }}
-							transition={{
-								duration: 0.2,
-								layout: { duration: 0.3 }
-							}}
+							{...ANIMATION_VARIANTS}
 						>
 							<LastTasksItem item={task} />
 						</motion.div>

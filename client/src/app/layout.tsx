@@ -1,11 +1,12 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
+import { cookies } from 'next/headers'
 import { type ReactNode } from 'react'
 
 import './globals.css'
 import { Providers } from './providers'
 import { PAGES_CONFIG } from '@/configs/pages.config'
-import { getMessagesByLocale } from '@/lib/helpers/getMessageByLocale'
+import { getMessagesByLocale } from '@/lib/helpers/i18n/getMessageByLocale'
 
 const geistSans = Geist({
 	variable: '--font-geist-sans',
@@ -29,12 +30,13 @@ interface Props {
 	children: ReactNode
 }
 
-export default function RootLayout({ children }: Props) {
-	const locale = 'ru'
+export default async function RootLayout({ children }: Props) {
+	const cookieStore = await cookies()
+	const locale = cookieStore.get('locale')?.value ?? 'ru'
 	const messages = getMessagesByLocale(locale)
 	return (
 		<html
-			lang='en'
+			lang={locale}
 			suppressHydrationWarning
 		>
 			<body

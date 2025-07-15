@@ -113,7 +113,7 @@ export function SignInForm() {
 					</div>
 					<SocialLoginButtons />
 					<div className='text-center text-sm'>
-						{i18n.formatMessage({ id: 'auth.form.dontHaveAccount' })}
+						{i18n.formatMessage({ id: 'auth.form.dontHaveAccount' })}{' '}
 						<Button
 							type='button'
 							variant='link'

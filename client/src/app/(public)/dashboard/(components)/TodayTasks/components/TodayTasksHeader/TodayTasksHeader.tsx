@@ -6,19 +6,33 @@ import { Avatar, AvatarImage } from '@/components/ui/avatar'
 
 import type { Task } from '@/types/task.types'
 
+import { useI18n } from '@/utils/providers'
+
 interface Props {
 	tasks: Task[]
 }
 
 export function TodayTasksHeader({ tasks }: Props) {
+	const i18n = useI18n()
 	return (
 		<div className='flex items-center justify-between'>
 			<div>
-				<h2 className='mb-1 text-2xl font-bold'>Today&apos;s Tasks</h2>
+				<h2 className='mb-1 text-2xl font-bold'>
+					{i18n.formatMessage({ id: 'dashboard.todayTasks.title' })}
+				</h2>
 				<p className='text-muted-foreground text-sm'>
 					{tasks.length
-						? `${tasks.length} task${tasks.length === 1 ? '' : 's'} scheduled for today`
-						: 'No tasks scheduled for today'}
+						? i18n.formatMessage(
+								{
+									id: 'dashboard.todayTasks.tasksScheduled'
+								},
+								{
+									count: tasks.length
+								}
+							)
+						: i18n.formatMessage({
+								id: 'dashboard.todayTasks.noTasksScheduled'
+							})}
 				</p>
 			</div>
 			<AvatarGroup className='-space-x-3'>

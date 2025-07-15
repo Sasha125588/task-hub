@@ -9,6 +9,8 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
+import { useI18n } from '@/utils/providers'
+
 import { taskEditFormSchema } from '../constants/taskEditFormSchema'
 
 import { $getTaskByID, taskUpdated as updateTask } from '@/stores/task/store'
@@ -16,6 +18,7 @@ import { $getTaskByID, taskUpdated as updateTask } from '@/stores/task/store'
 type TaskFormValues = z.infer<typeof taskEditFormSchema>
 
 export const useTaskEditForm = (id: string) => {
+	const i18n = useI18n()
 	const [loading, setLoading] = useState(false)
 	const router = useRouter()
 	const task = useUnit($getTaskByID)(id)
@@ -28,7 +31,7 @@ export const useTaskEditForm = (id: string) => {
 	const onSubmit = form.handleSubmit((values: TaskFormValues) => {
 		setLoading(true)
 		updateTask({ id, ...values })
-		toast.success('Task updated successfully', {
+		toast.success(i18n.formatMessage({ id: 'toast.taskUpdated' }), {
 			description: `${format(new Date(), 'Pp')}`
 		})
 		setLoading(false)

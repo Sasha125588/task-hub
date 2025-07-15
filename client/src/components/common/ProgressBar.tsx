@@ -1,6 +1,8 @@
 import { SquareCheck } from 'lucide-react'
 import { useMemo } from 'react'
 
+import { useI18n } from '@/utils/providers'
+
 import { cn } from '@/lib/helpers/common'
 
 interface Props {
@@ -8,10 +10,12 @@ interface Props {
 }
 
 export function ProgressBar({ progress }: Props) {
+	const i18n = useI18n()
 	const clamped = Math.min(100, Math.max(0, progress))
 
 	const progressText = useMemo(() => {
-		if (clamped === 0) return <>Not Started</>
+		if (clamped === 0)
+			return <>{i18n.formatMessage({ id: 'progressBar.notStarted' })}</>
 		if (clamped <= 10) return <></>
 		if (clamped >= 100)
 			return (
@@ -20,7 +24,7 @@ export function ProgressBar({ progress }: Props) {
 						size={20}
 						className='mr-1'
 					/>
-					Done
+					{i18n.formatMessage({ id: 'progressBar.done' })}
 				</>
 			)
 

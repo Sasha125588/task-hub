@@ -1,4 +1,4 @@
-import defaultMessages from '../../../locales/en.json' assert { type: 'json' };
+import defaultMessages from '../../../../locales/en.json' assert { type: 'json' };
 
 export type Messages = Record<LocaleMessageId, string>;
 
@@ -6,7 +6,7 @@ export const getMessagesByLocale = (locale: string) => {
   try {
      
     // eslint-disable-next-line @typescript-eslint/no-require-imports
-    return require(`../../../locales/${locale}.json`) as Messages;
+    return require(`../../../../locales/${locale}.json`) as Messages;
   } catch (error: unknown) {
     console.error('Error loading messages for locale', locale, error);
 

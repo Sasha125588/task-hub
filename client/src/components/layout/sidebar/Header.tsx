@@ -6,9 +6,13 @@ import { SidebarTrigger } from '@/components/animate-ui/radix/sidebar'
 import { Separator } from '@/components/ui/separator'
 import { ModeToggle } from '@/components/ui/toggle-theme'
 
+import { useI18n } from '@/utils/providers'
+
+import { LanguageSwitcher } from './LanguageSwitcher/LanguageSwitcher'
 import { SearchForm } from './Search'
 
 export function Header() {
+	const i18n = useI18n()
 	const pathname = usePathname()
 
 	const pageName =
@@ -23,11 +27,12 @@ export function Header() {
 					orientation='vertical'
 					className='mr-2 data-[orientation=vertical]:h-4'
 				/>
-				{pageName}
+				{i18n.formatMessage({ id: `pages.${pageName}` })}
 			</div>
 			<div className='flex items-center gap-3'>
 				<SearchForm />
 				<ModeToggle />
+				<LanguageSwitcher />
 			</div>
 		</header>
 	)

@@ -150,7 +150,7 @@ export function SignUpForm() {
 					</div>
 					<SocialLoginButtons />
 					<div className='text-center text-sm'>
-						{i18n.formatMessage({ id: 'auth.form.alreadyHaveAccount' })}
+						{i18n.formatMessage({ id: 'auth.form.alreadyHaveAccount' })}{' '}
 						<Button
 							type='button'
 							variant='link'

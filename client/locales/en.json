@@ -49,6 +49,7 @@
 	"toast.failedLogout": "Failed to log out",
 	"toast.userEmailNotFound": "User email not found",
 	"toast.verificationEmailSent": "Verification email sent",
+	"toast.taskUpdated": "Task updated successfully",
 
 	"sidebar.account": "Account",
 	"sidebar.account.confirmEmail": "Confirm Email",
@@ -86,7 +87,7 @@
 	"auth.form.forgotPassword": "Forgot your password?",
 	"auth.form.passwordRequirements": "Password must be at least 8 characters and contain uppercase, lowercase, and numbers",
 
-	"auth.agreement": "By clicking continue, you agree to our ",
+	"auth.agreement": "By clicking continue, you agree to our {terms} and {privacy}.",
 	"auth.terms": "Terms of Service",
 	"auth.privacy": "Privacy Policy",
 
@@ -123,5 +124,20 @@
 	"last-tasks.due": "Due",
 	"last-tasks.days": "days",
 
-	"task-edit.title": "Edit Task"
+	"task-edit.title": "Edit Task",
+
+	"dashboard.todayTasks.title": "Today's Tasks",
+	"dashboard.todayTasks.noTasksScheduled": "No tasks scheduled for today",
+	"dashboard.todayTasks.tasksScheduled": "{count, plural, one {# task scheduled for today} few {# tasks scheduled for today} many {# tasks scheduled for today} other {# tasks scheduled for today}}",
+
+	"toggleTheme.label": "Theme",
+	"toggleTheme.light": "Light",
+	"toggleTheme.dark": "Dark",
+	"toggleTheme.system": "System",
+
+	"progressBar.notStarted": "Not Started",
+	"progressBar.done": "Done",
+
+	"pages.Dashboard": "Dashboard",
+	"pages.Settings": "Settings"
 }

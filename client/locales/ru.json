@@ -20,7 +20,7 @@
 	"form.enterTaskTitle": "Введите название задачи",
 	"form.selectStatus": "Выберите статус",
 
-	"field.email.label": "Email",
+	"field.email.label": "Почта",
 	"field.email.placeholder": "example@example.com",
 	"field.password.label": "Пароль",
 	"field.password.placeholder": "********",
@@ -49,6 +49,7 @@
 	"toast.failedLogout": "Не удалось выйти",
 	"toast.userEmailNotFound": "Email пользователя не найден",
 	"toast.verificationEmailSent": "Письмо для подтверждения отправлено",
+	"toast.taskUpdated": "Задача обновлена успешно",
 
 	"sidebar.account": "Аккаунт",
 	"sidebar.account.confirmEmail": "Подтвердить Email",
@@ -86,7 +87,7 @@
 	"auth.form.forgotPassword": "Забыли пароль?",
 	"auth.form.passwordRequirements": "Пароль должен содержать минимум 8 символов, включая заглавные, строчные буквы и цифры",
 
-	"auth.agreement": "Нажимая продолжить, вы соглашаетесь с ",
+	"auth.agreement": "Нажимая продолжить, вы соглашаетесь с {terms} и {privacy}.",
 	"auth.terms": "Условиями использования",
 	"auth.privacy": "Политикой конфиденциальности",
 
@@ -123,5 +124,20 @@
 	"last-tasks.due": "Срок",
 	"last-tasks.days": "дней",
 
-	"task-edit.title": "Редактировать задачу"
+	"task-edit.title": "Редактировать задачу",
+
+	"dashboard.todayTasks.title": "Задачи на сегодня",
+	"dashboard.todayTasks.tasksScheduled": "{count, plural, one {# задача запланирована на сегодня} few {# задачи запланированы на сегодня} many {# задач запланировано на сегодня} other {# задач запланировано на сегодня}}",
+	"dashboard.todayTasks.noTasksScheduled": "Задач на сегодня не запланировано",
+
+	"toggleTheme.label": "Тема",
+	"toggleTheme.light": "Светлая",
+	"toggleTheme.dark": "Тёмная",
+	"toggleTheme.system": "Системная",
+
+	"progressBar.notStarted": "Не начато",
+	"progressBar.done": "Завершено",
+
+	"pages.Dashboard": "Дашборд",
+	"pages.Settings": "Настройки"
 }

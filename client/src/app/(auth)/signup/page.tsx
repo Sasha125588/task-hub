@@ -28,10 +28,16 @@ export default function SignUpPage() {
 						</div>
 					</CardContent>
 				</Card>
-				<div className='text-muted-foreground bg-accent *:[a]:hover:text-primary w-1/2 rounded-lg p-4 text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4'>
-					{i18n.formatMessage({ id: 'auth.agreement' })}
-					<a href='#'>{i18n.formatMessage({ id: 'auth.terms' })}</a> and{' '}
-					<a href='#'>{i18n.formatMessage({ id: 'auth.privacy' })}</a>.
+				<div className='text-muted-foreground bg-accent *:[a]:hover:text-primary w-[75%] rounded-lg p-4 text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4'>
+					{i18n.formatMessage(
+						{ id: 'auth.agreement' },
+						{
+							terms: <a href='#'>{i18n.formatMessage({ id: 'auth.terms' })}</a>,
+							privacy: (
+								<a href='#'>{i18n.formatMessage({ id: 'auth.privacy' })}</a>
+							)
+						}
+					)}
 				</div>
 			</div>
 		</div>

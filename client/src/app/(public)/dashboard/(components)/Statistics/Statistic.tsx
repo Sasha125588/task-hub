@@ -36,58 +36,50 @@ export function Statistic() {
 	}, [])
 
 	return (
-		<div>
-			<div className='flex h-[450px] gap-5'>
-				<div className='h-full w-70'>
+		<div className='flex h-[450px] gap-5'>
+			<div
+				ref={containerRef}
+				className='flex h-full flex-col gap-5'
+			>
+				{STATISTICS_CARDS.map(card => (
 					<div
-						ref={containerRef}
-						className='flex h-full flex-col gap-5'
+						data-swapy-slot={card.id}
+						key={card.id}
+						className='flex-1'
 					>
-						{STATISTICS_CARDS.map(card => (
-							<div
-								data-swapy-slot={card.id}
-								key={card.id}
-								className='flex-1'
+						<motion.div
+							className='h-full'
+							data-swapy-item={card.id}
+							whileTap={{ scale: 0.95 }}
+						>
+							<Card
+								className={`border-border h-full w-full max-w-sm cursor-pointer border shadow ${card.colorClass} ${card.darkColorClass}`}
 							>
-								<div
-									className='h-full'
-									data-swapy-item={card.id}
-								>
-									<motion.div
-										className='h-full'
-										whileTap={{ scale: 0.95 }}
-									>
-										<Card
-											className={`border-border h-full w-full max-w-sm cursor-pointer border shadow ${card.colorClass} ${card.darkColorClass}`}
-										>
-											<CardContent className='cards-center flex justify-between'>
-												<div>
-													<h1 className='scroll-m-20 text-4xl font-medium tracking-tight text-balance'>
-														{card.title}
-													</h1>
-													<p className='leading-7 font-medium'>
-														{i18n.formatMessage({
-															id: `statistics.desc.${card.desc}`
-														})}
-													</p>
-												</div>
-												<Image
-													src={card.imgSrc}
-													alt={card.title}
-													width={80}
-													height={80}
-												/>
-											</CardContent>
-										</Card>
-									</motion.div>
-								</div>
-							</div>
-						))}
+								<CardContent className='flex justify-between'>
+									<div className='flex flex-col gap-1'>
+										<h1 className='scroll-m-20 text-4xl font-medium tracking-tight text-balance'>
+											{card.title}
+										</h1>
+										<p className='leading-7 font-medium'>
+											{i18n.formatMessage({
+												id: `statistics.desc.${card.desc}`
+											})}
+										</p>
+									</div>
+									<Image
+										src={card.imgSrc}
+										alt={card.title}
+										width={80}
+										height={80}
+									/>
+								</CardContent>
+							</Card>
+						</motion.div>
 					</div>
-				</div>
-				<div className='h-full flex-1'>
-					<StatisticsChart />
-				</div>
+				))}
+			</div>
+			<div className='h-full flex-1'>
+				<StatisticsChart />
 			</div>
 		</div>
 	)
