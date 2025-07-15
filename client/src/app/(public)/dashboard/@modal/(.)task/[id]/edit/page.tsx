@@ -1,5 +1,5 @@
-import { TaskEditForm } from './components/TaskEditForm/TaskEditForm'
-import { TaskEditModal } from './components/TaskEditModal/TaskEditModal'
+import { TaskEditForm } from './(components)/TaskEditForm/TaskEditForm'
+import { TaskEditModal } from './(components)/TaskEditModal/TaskEditModal'
 
 interface Props {
 	params: Promise<{ id: string }>

@@ -10,8 +10,9 @@ import { TabsList, TabsTrigger } from '@/components/animate-ui/radix/tabs'
 
 import type { TaskStatuses } from '@/types/task.types'
 
+import { useI18n } from '@/utils/providers'
+
 import { TABS } from './constants/data'
-import { TASK_CONFIG } from '@/configs/task.config'
 import {
 	$numTasksByStatus,
 	$sortType,
@@ -19,10 +20,9 @@ import {
 	sortTypeUpdated as updateSortType
 } from '@/stores/task/store'
 
-const FRONT_TEXT = TASK_CONFIG.CHANGE_SORT_TYPE_BUTTON_TEXT.frontText
-const BACK_TEXT = TASK_CONFIG.CHANGE_SORT_TYPE_BUTTON_TEXT.backText
-
 export function LastTasksHeader() {
+	const i18n = useI18n()
+
 	const statusType = useUnit($statusType)
 	const sortType = useUnit($sortType)
 	const numOfTasksByStatus = useUnit($numTasksByStatus)
@@ -42,23 +42,23 @@ export function LastTasksHeader() {
 								key={tab.value}
 								value={tab.value}
 							>
-								{tab.title}
+								{i18n.formatMessage({ id: `last-tasks.status.${tab.value}` })}
 							</TabsTrigger>
 						)
 					})}
 				</TabsList>
 				<ChangeSortTypeButton
-					frontText={FRONT_TEXT}
-					backText={BACK_TEXT}
+					frontText={i18n.formatMessage({ id: 'last-tasks.sort.desc' })}
+					backText={i18n.formatMessage({ id: 'last-tasks.sort.asc' })}
 					flipped={sortType == 'asc'}
 					onClick={changeSortType}
-					className='rounded-lg shadow'
+					className='rounded-lg px-4 shadow'
 				/>
 			</div>
 			<h4 className='font-geist-sans text-xl font-semibold tracking-tight'>
 				<HoverCard>
 					<HoverCardTrigger className='cursor-pointer scroll-m-20 pr-1'>
-						Last Tasks
+						{i18n.formatMessage({ id: 'last-tasks.title' })}
 					</HoverCardTrigger>
 					<HoverCardContent>
 						{Object.keys(numOfTasksByStatus).map(key => {
@@ -68,7 +68,11 @@ export function LastTasksHeader() {
 									key={key}
 									className='flex gap-2'
 								>
-									<p>{validKey}</p>
+									<p>
+										{i18n.formatMessage({
+											id: `last-tasks.status.${validKey}`
+										})}
+									</p>
 									<p>{numOfTasksByStatus[validKey]}</p>
 								</div>
 							)

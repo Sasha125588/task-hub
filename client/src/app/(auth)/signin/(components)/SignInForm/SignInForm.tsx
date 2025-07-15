@@ -12,10 +12,13 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 
+import { useI18n } from '@/utils/providers'
+
 import { useSignInForm } from './hooks/useSignInForm'
 
 export function SignInForm() {
 	const { form, functions, state } = useSignInForm()
+	const i18n = useI18n()
 
 	return (
 		<Form {...form}>
@@ -28,9 +31,11 @@ export function SignInForm() {
 			>
 				<div className='flex flex-col gap-6'>
 					<div className='flex flex-col items-center text-center'>
-						<h1 className='text-2xl font-bold'>Welcome back</h1>
+						<h1 className='text-2xl font-bold'>
+							{i18n.formatMessage({ id: 'auth.signin.form.title' })}
+						</h1>
 						<p className='text-muted-foreground text-balance'>
-							Login to your Task Hub account
+							{i18n.formatMessage({ id: 'auth.signin.form.description' })}
 						</p>
 					</div>
 					<FormField
@@ -38,13 +43,17 @@ export function SignInForm() {
 						name='email'
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel htmlFor='email'>Email</FormLabel>
+								<FormLabel htmlFor='email'>
+									{i18n.formatMessage({ id: 'field.email.label' })}
+								</FormLabel>
 								<FormControl>
 									<Input
 										id='email'
 										aria-label='Email'
 										type='email'
-										placeholder='m@example.com'
+										placeholder={i18n.formatMessage({
+											id: 'field.email.placeholder'
+										})}
 										disabled={state.loading}
 										{...field}
 									/>
@@ -59,12 +68,14 @@ export function SignInForm() {
 						render={({ field }) => (
 							<FormItem>
 								<div className='flex items-center'>
-									<FormLabel htmlFor='password'>Password</FormLabel>
+									<FormLabel htmlFor='password'>
+										{i18n.formatMessage({ id: 'field.password.label' })}
+									</FormLabel>
 									<a
 										href='#'
 										className='ml-auto text-sm underline-offset-2 hover:underline'
 									>
-										Forgot your password?
+										{i18n.formatMessage({ id: 'auth.form.forgotPassword' })}
 									</a>
 								</div>
 								<FormControl>
@@ -72,15 +83,16 @@ export function SignInForm() {
 										id='password'
 										aria-label='Password'
 										type='password'
-										placeholder='********'
+										placeholder={i18n.formatMessage({
+											id: 'field.password.placeholder'
+										})}
 										disabled={state.loading}
 										{...field}
 									/>
 								</FormControl>
 								<FormMessage />
 								<p className='text-muted-foreground mt-2 text-sm'>
-									Password must be at least 8 characters and contain uppercase,
-									lowercase, and numbers
+									{i18n.formatMessage({ id: 'auth.form.passwordRequirements' })}
 								</p>
 							</FormItem>
 						)}
@@ -90,23 +102,25 @@ export function SignInForm() {
 						className='w-full cursor-pointer dark:hover:bg-zinc-50/80'
 						disabled={state.loading}
 					>
-						{state.loading ? 'Logging in...' : 'Login'}
+						{state.loading
+							? i18n.formatMessage({ id: 'site.loading' })
+							: i18n.formatMessage({ id: 'button.login' })}
 					</Button>
 					<div className='after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t'>
 						<span className='bg-card text-muted-foreground relative z-10 px-2'>
-							Or continue with
+							{i18n.formatMessage({ id: 'auth.form.orContinueWith' })}
 						</span>
 					</div>
 					<SocialLoginButtons />
 					<div className='text-center text-sm'>
-						Don&apos;t have an account?{' '}
+						{i18n.formatMessage({ id: 'auth.form.dontHaveAccount' })}
 						<Button
 							type='button'
 							variant='link'
 							className='h-auto cursor-pointer p-0'
 							onClick={functions.goToSignUp}
 						>
-							Sign up
+							{i18n.formatMessage({ id: 'button.signup' })}
 						</Button>
 					</div>
 				</div>

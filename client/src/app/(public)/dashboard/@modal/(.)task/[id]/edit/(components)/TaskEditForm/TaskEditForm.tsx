@@ -13,6 +13,8 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 
+import { useI18n } from '@/utils/providers'
+
 import { SubTasks } from './components/SubTasks/SubTasks'
 import { useTaskEditForm } from './hooks/useTaskEditForm'
 
@@ -21,6 +23,8 @@ interface Props {
 }
 
 export function TaskEditForm({ id }: Props) {
+	const i18n = useI18n()
+
 	const { state, form, functions } = useTaskEditForm(id)
 
 	return (
@@ -35,11 +39,15 @@ export function TaskEditForm({ id }: Props) {
 						name='title'
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>Title</FormLabel>
+								<FormLabel>
+									{i18n.formatMessage({ id: 'field.title.label' })}
+								</FormLabel>
 								<FormControl>
 									<Input
 										disabled={state.loading}
-										placeholder='Task title'
+										placeholder={i18n.formatMessage({
+											id: 'field.title.placeholder'
+										})}
 										aria-label='Task title'
 										{...field}
 									/>
@@ -53,7 +61,9 @@ export function TaskEditForm({ id }: Props) {
 						name='dueDate'
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>Due Date</FormLabel>
+								<FormLabel>
+									{i18n.formatMessage({ id: 'field.dueDate.label' })}
+								</FormLabel>
 								<FormControl>
 									<DatePicker
 										dateForm={field.value}
@@ -69,7 +79,9 @@ export function TaskEditForm({ id }: Props) {
 						name='iconName'
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>Select Icon</FormLabel>
+								<FormLabel>
+									{i18n.formatMessage({ id: 'field.icon.label' })}
+								</FormLabel>
 								<FormControl>
 									<IconPicker
 										value={field.value}
@@ -85,7 +97,7 @@ export function TaskEditForm({ id }: Props) {
 						type='submit'
 						disabled={state.loading}
 					>
-						Submit
+						{i18n.formatMessage({ id: 'button.submit' })}
 					</Button>
 				</div>
 				<div className='space-y-8'>

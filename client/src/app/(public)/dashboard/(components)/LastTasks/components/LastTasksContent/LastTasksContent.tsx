@@ -5,6 +5,8 @@ import { useMemo } from 'react'
 
 import { TabsContent } from '@/components/animate-ui/radix/tabs'
 
+import { useI18n } from '@/utils/providers'
+
 import { LastTasksItem } from '../LastTasksItem/LastTasksItem'
 
 import { TASK_CONFIG } from '@/configs/task.config'
@@ -17,6 +19,8 @@ import {
 const DISPLAYED_TASKS_LIMIT = TASK_CONFIG.DISPLAYED_TASKS_LIMIT
 
 export function LastTasksContent() {
+	const i18n = useI18n()
+
 	const [isShowAll, setIsShowAll] = useQueryState('show-all', parseAsBoolean)
 
 	const tasks = useUnit($filteredTasks)
@@ -70,9 +74,13 @@ export function LastTasksContent() {
 						}`}
 					>
 						{isShowAll ? (
-							<div>Show less</div>
+							<div>{i18n.formatMessage({ id: 'last-tasks.show-less' })}</div>
 						) : (
-							<div>Show all {numOfTasksByStatus[statusType]} tasks</div>
+							<div>
+								{i18n.formatMessage({ id: 'last-tasks.show-all' })}{' '}
+								{numOfTasksByStatus[statusType]}
+								{i18n.formatMessage({ id: 'last-tasks.tasks' })}
+							</div>
 						)}
 					</button>
 				</div>

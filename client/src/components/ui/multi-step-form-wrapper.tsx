@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -19,13 +18,9 @@ import { z } from 'zod'
 
 import { Button } from '@/components/ui/button'
 
+import { useI18n } from '@/utils/providers'
+
 import { cn } from '@/lib/helpers/common'
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -131,6 +126,7 @@ export function MultiStepFormWrapper<T extends FormData = FormData>({
 	transitionDuration = 300,
 	animateStepChange = true
 }: MultiStepFormWrapperProps<T>): React.ReactNode {
+	const i18n = useI18n()
 	const steps = React.Children.toArray(children).filter(
 		child => React.isValidElement(child) && child.type === Step
 	) as React.ReactElement<StepProps<T>>[]
@@ -513,7 +509,7 @@ export function MultiStepFormWrapper<T extends FormData = FormData>({
 				{showProgressBar && (
 					<div className='mb-6'>
 						<div className='mb-2 flex justify-between text-sm text-gray-600 dark:text-gray-400'>
-							<span>Progress</span>
+							<span>{i18n.formatMessage({ id: 'form.progress' })}</span>
 							<span>{getProgressPercentage()}%</span>
 						</div>
 						<div className='h-2 w-full rounded-full bg-gray-200 dark:bg-gray-700'>
@@ -555,7 +551,7 @@ export function MultiStepFormWrapper<T extends FormData = FormData>({
 									onClick={resetForm}
 									className='text-gray-500 hover:text-gray-700'
 								>
-									Reset
+									{i18n.formatMessage({ id: 'button.cancel' })}
 								</Button>
 							)}
 						</div>
@@ -566,7 +562,7 @@ export function MultiStepFormWrapper<T extends FormData = FormData>({
 
 				<div
 					className={cn(
-						'mb-4 mt-4',
+						'mt-4 mb-4',
 						animateStepChange && 'transition-all duration-300 ease-in-out'
 					)}
 					style={{

@@ -7,10 +7,13 @@ import { type Swapy, createSwapy } from 'swapy'
 
 import { Card, CardContent } from '@/components/ui/card'
 
+import { useI18n } from '@/utils/providers'
+
 import { StatisticsChart } from './components/StatisticsChart/StatisticsChart'
 import { STATISTICS_CARDS } from './constants/data'
 
 export function Statistic() {
+	const i18n = useI18n()
 	const swapyRef = useRef<Swapy | null>(null)
 	const containerRef = useRef<HTMLDivElement>(null)
 
@@ -62,7 +65,11 @@ export function Statistic() {
 													<h1 className='scroll-m-20 text-4xl font-medium tracking-tight text-balance'>
 														{card.title}
 													</h1>
-													<p className='leading-7 font-medium'>{card.desc}</p>
+													<p className='leading-7 font-medium'>
+														{i18n.formatMessage({
+															id: `statistics.desc.${card.desc}`
+														})}
+													</p>
 												</div>
 												<Image
 													src={card.imgSrc}

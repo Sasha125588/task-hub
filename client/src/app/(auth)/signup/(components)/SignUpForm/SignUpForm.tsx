@@ -12,10 +12,13 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 
+import { useI18n } from '@/utils/providers'
+
 import { useSignUpForm } from './hooks/useSignUpForm'
 
 export function SignUpForm() {
 	const { form, functions, state } = useSignUpForm()
+	const i18n = useI18n()
 
 	return (
 		<Form {...form}>
@@ -28,9 +31,11 @@ export function SignUpForm() {
 			>
 				<div className='flex flex-col gap-6'>
 					<div className='flex flex-col items-center text-center'>
-						<h1 className='text-2xl font-bold'>Create your account</h1>
+						<h1 className='text-2xl font-bold'>
+							{i18n.formatMessage({ id: 'auth.signup.form.title' })}
+						</h1>
 						<p className='text-muted-foreground text-balance'>
-							Join Task Hub and start managing your tasks
+							{i18n.formatMessage({ id: 'auth.signup.form.description' })}
 						</p>
 					</div>
 					<FormField
@@ -38,13 +43,17 @@ export function SignUpForm() {
 						name='email'
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel htmlFor='email'>Email</FormLabel>
+								<FormLabel htmlFor='email'>
+									{i18n.formatMessage({ id: 'field.email.label' })}
+								</FormLabel>
 								<FormControl>
 									<Input
 										id='email'
 										aria-label='Email'
 										type='email'
-										placeholder='m@example.com'
+										placeholder={i18n.formatMessage({
+											id: 'field.email.placeholder'
+										})}
 										disabled={state.loading}
 										{...field}
 									/>
@@ -58,13 +67,17 @@ export function SignUpForm() {
 						name='username'
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel htmlFor='username'>Username</FormLabel>
+								<FormLabel htmlFor='username'>
+									{i18n.formatMessage({ id: 'field.username.label' })}
+								</FormLabel>
 								<FormControl>
 									<Input
 										id='username'
 										aria-label='Username'
 										type='text'
-										placeholder='johndoe'
+										placeholder={i18n.formatMessage({
+											id: 'field.username.placeholder'
+										})}
 										disabled={state.loading}
 										{...field}
 									/>
@@ -78,13 +91,17 @@ export function SignUpForm() {
 						name='password'
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel htmlFor='password'>Password</FormLabel>
+								<FormLabel htmlFor='password'>
+									{i18n.formatMessage({ id: 'field.password.label' })}
+								</FormLabel>
 								<FormControl>
 									<Input
 										id='password'
 										aria-label='Password'
 										type='password'
-										placeholder='********'
+										placeholder={i18n.formatMessage({
+											id: 'field.password.placeholder'
+										})}
 										disabled={state.loading}
 										{...field}
 									/>
@@ -99,14 +116,16 @@ export function SignUpForm() {
 						render={({ field }) => (
 							<FormItem>
 								<FormLabel htmlFor='confirmPassword'>
-									Confirm Password
+									{i18n.formatMessage({ id: 'field.confirmPassword.label' })}
 								</FormLabel>
 								<FormControl>
 									<Input
 										id='confirmPassword'
 										aria-label='Confirm Password'
 										type='password'
-										placeholder='********'
+										placeholder={i18n.formatMessage({
+											id: 'field.confirmPassword.placeholder'
+										})}
 										disabled={state.loading}
 										{...field}
 									/>
@@ -120,23 +139,25 @@ export function SignUpForm() {
 						className='w-full cursor-pointer dark:hover:bg-zinc-50/80'
 						disabled={state.loading}
 					>
-						{state.loading ? 'Creating account...' : 'Create Account'}
+						{state.loading
+							? i18n.formatMessage({ id: 'site.loading' })
+							: i18n.formatMessage({ id: 'button.createAccount' })}
 					</Button>
 					<div className='after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t'>
 						<span className='bg-card text-muted-foreground relative z-10 px-2'>
-							Or continue with
+							{i18n.formatMessage({ id: 'auth.form.orContinueWith' })}
 						</span>
 					</div>
 					<SocialLoginButtons />
 					<div className='text-center text-sm'>
-						Already have an account?{' '}
+						{i18n.formatMessage({ id: 'auth.form.alreadyHaveAccount' })}
 						<Button
 							type='button'
 							variant='link'
 							className='h-auto cursor-pointer p-0'
 							onClick={functions.goToSignIn}
 						>
-							Login
+							{i18n.formatMessage({ id: 'button.login' })}
 						</Button>
 					</div>
 				</div>

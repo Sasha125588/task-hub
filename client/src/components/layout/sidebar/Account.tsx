@@ -30,25 +30,27 @@ import {
 	DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
 
+import { useI18n } from '@/utils/providers'
+
 import { authClient, signOut, useSession } from '@/lib/better-auth/auth-client'
 
 export function Account() {
 	const router = useRouter()
 	const { isMobile } = useSidebar()
-
 	const { data: user, isPending } = useSession()
 	const userName = user?.user.name
 	const userEmail = user?.user.email
+	const i18n = useI18n()
 
 	const handleSignOut = () => {
 		signOut({
 			fetchOptions: {
 				onSuccess: () => {
-					toast.success('Logged out successfully')
+					toast.success(i18n.formatMessage({ id: 'toast.loggedOut' }))
 					router.push('/signin')
 				},
 				onError: () => {
-					toast.error('Failed to log out')
+					toast.error(i18n.formatMessage({ id: 'toast.failedLogout' }))
 				}
 			}
 		})
@@ -56,7 +58,7 @@ export function Account() {
 
 	const handleConfirmEmail = async () => {
 		if (!userEmail) {
-			toast.error('User email not found')
+			toast.error(i18n.formatMessage({ id: 'toast.userEmailNotFound' }))
 			return
 		}
 
@@ -64,14 +66,16 @@ export function Account() {
 			email: userEmail,
 			callbackURL: '/dashboard'
 		})
-		toast.success('Verification email sent')
+		toast.success(i18n.formatMessage({ id: 'toast.verificationEmailSent' }))
 	}
 
 	if (isPending) {
 		return (
 			<SidebarMenu>
 				<SidebarHeader className='mb-0 pb-0'>
-					<p className='text-sidebar-foreground/70 text-[13px]'>Account</p>
+					<p className='text-sidebar-foreground/70 text-[13px]'>
+						{i18n.formatMessage({ id: 'account.title' })}
+					</p>
 				</SidebarHeader>
 				<SidebarMenuItem>
 					<SidebarMenuButton size='lg'>
@@ -81,7 +85,9 @@ export function Account() {
 							</AvatarFallback>
 						</Avatar>
 						<div className='grid flex-1 text-left text-sm leading-tight'>
-							<span className='truncate font-medium'>Loading...</span>
+							<span className='truncate font-medium'>
+								{i18n.formatMessage({ id: 'site.loading' })}
+							</span>
 						</div>
 					</SidebarMenuButton>
 				</SidebarMenuItem>
@@ -117,7 +123,9 @@ export function Account() {
 	return (
 		<SidebarMenu>
 			<SidebarHeader className='mb-0 pb-0'>
-				<p className='text-sidebar-foreground/70 text-[13px]'>Account</p>
+				<p className='text-sidebar-foreground/70 text-[13px]'>
+					{i18n.formatMessage({ id: 'sidebar.account' })}
+				</p>
 			</SidebarHeader>
 			<SidebarMenuItem>
 				<DropdownMenu>
@@ -143,32 +151,32 @@ export function Account() {
 						<DropdownMenuGroup>
 							<DropdownMenuItem onClick={handleConfirmEmail}>
 								<UserIcon className='mr-2 h-4 w-4' />
-								Confirm Email
+								{i18n.formatMessage({ id: 'sidebar.account.confirmEmail' })}
 							</DropdownMenuItem>
 							<DropdownMenuItem>
 								<Sparkles className='mr-2 h-4 w-4' />
-								Upgrade to Pro
+								{i18n.formatMessage({ id: 'sidebar.account.upgradeToPro' })}
 							</DropdownMenuItem>
 						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
 						<DropdownMenuGroup>
 							<DropdownMenuItem>
 								<BadgeCheck className='mr-2 h-4 w-4' />
-								Account Settings
+								{i18n.formatMessage({ id: 'sidebar.account.settings' })}
 							</DropdownMenuItem>
 							<DropdownMenuItem>
 								<CreditCard className='mr-2 h-4 w-4' />
-								Billing
+								{i18n.formatMessage({ id: 'sidebar.account.billing' })}
 							</DropdownMenuItem>
 							<DropdownMenuItem>
 								<Bell className='mr-2 h-4 w-4' />
-								Notifications
+								{i18n.formatMessage({ id: 'sidebar.account.notifications' })}
 							</DropdownMenuItem>
 						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
 						<DropdownMenuItem onClick={handleSignOut}>
 							<LogOut className='mr-2 h-4 w-4' />
-							Log out
+							{i18n.formatMessage({ id: 'sidebar.account.logOut' })}
 						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>

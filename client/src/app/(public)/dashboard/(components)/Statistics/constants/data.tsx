@@ -12,7 +12,7 @@ export const STATISTICS_CARDS: StatisticsCard[] = [
 	{
 		id: 'ongoing-projects',
 		title: '35',
-		desc: 'On Going Project',
+		desc: 'On Going Projects',
 		imgSrc: '/images/ongoing-projects.svg',
 		colorClass: 'bg-[#faf089]',
 		darkColorClass: 'dark:bg-[#ac35d4]'

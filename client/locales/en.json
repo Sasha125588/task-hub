@@ -1,0 +1,127 @@
+{
+	"site.title": "Task Hub",
+	"site.description": "Manage your progress",
+	"site.loading": "Loading...",
+	"site.home": "Welcome to Task Hub!",
+
+	"button.addSubTask": "Add Sub Task",
+	"button.addTask": "Add Task",
+	"button.cancel": "Cancel",
+	"button.createAccount": "Create Account",
+	"button.login": "Login",
+	"button.signup": "Sign up",
+	"button.submit": "Submit",
+	"button.next": "Next",
+	"button.back": "Back",
+
+	"form.basicInfo": "Basic Info",
+	"form.additionalInfo": "Additional Info",
+	"form.taskTitle": "Task Title",
+	"form.enterTaskTitle": "Enter task title",
+	"form.selectStatus": "Select status",
+
+	"field.email.label": "Email",
+	"field.email.placeholder": "example@example.com",
+	"field.password.label": "Password",
+	"field.password.placeholder": "********",
+	"field.confirmPassword.label": "Confirm Password",
+	"field.confirmPassword.placeholder": "********",
+	"field.name.label": "Name",
+	"field.name.placeholder": "John Doe",
+	"field.username.label": "Username",
+	"field.username.placeholder": "johndoe",
+	"field.title.label": "Title",
+	"field.title.placeholder": "Enter task title",
+	"field.dueDate.label": "Due Date",
+	"field.icon.label": "Icon",
+	"field.status.label": "Status",
+	"field.status.not-started": "Not Started",
+	"field.status.in-progress": "In Progress",
+	"field.status.completed": "Completed",
+	"field.description.label": "Description",
+	"field.description.placeholder": "Enter description",
+
+	"form.nameRequired": "Name is required",
+	"form.descriptionTooShort": "Description is too short",
+
+	"toast.subTaskAdded": "Sub task added!",
+	"toast.loggedOut": "Logged out successfully",
+	"toast.failedLogout": "Failed to log out",
+	"toast.userEmailNotFound": "User email not found",
+	"toast.verificationEmailSent": "Verification email sent",
+
+	"sidebar.account": "Account",
+	"sidebar.account.confirmEmail": "Confirm Email",
+	"sidebar.account.upgradeToPro": "Upgrade to Pro",
+	"sidebar.account.settings": "Account Settings",
+	"sidebar.account.billing": "Billing",
+	"sidebar.account.notifications": "Notifications",
+	"sidebar.account.logOut": "Log out",
+
+	"sidebar.menu.Main Menu": "Main Menu",
+	"sidebar.menu.Projects": "Projects",
+	"sidebar.menu.Dashboard": "Dashboard",
+	"sidebar.menu.Message": "Messages",
+	"sidebar.menu.Insight": "Insights",
+	"sidebar.menu.Team": "Team",
+	"sidebar.menu.Schedule": "Schedule",
+	"sidebar.menu.Report": "Reports",
+	"sidebar.menu.Settings": "Settings",
+	"sidebar.menu.Landing Page": "Landing Page",
+	"sidebar.menu.Mobile App": "Mobile App",
+	"sidebar.menu.Flyer": "Flyer",
+	"sidebar.menu.Branding": "Branding",
+
+	"search.label": "Search",
+	"search.placeholder": "Search the docs...",
+
+	"form.progress": "Progress",
+	"form.complete": "Complete",
+	"form.next": "Next",
+	"form.back": "Back",
+
+	"auth.form.orContinueWith": "Or continue with",
+	"auth.form.dontHaveAccount": "Don&apos;t have an account?",
+	"auth.form.alreadyHaveAccount": "Already have an account?",
+	"auth.form.forgotPassword": "Forgot your password?",
+	"auth.form.passwordRequirements": "Password must be at least 8 characters and contain uppercase, lowercase, and numbers",
+
+	"auth.agreement": "By clicking continue, you agree to our ",
+	"auth.terms": "Terms of Service",
+	"auth.privacy": "Privacy Policy",
+
+	"auth.signin.form.title": "Welcome back",
+	"auth.signin.form.description": "Login to your Task Hub account",
+
+	"auth.signup.form.title": "Create your account",
+	"auth.signup.form.description": "Join Task Hub and start managing your tasks",
+
+	"statistics.desc.Active Projects": "Active Projects",
+	"statistics.desc.Working Hours": "Working Hours",
+	"statistics.desc.On Going Projects": "On Going Projects",
+
+	"statistics.chart.title": "Projects Statistic",
+	"statistics.chart.yearly": "Yearly",
+	"statistics.chart.monthly": "Monthly",
+	"statistics.chart.weekly": "Weekly",
+
+	"statistics.chart.config.label": "Projects",
+
+	"last-tasks.title": "Last Tasks",
+	"last-tasks.show-less": "Show less",
+	"last-tasks.show-all": "Show all",
+	"last-tasks.tasks": " tasks",
+
+	"last-tasks.status.all": "All",
+	"last-tasks.status.not-started": "Not Started",
+	"last-tasks.status.in-progress": "In Progress",
+	"last-tasks.status.completed": "Completed",
+
+	"last-tasks.sort.asc": "Soonest",
+	"last-tasks.sort.desc": "Latest",
+
+	"last-tasks.due": "Due",
+	"last-tasks.days": "days",
+
+	"task-edit.title": "Edit Task"
+}

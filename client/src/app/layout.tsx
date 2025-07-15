@@ -5,6 +5,7 @@ import { type ReactNode } from 'react'
 import './globals.css'
 import { Providers } from './providers'
 import { PAGES_CONFIG } from '@/configs/pages.config'
+import { getMessagesByLocale } from '@/lib/helpers/getMessageByLocale'
 
 const geistSans = Geist({
 	variable: '--font-geist-sans',
@@ -29,6 +30,8 @@ interface Props {
 }
 
 export default function RootLayout({ children }: Props) {
+	const locale = 'ru'
+	const messages = getMessagesByLocale(locale)
 	return (
 		<html
 			lang='en'
@@ -38,7 +41,7 @@ export default function RootLayout({ children }: Props) {
 				id='modal-root'
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 			>
-				<Providers>{children}</Providers>
+				<Providers i18n={{ locale, messages }}>{children}</Providers>
 			</body>
 		</html>
 	)

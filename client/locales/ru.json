@@ -1,0 +1,127 @@
+{
+	"site.title": "Task Hub",
+	"site.description": "Управляйте своим прогрессом",
+	"site.loading": "Загрузка...",
+	"site.home": "Добро пожаловать в Task Hub!",
+
+	"button.addSubTask": "Добавить подзадачу",
+	"button.addTask": "Добавить задачу",
+	"button.cancel": "Отмена",
+	"button.createAccount": "Создать аккаунт",
+	"button.login": "Войти",
+	"button.signup": "Регистрация",
+	"button.submit": "Отправить",
+	"button.next": "Далее",
+	"button.back": "Назад",
+
+	"form.basicInfo": "Основная информация",
+	"form.additionalInfo": "Дополнительная информация",
+	"form.taskTitle": "Название задачи",
+	"form.enterTaskTitle": "Введите название задачи",
+	"form.selectStatus": "Выберите статус",
+
+	"field.email.label": "Email",
+	"field.email.placeholder": "example@example.com",
+	"field.password.label": "Пароль",
+	"field.password.placeholder": "********",
+	"field.confirmPassword.label": "Подтвердите пароль",
+	"field.confirmPassword.placeholder": "********",
+	"field.name.label": "Имя",
+	"field.name.placeholder": "Иван Иванов",
+	"field.username.label": "Имя пользователя",
+	"field.username.placeholder": "ivanivanov",
+	"field.title.label": "Название",
+	"field.title.placeholder": "Введите название задачи",
+	"field.dueDate.label": "Срок выполнения",
+	"field.icon.label": "Иконка",
+	"field.status.label": "Статус",
+	"field.status.not-started": "Не начато",
+	"field.status.in-progress": "В процессе",
+	"field.status.completed": "Завершено",
+	"field.description.label": "Описание",
+	"field.description.placeholder": "Введите описание",
+
+	"form.nameRequired": "Имя обязательно",
+	"form.descriptionTooShort": "Описание слишком короткое",
+
+	"toast.subTaskAdded": "Подзадача добавлена!",
+	"toast.loggedOut": "Выход выполнен успешно",
+	"toast.failedLogout": "Не удалось выйти",
+	"toast.userEmailNotFound": "Email пользователя не найден",
+	"toast.verificationEmailSent": "Письмо для подтверждения отправлено",
+
+	"sidebar.account": "Аккаунт",
+	"sidebar.account.confirmEmail": "Подтвердить Email",
+	"sidebar.account.upgradeToPro": "Перейти на Pro",
+	"sidebar.account.settings": "Настройки аккаунта",
+	"sidebar.account.billing": "Оплата",
+	"sidebar.account.notifications": "Уведомления",
+	"sidebar.account.logOut": "Выйти",
+
+	"sidebar.menu.Main Menu": "Главное меню",
+	"sidebar.menu.Projects": "Проекты",
+	"sidebar.menu.Dashboard": "Дашборд",
+	"sidebar.menu.Message": "Сообщения",
+	"sidebar.menu.Insight": "Аналитика",
+	"sidebar.menu.Team": "Команда",
+	"sidebar.menu.Schedule": "Расписание",
+	"sidebar.menu.Report": "Отчеты",
+	"sidebar.menu.Settings": "Настройки",
+	"sidebar.menu.Landing Page": "Лендинг",
+	"sidebar.menu.Mobile App": "Мобильное приложение",
+	"sidebar.menu.Flyer": "Флаер",
+	"sidebar.menu.Branding": "Брендинг",
+
+	"search.label": "Поиск",
+	"search.placeholder": "Поиск в документации...",
+
+	"form.progress": "Прогресс",
+	"form.complete": "Завершено",
+	"form.next": "Далее",
+	"form.back": "Назад",
+
+	"auth.form.orContinueWith": "Или продолжить через",
+	"auth.form.dontHaveAccount": "Нет аккаунта?",
+	"auth.form.alreadyHaveAccount": "Уже есть аккаунт?",
+	"auth.form.forgotPassword": "Забыли пароль?",
+	"auth.form.passwordRequirements": "Пароль должен содержать минимум 8 символов, включая заглавные, строчные буквы и цифры",
+
+	"auth.agreement": "Нажимая продолжить, вы соглашаетесь с ",
+	"auth.terms": "Условиями использования",
+	"auth.privacy": "Политикой конфиденциальности",
+
+	"auth.signin.form.title": "С возвращением",
+	"auth.signin.form.description": "Войдите в свой аккаунт Task Hub",
+
+	"auth.signup.form.title": "Создайте аккаунт",
+	"auth.signup.form.description": "Присоединяйтесь к Task Hub и управляйте задачами",
+
+	"statistics.desc.Active Projects": "Активные проекты",
+	"statistics.desc.Working Hours": "Рабочие часы",
+	"statistics.desc.On Going Projects": "Текущие проекты",
+
+	"statistics.chart.title": "Статистика проектов",
+	"statistics.chart.yearly": "Годовая",
+	"statistics.chart.monthly": "Месячная",
+	"statistics.chart.weekly": "Недельная",
+
+	"statistics.chart.config.label": "Проекты",
+
+	"last-tasks.title": "Последние задачи",
+	"last-tasks.show-less": "Скрыть",
+	"last-tasks.show-all": "Показать все",
+	"last-tasks.tasks": " задач",
+
+	"last-tasks.status.all": "Все",
+	"last-tasks.status.not-started": "Не начато",
+	"last-tasks.status.in-progress": "В процессе",
+	"last-tasks.status.completed": "Завершено",
+
+	"last-tasks.sort.asc": "Ближайшие",
+	"last-tasks.sort.desc": "Последние",
+
+	"last-tasks.due": "Срок",
+	"last-tasks.days": "дней",
+
+	"task-edit.title": "Редактировать задачу"
+}

@@ -19,6 +19,8 @@ import { GlowingEffect } from '@/components/ui/glowing-effect'
 
 import type { Task } from '@/types/task.types'
 
+import { useI18n } from '@/utils/providers'
+
 import { PAGES_CONFIG } from '@/configs/pages.config'
 import { getDaysUntilDue } from '@/lib/helpers/date'
 import { taskDeleted } from '@/stores/task/store'
@@ -28,6 +30,8 @@ interface Props {
 }
 
 export function LastTasksItem({ item }: Props) {
+	const i18n = useI18n()
+
 	const deleteTask = useUnit(taskDeleted)
 	const dueDate = getDaysUntilDue(item.dueDate)
 
@@ -51,7 +55,8 @@ export function LastTasksItem({ item }: Props) {
 								{item.title}
 							</h3>
 							<p className='text-muted-foreground text-xs'>
-								Due: {dueDate} days
+								{i18n.formatMessage({ id: 'last-tasks.due' })}: {dueDate}{' '}
+								{i18n.formatMessage({ id: 'last-tasks.days' })}
 							</p>
 						</div>
 					</div>

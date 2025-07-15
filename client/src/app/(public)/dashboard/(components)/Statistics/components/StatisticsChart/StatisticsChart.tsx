@@ -23,9 +23,12 @@ import {
 	SelectValue
 } from '@/components/ui/select'
 
+import { useI18n } from '@/utils/providers'
+
 import { CHART_DATA } from './constants/data'
 
 export function StatisticsChart() {
+	const i18n = useI18n()
 	const [timeRange, setTimeRange] = useState('7d')
 
 	const filteredData = CHART_DATA.filter(item => {
@@ -45,7 +48,7 @@ export function StatisticsChart() {
 		<Card className='h-full w-full'>
 			<CardHeader className='flex items-center'>
 				<CardTitle className='font-geist-sans text-foreground/95 flex-1 text-2xl'>
-					Projects Statistic
+					{i18n.formatMessage({ id: 'statistics.chart.title' })}
 				</CardTitle>
 				<CardAction>
 					<Select
@@ -60,9 +63,15 @@ export function StatisticsChart() {
 							<SelectValue placeholder='Last 3 months' />
 						</SelectTrigger>
 						<SelectContent>
-							<SelectItem value='90d'>Yearly</SelectItem>
-							<SelectItem value='30d'>Monthly</SelectItem>
-							<SelectItem value='7d'>Weekly</SelectItem>
+							<SelectItem value='90d'>
+								{i18n.formatMessage({ id: 'statistics.chart.yearly' })}
+							</SelectItem>
+							<SelectItem value='30d'>
+								{i18n.formatMessage({ id: 'statistics.chart.monthly' })}
+							</SelectItem>
+							<SelectItem value='7d'>
+								{i18n.formatMessage({ id: 'statistics.chart.weekly' })}
+							</SelectItem>
 						</SelectContent>
 					</Select>
 				</CardAction>
@@ -72,7 +81,9 @@ export function StatisticsChart() {
 					className='h-full w-full'
 					config={{
 						projects: {
-							label: 'Projects',
+							label: i18n.formatMessage({
+								id: 'statistics.chart.config.label'
+							}),
 							color: '#8b5cf6'
 						}
 					}}
