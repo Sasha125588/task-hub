@@ -4,15 +4,12 @@ import { type HTMLMotionProps, motion } from 'motion/react'
 import { Checkbox as CheckboxPrimitive } from 'radix-ui'
 import * as React from 'react'
 
-import { cn } from '@/lib/helpers/common'
+import { cn } from '@/lib/helpers/cn'
 
-type CheckboxProps = React.ComponentProps<typeof CheckboxPrimitive.Root> &
-	HTMLMotionProps<'button'>
+type CheckboxProps = React.ComponentProps<typeof CheckboxPrimitive.Root> & HTMLMotionProps<'button'>
 
 function Checkbox({ className, onCheckedChange, ...props }: CheckboxProps) {
-	const [isChecked, setIsChecked] = React.useState(
-		props?.checked ?? props?.defaultChecked ?? false
-	)
+	const [isChecked, setIsChecked] = React.useState(props?.checked ?? props?.defaultChecked ?? false)
 
 	React.useEffect(() => {
 		if (props?.checked !== undefined) setIsChecked(props.checked)
@@ -35,7 +32,7 @@ function Checkbox({ className, onCheckedChange, ...props }: CheckboxProps) {
 			<motion.button
 				data-slot='checkbox'
 				className={cn(
-					'bg-input focus-visible:ring-ring data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground peer flex size-5 shrink-0 items-center justify-center rounded-sm transition-colors duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
+					'bg-input focus-visible:ring-ring data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground peer flex size-5 shrink-0 items-center justify-center rounded-sm transition-colors duration-500 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
 					className
 				)}
 				whileTap={{ scale: 0.95 }}

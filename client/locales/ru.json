@@ -3,6 +3,7 @@
 	"site.description": "Управляйте своим прогрессом",
 	"site.loading": "Загрузка...",
 	"site.home": "Добро пожаловать в Task Hub!",
+	"loading.task": "Загрузка задачи...",
 
 	"button.addSubTask": "Добавить подзадачу",
 	"button.addTask": "Добавить задачу",
@@ -13,6 +14,7 @@
 	"button.submit": "Отправить",
 	"button.next": "Далее",
 	"button.back": "Назад",
+	"button.create": "Создать",
 
 	"form.basicInfo": "Основная информация",
 	"form.additionalInfo": "Дополнительная информация",
@@ -110,8 +112,7 @@
 
 	"last-tasks.title": "Последние задачи",
 	"last-tasks.show-less": "Скрыть",
-	"last-tasks.show-all": "Показать все",
-	"last-tasks.tasks": " задач",
+	"last-tasks.show-all": "Перейти ко всем задачам",
 
 	"last-tasks.status.all": "Все",
 	"last-tasks.status.not-started": "Не начато",
@@ -139,5 +140,12 @@
 	"progressBar.done": "Завершено",
 
 	"pages.Dashboard": "Дашборд",
-	"pages.Settings": "Настройки"
+	"pages.Settings": "Настройки",
+	"pages.Message": "Сообщения",
+	"create-task.title": "Создать задачу",
+	"create-task.form.title": "Название задачи",
+	"create-task.form.icon": "Иконка задачи",
+	"create-task.form.dueDate": "Срок выполнения",
+	"create-task.form.startTime": "Время начала",
+	"create-task.form.endTime": "Время окончания"
 }

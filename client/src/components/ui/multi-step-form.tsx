@@ -1,7 +1,6 @@
 'use client'
 
 import { DialogTitle } from '@radix-ui/react-dialog'
-import { useUnit } from 'effector-react'
 import React, { useState } from 'react'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -25,7 +24,6 @@ import {
 import { useI18n } from '@/utils/providers'
 
 import { Dialog, DialogContent } from './dialog'
-import { subTaskCreated } from '@/stores/task/store'
 
 const SubTaskStatuses = ['not-started', 'in-progress', 'completed'] as const
 
@@ -47,7 +45,6 @@ type FormValues = z.infer<typeof formSchema>
 
 export function MultiStepForm({ taskId }: { taskId: string }) {
 	const [isFormVisible, setIsFormVisible] = useState(false)
-	const createSubTask = useUnit(subTaskCreated)
 	const i18n = useI18n()
 
 	const initialValues: Partial<FormValues> = {
@@ -59,7 +56,8 @@ export function MultiStepForm({ taskId }: { taskId: string }) {
 	const handleComplete = (data: FormValues) => {
 		toast.success(i18n.formatMessage({ id: 'toast.subTaskAdded' }))
 		setIsFormVisible(false)
-		createSubTask({ subTask: { id: crypto.randomUUID(), ...data }, taskId })
+		console.log(data)
+		// createSubTask({ subTask: { id: crypto.randomUUID(), ...data }, taskId })
 	}
 
 	const handleCancel = () => {
@@ -135,9 +133,7 @@ function BasicInfoStep() {
 					name='title'
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>
-								{i18n.formatMessage({ id: 'field.title.label' })}
-							</FormLabel>
+							<FormLabel>{i18n.formatMessage({ id: 'field.title.label' })}</FormLabel>
 							<FormControl>
 								<Input
 									{...field}
@@ -155,9 +151,7 @@ function BasicInfoStep() {
 					name='status'
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>
-								{i18n.formatMessage({ id: 'field.status.label' })}
-							</FormLabel>
+							<FormLabel>{i18n.formatMessage({ id: 'field.status.label' })}</FormLabel>
 							<FormControl>
 								<select
 									{...field}
@@ -194,9 +188,7 @@ function MessageStep() {
 					name='description'
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>
-								{i18n.formatMessage({ id: 'field.description.label' })}
-							</FormLabel>
+							<FormLabel>{i18n.formatMessage({ id: 'field.description.label' })}</FormLabel>
 							<FormControl>
 								<textarea
 									{...field}

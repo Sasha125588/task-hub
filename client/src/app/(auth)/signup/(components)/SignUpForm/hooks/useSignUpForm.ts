@@ -7,7 +7,7 @@ import { useSignUpMutation } from '@/utils/api'
 
 import { signUpFormSchema } from '../constants/signUpSchema'
 
-import { getErrorMessage } from '@/lib/helpers/auth'
+import { getErrorMessage } from '@/lib/helpers/auth/getErrorMessage'
 
 interface SignUpForm {
 	email: string

@@ -5,11 +5,11 @@ import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
-import { useSignInMutation } from '@/utils/api/hooks'
+import { useSignInMutation } from '@/utils/api'
 
 import { loginFormSchema } from '../constants/signInSchema'
 
-import { getErrorMessage } from '@/lib/helpers/auth'
+import { getErrorMessage } from '@/lib/helpers/auth/getErrorMessage'
 
 interface SignInForm {
 	email: string
@@ -18,7 +18,7 @@ interface SignInForm {
 
 export const useSignInForm = () => {
 	const router = useRouter()
-	const signInMutation = useSignInMutation()!
+	const signInMutation = useSignInMutation()
 
 	const signInForm = useForm<SignInForm>({
 		resolver: zodResolver(loginFormSchema),

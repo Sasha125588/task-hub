@@ -3,6 +3,7 @@
 	"site.description": "Manage your progress",
 	"site.loading": "Loading...",
 	"site.home": "Welcome to Task Hub!",
+	"loading.task": "Loading task...",
 
 	"button.addSubTask": "Add Sub Task",
 	"button.addTask": "Add Task",
@@ -13,6 +14,7 @@
 	"button.submit": "Submit",
 	"button.next": "Next",
 	"button.back": "Back",
+	"button.create": "Create",
 
 	"form.basicInfo": "Basic Info",
 	"form.additionalInfo": "Additional Info",
@@ -110,8 +112,7 @@
 
 	"last-tasks.title": "Last Tasks",
 	"last-tasks.show-less": "Show less",
-	"last-tasks.show-all": "Show all",
-	"last-tasks.tasks": " tasks",
+	"last-tasks.show-all": "Show all tasks",
 
 	"last-tasks.status.all": "All",
 	"last-tasks.status.not-started": "Not Started",
@@ -139,5 +140,13 @@
 	"progressBar.done": "Done",
 
 	"pages.Dashboard": "Dashboard",
-	"pages.Settings": "Settings"
+	"pages.Settings": "Settings",
+	"pages.Message": "Messages",
+
+	"create-task.title": "Create Task",
+	"create-task.form.title": "Task Title",
+	"create-task.form.icon": "Task Icon",
+	"create-task.form.dueDate": "Due Date",
+	"create-task.form.startTime": "Start Time",
+	"create-task.form.endTime": "End Time"
 }

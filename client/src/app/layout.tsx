@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from 'next/font/google'
 import { cookies } from 'next/headers'
 import { type ReactNode } from 'react'
 
+import { ThemeSwitcher } from '@/components/common/ThemeSwitcher'
+
 import './globals.css'
 import { Providers } from './providers'
 import { PAGES_CONFIG } from '@/configs/pages.config'
@@ -32,7 +34,7 @@ interface Props {
 
 export default async function RootLayout({ children }: Props) {
 	const cookieStore = await cookies()
-	const locale = cookieStore.get('locale')?.value ?? 'ru'
+	const locale = cookieStore.get('locale')?.value ?? 'en'
 	const messages = getMessagesByLocale(locale)
 	return (
 		<html
@@ -43,7 +45,10 @@ export default async function RootLayout({ children }: Props) {
 				id='modal-root'
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 			>
-				<Providers i18n={{ locale, messages }}>{children}</Providers>
+				<Providers i18n={{ locale, messages }}>
+					{children}
+					<ThemeSwitcher />
+				</Providers>
 			</body>
 		</html>
 	)

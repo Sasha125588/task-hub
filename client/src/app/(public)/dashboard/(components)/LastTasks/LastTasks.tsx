@@ -5,21 +5,26 @@ import { parseAsStringLiteral, useQueryState } from 'nuqs'
 
 import { Tabs } from '@/components/animate-ui/radix/tabs'
 
-import {
-	StatusFilter,
-	type TStatusFilter,
-	type TaskStatuses
-} from '@/types/task.types'
+import { StatusFilter, type TStatusFilter, type TaskStatuses } from '@/types/task.types'
+
+import { useGetAllTasks } from '@/utils/api'
 
 import { LastTasksContent } from './components/LastTasksContent/LastTasksContent'
 import { LastTasksHeader } from './components/LastTasksHeader/LastTasksHeader'
-import {
-	$statusType,
-	statusTypeUpdated as updateStatusType
-} from '@/stores/task/store'
+import { TASK_CONFIG } from '@/configs/task.config'
+import { $sortType } from '@/stores/task/sort-type'
+import { $statusType, statusTypeUpdated as updateStatusType } from '@/stores/task/status-type'
 
 export function LastTasks() {
 	const statusType = useUnit($statusType)
+	const sortType = useUnit($sortType)
+	const { data } = useGetAllTasks({
+		status: statusType,
+		sort_by: 'due_date',
+		sort_type: sortType,
+		limit: TASK_CONFIG.DISPLAYED_TASKS_LIMIT,
+		offset: 0
+	})
 
 	const [, setUrlStatus] = useQueryState<TStatusFilter>(
 		'status',
@@ -38,8 +43,8 @@ export function LastTasks() {
 			dir='rtl'
 			onValueChange={changeStatusType}
 		>
-			<LastTasksHeader />
-			<LastTasksContent />
+			<LastTasksHeader tasks={data?.tasks ?? []} />
+			<LastTasksContent tasks={data?.tasks ?? []} />
 		</Tabs>
 	)
 }

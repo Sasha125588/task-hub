@@ -18,7 +18,7 @@ import {
 } from 'lucide-react'
 
 import { type IconData } from './types'
-import { createIconData } from '@/lib/helpers/icon'
+import { createIconData } from '@/lib/helpers/icon/createIconData'
 
 export const NATURE_ICONS: IconData[] = [
 	createIconData('Sun', Sun, 'nature'),

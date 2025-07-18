@@ -1,16 +1,7 @@
-import {
-	Archive,
-	Bookmark,
-	File,
-	FileText,
-	Files,
-	Folder,
-	FolderOpen,
-	Tag
-} from 'lucide-react'
+import { Archive, Bookmark, File, FileText, Files, Folder, FolderOpen, Tag } from 'lucide-react'
 
 import { type IconData } from './types'
-import { createIconData } from '@/lib/helpers/icon'
+import { createIconData } from '@/lib/helpers/icon/createIconData'
 
 export const FILE_ICONS: IconData[] = [
 	createIconData('File', File, 'files'),

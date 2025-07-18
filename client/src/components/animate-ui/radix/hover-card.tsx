@@ -1,23 +1,16 @@
 'use client'
 
-import {
-	AnimatePresence,
-	type HTMLMotionProps,
-	type Transition,
-	motion
-} from 'motion/react'
+import { AnimatePresence, type HTMLMotionProps, type Transition, motion } from 'motion/react'
 import { HoverCard as HoverCardPrimitive } from 'radix-ui'
 import * as React from 'react'
 
-import { cn } from '@/lib/helpers/common'
+import { cn } from '@/lib/helpers/cn'
 
 type HoverCardContextType = {
 	isOpen: boolean
 }
 
-const HoverCardContext = React.createContext<HoverCardContextType | undefined>(
-	undefined
-)
+const HoverCardContext = React.createContext<HoverCardContextType | undefined>(undefined)
 
 const useHoverCard = (): HoverCardContextType => {
 	const context = React.useContext(HoverCardContext)
@@ -45,9 +38,7 @@ const getInitialPosition = (side: Side) => {
 type HoverCardProps = React.ComponentProps<typeof HoverCardPrimitive.Root>
 
 function HoverCard({ children, ...props }: HoverCardProps) {
-	const [isOpen, setIsOpen] = React.useState(
-		props?.open ?? props?.defaultOpen ?? false
-	)
+	const [isOpen, setIsOpen] = React.useState(props?.open ?? props?.defaultOpen ?? false)
 
 	React.useEffect(() => {
 		if (props?.open !== undefined) setIsOpen(props.open)
@@ -74,9 +65,7 @@ function HoverCard({ children, ...props }: HoverCardProps) {
 	)
 }
 
-type HoverCardTriggerProps = React.ComponentProps<
-	typeof HoverCardPrimitive.Trigger
->
+type HoverCardTriggerProps = React.ComponentProps<typeof HoverCardPrimitive.Trigger>
 
 function HoverCardTrigger(props: HoverCardTriggerProps) {
 	return (
@@ -87,9 +76,7 @@ function HoverCardTrigger(props: HoverCardTriggerProps) {
 	)
 }
 
-type HoverCardContentProps = React.ComponentProps<
-	typeof HoverCardPrimitive.Content
-> &
+type HoverCardContentProps = React.ComponentProps<typeof HoverCardPrimitive.Content> &
 	HTMLMotionProps<'div'> & {
 		transition?: Transition
 	}

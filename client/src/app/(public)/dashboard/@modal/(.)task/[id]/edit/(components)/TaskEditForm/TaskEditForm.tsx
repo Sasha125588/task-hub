@@ -27,6 +27,17 @@ export function TaskEditForm({ id }: Props) {
 
 	const { state, form, functions } = useTaskEditForm(id)
 
+	if (state.isLoading) {
+		return (
+			<div className='flex items-center justify-center p-8'>
+				<div className='text-center'>
+					<div className='border-primary mx-auto mb-4 h-8 w-8 animate-spin rounded-full border-b-2'></div>
+					<p className='text-muted-foreground'>{i18n.formatMessage({ id: 'loading.task' })}</p>
+				</div>
+			</div>
+		)
+	}
+
 	return (
 		<Form {...form}>
 			<form
@@ -39,12 +50,10 @@ export function TaskEditForm({ id }: Props) {
 						name='title'
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>
-									{i18n.formatMessage({ id: 'field.title.label' })}
-								</FormLabel>
+								<FormLabel>{i18n.formatMessage({ id: 'field.title.label' })}</FormLabel>
 								<FormControl>
 									<Input
-										disabled={state.loading}
+										disabled={state.isLoading}
 										placeholder={i18n.formatMessage({
 											id: 'field.title.placeholder'
 										})}
@@ -61,9 +70,7 @@ export function TaskEditForm({ id }: Props) {
 						name='dueDate'
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>
-									{i18n.formatMessage({ id: 'field.dueDate.label' })}
-								</FormLabel>
+								<FormLabel>{i18n.formatMessage({ id: 'field.dueDate.label' })}</FormLabel>
 								<FormControl>
 									<DatePicker
 										dateForm={field.value}
@@ -79,9 +86,7 @@ export function TaskEditForm({ id }: Props) {
 						name='iconName'
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>
-									{i18n.formatMessage({ id: 'field.icon.label' })}
-								</FormLabel>
+								<FormLabel>{i18n.formatMessage({ id: 'field.icon.label' })}</FormLabel>
 								<FormControl>
 									<IconPicker
 										value={field.value}
@@ -95,7 +100,7 @@ export function TaskEditForm({ id }: Props) {
 					<Button
 						className='cursor-pointer'
 						type='submit'
-						disabled={state.loading}
+						disabled={state.isLoading}
 					>
 						{i18n.formatMessage({ id: 'button.submit' })}
 					</Button>
@@ -108,7 +113,10 @@ export function TaskEditForm({ id }: Props) {
 							<FormItem>
 								<FormLabel className='pb-3.5'></FormLabel>
 								<FormControl>
-									<SubTasks id={id} />
+									<SubTasks
+										id={id}
+										task={state.data!}
+									/>
 								</FormControl>
 								<FormMessage />
 							</FormItem>

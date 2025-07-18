@@ -2,7 +2,7 @@ import type { PropsWithChildren } from 'react'
 
 import { SidebarProvider } from '@/components/animate-ui/radix/sidebar'
 import { SidebarInset } from '@/components/animate-ui/radix/sidebar'
-import { Header } from '@/components/layout/sidebar/Header'
+import { Header } from '@/components/layout/Header/Header'
 import { AppSidebar } from '@/components/layout/sidebar/Sidebar'
 
 export default function SidebarLayout({ children }: PropsWithChildren) {

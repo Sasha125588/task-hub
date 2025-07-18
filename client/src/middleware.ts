@@ -7,15 +7,12 @@ export async function middleware(request: NextRequest) {
 	if (sessionCookie && ['/signin', '/', '/signup'].includes(pathname)) {
 		return NextResponse.redirect(new URL('/dashboard', request.url))
 	}
-	if (
-		(!sessionCookie && pathname.startsWith('/dashboard')) ||
-		pathname === '/'
-	) {
+	if ((!sessionCookie && pathname.startsWith('/dashboard')) || pathname === '/') {
 		return NextResponse.redirect(new URL('/signin', request.url))
 	}
 	return NextResponse.next()
 }
 
 export const config = {
-	matcher: ['/dashboard', '/signin', '/signup', '/']
+	matcher: ['/dashboard', '/signin', '/signup', '/', '/message']
 }

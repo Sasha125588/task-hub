@@ -3,20 +3,19 @@ import Link from 'next/link'
 
 import { IconDisplay } from '@/components/common/IconPicker'
 
-import type { Task } from '@/types/task.types'
+import type { ModelsTask } from '../../../../../../../../generated/api'
 
 import { timeSlots } from './constants/data'
 import { getTaskWidth, getTimePosition } from './helpers'
 import { PAGES_CONFIG } from '@/configs/pages.config'
 
 interface Props {
-	tasks: Task[]
+	tasks: ModelsTask[]
 	currentTimePosition: number
 }
 
 export function TodayTasksTimeline({ tasks, currentTimePosition }: Props) {
-	const isWithinWorkHours =
-		currentTimePosition >= 0 && currentTimePosition <= 100
+	const isWithinWorkHours = currentTimePosition >= 0 && currentTimePosition <= 100
 
 	return (
 		<div>
@@ -27,9 +26,7 @@ export function TodayTasksTimeline({ tasks, currentTimePosition }: Props) {
 							key={index}
 							className='relative flex flex-col items-center'
 						>
-							<div className='text-muted-foreground mb-2 text-sm font-medium'>
-								{time}
-							</div>
+							<div className='text-muted-foreground mb-2 text-sm font-medium'>{time}</div>
 							<div className='bg-accent/50 h-[400px] w-px' />
 						</div>
 					))}
@@ -46,8 +43,8 @@ export function TodayTasksTimeline({ tasks, currentTimePosition }: Props) {
 					)}
 
 					{tasks.map((task, index) => {
-						const leftPosition = getTimePosition(task.startTime)
-						const width = getTaskWidth(task.startTime, task.endTime)
+						const leftPosition = getTimePosition(task.start_time)
+						const width = getTaskWidth(task.start_time, task.end_time)
 						const verticalPosition = (index % 3) * 30 + 10
 
 						return (
@@ -73,7 +70,7 @@ export function TodayTasksTimeline({ tasks, currentTimePosition }: Props) {
 										<div className='text-primary ml-[-2px] rounded-lg bg-white p-1.5 dark:bg-black dark:text-white'>
 											<IconDisplay
 												size={22}
-												iconName={task.iconName}
+												iconName={task.icon_name}
 											/>
 										</div>
 										<div>
@@ -81,7 +78,7 @@ export function TodayTasksTimeline({ tasks, currentTimePosition }: Props) {
 												{task.title}
 											</h3>
 											<p className='text-xs text-white/90'>
-												{task.startTime} - {task.endTime}
+												{task.start_time} - {task.end_time}
 											</p>
 										</div>
 									</div>

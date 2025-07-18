@@ -1,16 +1,12 @@
 'use client'
 
-import {
-	ChevronDownIcon,
-	ChevronLeftIcon,
-	ChevronRightIcon
-} from 'lucide-react'
+import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
 import * as React from 'react'
 import { DayButton, DayPicker, getDefaultClassNames } from 'react-day-picker'
 
 import { Button, buttonVariants } from '@/components/ui/button'
 
-import { cn } from '@/lib/helpers/common'
+import { cn } from '@/lib/helpers/cn'
 
 function Calendar({
 	className,
@@ -37,16 +33,12 @@ function Calendar({
 			)}
 			captionLayout={captionLayout}
 			formatters={{
-				formatMonthDropdown: date =>
-					date.toLocaleString('default', { month: 'short' }),
+				formatMonthDropdown: date => date.toLocaleString('default', { month: 'short' }),
 				...formatters
 			}}
 			classNames={{
 				root: cn('w-fit', defaultClassNames.root),
-				months: cn(
-					'flex gap-4 flex-col md:flex-row relative',
-					defaultClassNames.months
-				),
+				months: cn('flex gap-4 flex-col md:flex-row relative', defaultClassNames.months),
 				month: cn('flex flex-col w-full gap-4', defaultClassNames.month),
 				nav: cn(
 					'flex items-center gap-1 w-full absolute top-0 inset-x-0 justify-between',
@@ -89,10 +81,7 @@ function Calendar({
 					defaultClassNames.weekday
 				),
 				week: cn('flex w-full mt-2', defaultClassNames.week),
-				week_number_header: cn(
-					'select-none w-(--cell-size)',
-					defaultClassNames.week_number_header
-				),
+				week_number_header: cn('select-none w-(--cell-size)', defaultClassNames.week_number_header),
 				week_number: cn(
 					'text-[0.8rem] select-none text-zinc-500 dark:text-zinc-400',
 					defaultClassNames.week_number
@@ -101,15 +90,9 @@ function Calendar({
 					'relative w-full h-full p-0 text-center [&:first-child[data-selected=true]_button]:rounded-l-md [&:last-child[data-selected=true]_button]:rounded-r-md group/day aspect-square select-none',
 					defaultClassNames.day
 				),
-				range_start: cn(
-					'rounded-l-md bg-zinc-100 dark:bg-zinc-800',
-					defaultClassNames.range_start
-				),
+				range_start: cn('rounded-l-md bg-zinc-100 dark:bg-zinc-800', defaultClassNames.range_start),
 				range_middle: cn('rounded-none', defaultClassNames.range_middle),
-				range_end: cn(
-					'rounded-r-md bg-zinc-100 dark:bg-zinc-800',
-					defaultClassNames.range_end
-				),
+				range_end: cn('rounded-r-md bg-zinc-100 dark:bg-zinc-800', defaultClassNames.range_end),
 				today: cn(
 					'bg-zinc-100 text-zinc-900 rounded-md data-[selected=true]:rounded-none dark:bg-zinc-800 dark:text-zinc-50',
 					defaultClassNames.today
@@ -118,10 +101,7 @@ function Calendar({
 					'text-zinc-500 aria-selected:text-zinc-500 dark:text-zinc-400 dark:aria-selected:text-zinc-400',
 					defaultClassNames.outside
 				),
-				disabled: cn(
-					'text-zinc-500 opacity-50 dark:text-zinc-400',
-					defaultClassNames.disabled
-				),
+				disabled: cn('text-zinc-500 opacity-50 dark:text-zinc-400', defaultClassNames.disabled),
 				hidden: cn('invisible', defaultClassNames.hidden),
 				...classNames
 			}}
@@ -166,7 +146,7 @@ function Calendar({
 				WeekNumber: ({ children, ...props }) => {
 					return (
 						<td {...props}>
-							<div className='size-(--cell-size) flex items-center justify-center text-center'>
+							<div className='flex size-(--cell-size) items-center justify-center text-center'>
 								{children}
 							</div>
 						</td>
@@ -208,7 +188,7 @@ function CalendarDayButton({
 			data-range-end={modifiers.range_end}
 			data-range-middle={modifiers.range_middle}
 			className={cn(
-				'group-data-[focused=true]/day:border-ring group-data-[focused=true]/day:ring-ring/50 min-w-(--cell-size) flex aspect-square size-auto w-full flex-col gap-1 font-normal leading-none data-[range-end=true]:rounded-md data-[range-middle=true]:rounded-none data-[range-start=true]:rounded-md data-[range-end=true]:rounded-r-md data-[range-start=true]:rounded-l-md data-[range-end=true]:bg-zinc-900 data-[range-middle=true]:bg-zinc-100 data-[range-start=true]:bg-zinc-900 data-[selected-single=true]:bg-zinc-900 data-[range-end=true]:text-zinc-50 data-[range-middle=true]:text-zinc-900 data-[range-start=true]:text-zinc-50 data-[selected-single=true]:text-zinc-50 group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:ring-[3px] dark:dark:hover:text-zinc-50 dark:hover:text-zinc-900 dark:data-[range-end=true]:bg-zinc-50 dark:data-[range-middle=true]:bg-zinc-800 dark:data-[range-start=true]:bg-zinc-50 dark:data-[selected-single=true]:bg-zinc-50 dark:data-[range-end=true]:text-zinc-900 dark:data-[range-middle=true]:text-zinc-50 dark:data-[range-start=true]:text-zinc-900 dark:data-[selected-single=true]:text-zinc-900 [&>span]:text-xs [&>span]:opacity-70',
+				'group-data-[focused=true]/day:border-ring group-data-[focused=true]/day:ring-ring/50 flex aspect-square size-auto w-full min-w-(--cell-size) flex-col gap-1 leading-none font-normal group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:ring-[3px] data-[range-end=true]:rounded-md data-[range-end=true]:rounded-r-md data-[range-end=true]:bg-zinc-900 data-[range-end=true]:text-zinc-50 data-[range-middle=true]:rounded-none data-[range-middle=true]:bg-zinc-100 data-[range-middle=true]:text-zinc-900 data-[range-start=true]:rounded-md data-[range-start=true]:rounded-l-md data-[range-start=true]:bg-zinc-900 data-[range-start=true]:text-zinc-50 data-[selected-single=true]:bg-zinc-900 data-[selected-single=true]:text-zinc-50 dark:dark:hover:text-zinc-50 dark:hover:text-zinc-900 dark:data-[range-end=true]:bg-zinc-50 dark:data-[range-end=true]:text-zinc-900 dark:data-[range-middle=true]:bg-zinc-800 dark:data-[range-middle=true]:text-zinc-50 dark:data-[range-start=true]:bg-zinc-50 dark:data-[range-start=true]:text-zinc-900 dark:data-[selected-single=true]:bg-zinc-50 dark:data-[selected-single=true]:text-zinc-900 [&>span]:text-xs [&>span]:opacity-70',
 				defaultClassNames.day,
 				className
 			)}

@@ -1,7 +1,7 @@
 import { Bike, Bus, Car, Fuel, Plane, Train, Truck } from 'lucide-react'
 
 import { type IconData } from './types'
-import { createIconData } from '@/lib/helpers/icon'
+import { createIconData } from '@/lib/helpers/icon/createIconData'
 
 export const TRANSPORTATION_ICONS: IconData[] = [
 	createIconData('Car', Car, 'transportation'),

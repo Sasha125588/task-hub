@@ -17,21 +17,20 @@ import { useUnit } from 'effector-react'
 
 import { MultiStepForm } from '@/components/ui/multi-step-form'
 
-import type { subTask } from '@/types/task.types'
+import type { ModelsSubTask, ModelsTask } from '../../../../../../../../../../../../generated/api'
 
 import { SubTaskItem } from './components/SubTaskItem/SubTaskItem'
-import { $getTaskByID, subTasksReorderer } from '@/stores/task/store'
+import { subTasksReorderer } from '@/stores/task/status-type'
 
 interface Props {
 	id: string
+	task: ModelsTask
 }
 
-export function SubTasks({ id }: Props) {
-	const getTaskByID = useUnit($getTaskByID)
+export function SubTasks({ id, task }: Props) {
 	const reorderSubTasks = useUnit(subTasksReorderer)
-	const task = getTaskByID(id)!
 
-	const subTasks = task.subTasks || []
+	const subTasks = task?.sub_tasks || []
 
 	const sensors = useSensors(
 		useSensor(PointerSensor),
@@ -48,11 +47,7 @@ export function SubTasks({ id }: Props) {
 			const newIndex = subTasks.findIndex(t => t.id === over?.id)
 
 			if (oldIndex !== -1 && newIndex !== -1) {
-				const reordererSubTasks: subTask[] = arrayMove(
-					subTasks,
-					oldIndex,
-					newIndex
-				)
+				const reordererSubTasks: ModelsSubTask[] = arrayMove(subTasks, oldIndex, newIndex)
 				reorderSubTasks({ taskId: id, subTasks: reordererSubTasks })
 			}
 		}
@@ -65,7 +60,7 @@ export function SubTasks({ id }: Props) {
 		>
 			<MultiStepForm taskId={id} />
 			<SortableContext
-				items={subTasks.map(item => item.id)}
+				items={subTasks.map(item => item.id!)}
 				strategy={verticalListSortingStrategy}
 			>
 				{subTasks.map(item => {

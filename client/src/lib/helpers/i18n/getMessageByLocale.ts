@@ -4,7 +4,7 @@ export type Messages = Record<LocaleMessageId, string>;
 
 export const getMessagesByLocale = (locale: string) => {
   try {
-     
+    
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     return require(`../../../../locales/${locale}.json`) as Messages;
   } catch (error: unknown) {

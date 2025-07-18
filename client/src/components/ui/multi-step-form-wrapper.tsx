@@ -1,26 +1,16 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import {
-	CheckCircle2,
-	ChevronLeft,
-	ChevronRight,
-	Circle,
-	LoaderCircle
-} from 'lucide-react'
+import { CheckCircle2, ChevronLeft, ChevronRight, Circle, LoaderCircle } from 'lucide-react'
 import React, { createContext, useCallback, useContext, useState } from 'react'
-import {
-	type DefaultValues,
-	type UseFormReturn,
-	useForm
-} from 'react-hook-form'
+import { type DefaultValues, type UseFormReturn, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import { Button } from '@/components/ui/button'
 
 import { useI18n } from '@/utils/providers'
 
-import { cn } from '@/lib/helpers/common'
+import { cn } from '@/lib/helpers/cn'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -44,18 +34,12 @@ interface MultiStepFormContextType<T extends FormData = FormData> {
 	stepErrors: Record<number, string>
 }
 
-const MultiStepFormContext = createContext<
-	MultiStepFormContextType<any> | undefined
->(undefined)
+const MultiStepFormContext = createContext<MultiStepFormContextType<any> | undefined>(undefined)
 
 export function useMultiStepForm<T extends FormData = FormData>() {
-	const context = useContext(
-		MultiStepFormContext
-	) as MultiStepFormContextType<T>
+	const context = useContext(MultiStepFormContext) as MultiStepFormContextType<T>
 	if (!context) {
-		throw new Error(
-			'useMultiStepForm must be used within a MultiStepFormWrapper'
-		)
+		throw new Error('useMultiStepForm must be used within a MultiStepFormWrapper')
 	}
 	return context
 }
@@ -97,9 +81,7 @@ export interface MultiStepFormWrapperProps<T extends FormData = FormData> {
 	animateStepChange?: boolean
 }
 
-export function Step<T extends FormData = FormData>({
-	children
-}: StepProps<T>): React.ReactNode {
+export function Step<T extends FormData = FormData>({ children }: StepProps<T>): React.ReactNode {
 	return <>{children}</>
 }
 
@@ -279,8 +261,7 @@ export function MultiStepFormWrapper<T extends FormData = FormData>({
 				if (!result) {
 					const formErrors = form.formState.errors
 					const errorMessage =
-						CurrentStepComponent?.props.validationMessage ||
-						'Please fix the validation errors'
+						CurrentStepComponent?.props.validationMessage || 'Please fix the validation errors'
 					setStepErrors(prev => ({ ...prev, [currentStep]: errorMessage }))
 					onStepValidationError?.(currentStep, formErrors)
 					return
@@ -300,8 +281,7 @@ export function MultiStepFormWrapper<T extends FormData = FormData>({
 			try {
 				const isValid = await validate({ ...formData, ...currentFormValues })
 				if (!isValid) {
-					const errorMessage =
-						CurrentStepComponent?.props.validationMessage || 'Validation failed'
+					const errorMessage = CurrentStepComponent?.props.validationMessage || 'Validation failed'
 					setStepErrors(prev => ({ ...prev, [currentStep]: errorMessage }))
 					return
 				}
@@ -370,12 +350,7 @@ export function MultiStepFormWrapper<T extends FormData = FormData>({
 
 	const goToStep = useCallback(
 		(step: number): void => {
-			if (
-				step < 0 ||
-				step >= steps.length ||
-				(!allowSkipSteps && step > currentStep)
-			)
-				return
+			if (step < 0 || step >= steps.length || (!allowSkipSteps && step > currentStep)) return
 
 			const prevStep = currentStep
 			setCurrentStep(step)
@@ -523,9 +498,7 @@ export function MultiStepFormWrapper<T extends FormData = FormData>({
 
 				{stepErrors[currentStep] && (
 					<div className='mb-4 rounded-md border border-red-200 border-zinc-200 bg-red-50 p-3 dark:border-red-800 dark:border-zinc-800 dark:bg-red-900/20'>
-						<p className='text-sm text-red-700 dark:text-red-400'>
-							{stepErrors[currentStep]}
-						</p>
+						<p className='text-sm text-red-700 dark:text-red-400'>{stepErrors[currentStep]}</p>
 					</div>
 				)}
 
@@ -533,15 +506,9 @@ export function MultiStepFormWrapper<T extends FormData = FormData>({
 					<div className='mb-6'>
 						<div className='flex items-start justify-between'>
 							<div>
-								{title && (
-									<h2 className='text-2xl font-bold dark:text-white'>
-										{title}
-									</h2>
-								)}
+								{title && <h2 className='text-2xl font-bold dark:text-white'>{title}</h2>}
 								{description && (
-									<p className='mt-1 text-gray-500 dark:text-gray-400'>
-										{description}
-									</p>
+									<p className='mt-1 text-gray-500 dark:text-gray-400'>{description}</p>
 								)}
 							</div>
 							{allowStepReset && (
@@ -566,9 +533,7 @@ export function MultiStepFormWrapper<T extends FormData = FormData>({
 						animateStepChange && 'transition-all duration-300 ease-in-out'
 					)}
 					style={{
-						transitionDuration: animateStepChange
-							? `${transitionDuration}ms`
-							: undefined
+						transitionDuration: animateStepChange ? `${transitionDuration}ms` : undefined
 					}}
 				>
 					{CurrentStepComponent}

@@ -17,7 +17,7 @@ import {
 } from 'lucide-react'
 
 import { type IconData } from './types'
-import { createIconData } from '@/lib/helpers/icon'
+import { createIconData } from '@/lib/helpers/icon/createIconData'
 
 export const BUSINESS_ICONS: IconData[] = [
 	createIconData('CreditCard', CreditCard, 'business'),

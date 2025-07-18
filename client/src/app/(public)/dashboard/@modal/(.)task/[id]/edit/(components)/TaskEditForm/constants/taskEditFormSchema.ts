@@ -4,7 +4,7 @@ export const TaskStatuses = ['not-started', 'completed', 'in-progress'] as const
 
 export const taskEditFormSchema = z.object({
 	title: z.string().min(1, 'Title is required'),
-	dueDate: z.date(),
+	dueDate: z.date().min(new Date(), { message: 'Due date must be in the future' }),
 	iconName: z.string(),
 	subTasks: z
 		.array(

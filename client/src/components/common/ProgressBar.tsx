@@ -3,7 +3,7 @@ import { useMemo } from 'react'
 
 import { useI18n } from '@/utils/providers'
 
-import { cn } from '@/lib/helpers/common'
+import { cn } from '@/lib/helpers/cn'
 
 interface Props {
 	progress: number
@@ -14,8 +14,7 @@ export function ProgressBar({ progress }: Props) {
 	const clamped = Math.min(100, Math.max(0, progress))
 
 	const progressText = useMemo(() => {
-		if (clamped === 0)
-			return <>{i18n.formatMessage({ id: 'progressBar.notStarted' })}</>
+		if (clamped === 0) return <>{i18n.formatMessage({ id: 'progressBar.notStarted' })}</>
 		if (clamped <= 10) return <></>
 		if (clamped >= 100)
 			return (
@@ -29,7 +28,7 @@ export function ProgressBar({ progress }: Props) {
 			)
 
 		return `${clamped}%`
-	}, [clamped])
+	}, [clamped, i18n])
 
 	const colorProgressBar = useMemo(() => {
 		if (clamped >= 100) return 'bg-emerald-500'

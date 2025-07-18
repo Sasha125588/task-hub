@@ -6,8 +6,7 @@ import {
 	SidebarHeader,
 	SidebarRail
 } from '@/components/animate-ui/radix/sidebar'
-
-import { SIDEBAR_MENU_DATA } from '@/utils/constants/data/sidebar-menu.data'
+import { SIDEBAR_MENU_DATA } from '@/components/layout/sidebar/constants/data/sidebar-menu.data'
 
 import { Account } from './Account'
 import { SidebarItem } from './SidebarItem'

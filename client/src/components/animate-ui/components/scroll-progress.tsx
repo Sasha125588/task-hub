@@ -1,14 +1,9 @@
 'use client'
 
-import {
-	type HTMLMotionProps,
-	motion,
-	useScroll,
-	useSpring
-} from 'motion/react'
+import { type HTMLMotionProps, motion, useScroll, useSpring } from 'motion/react'
 import * as React from 'react'
 
-import { cn } from '@/lib/helpers/common'
+import { cn } from '@/lib/helpers/cn'
 
 type ScrollProgressProps = React.ComponentProps<'div'> & {
 	progressProps?: HTMLMotionProps<'div'>
@@ -24,9 +19,7 @@ function ScrollProgress({
 	const containerRef = React.useRef<HTMLDivElement | null>(null)
 	React.useImperativeHandle(ref, () => containerRef.current as HTMLDivElement)
 
-	const { scrollYProgress } = useScroll(
-		children ? { container: containerRef } : undefined
-	)
+	const { scrollYProgress } = useScroll(children ? { container: containerRef } : undefined)
 
 	const scaleX = useSpring(scrollYProgress, {
 		stiffness: 250,

@@ -1,15 +1,12 @@
-import {
-	AvatarGroup,
-	AvatarGroupTooltip
-} from '@/components/animate-ui/components/avatar-group'
+import { AvatarGroup, AvatarGroupTooltip } from '@/components/animate-ui/components/avatar-group'
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
-
-import type { Task } from '@/types/task.types'
 
 import { useI18n } from '@/utils/providers'
 
+import type { ModelsTask } from '../../../../../../../../generated/api'
+
 interface Props {
-	tasks: Task[]
+	tasks: ModelsTask[]
 }
 
 export function TodayTasksHeader({ tasks }: Props) {
@@ -36,19 +33,17 @@ export function TodayTasksHeader({ tasks }: Props) {
 				</p>
 			</div>
 			<AvatarGroup className='-space-x-3'>
-				{Array.from(new Set(tasks.flatMap(task => task.users))).map(
-					(user, idx) => (
-						<Avatar
-							key={idx}
-							className='border-background size-9 border-1'
-						>
-							<AvatarImage src={user.src} />
-							<AvatarGroupTooltip>
-								<p>{user.name}</p>
-							</AvatarGroupTooltip>
-						</Avatar>
-					)
-				)}
+				{Array.from(new Set(tasks.flatMap(task => task.users))).map((user, idx) => (
+					<Avatar
+						key={idx}
+						className='border-background size-9 border-1'
+					>
+						<AvatarImage src={user?.src || ''} />
+						<AvatarGroupTooltip>
+							<p>{user?.name || ''}</p>
+						</AvatarGroupTooltip>
+					</Avatar>
+				))}
 			</AvatarGroup>
 		</div>
 	)

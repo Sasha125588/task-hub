@@ -17,7 +17,7 @@ import { Label } from '@/components/ui/label'
 
 import { useI18n } from '@/utils/providers'
 
-import { cn } from '@/lib/helpers/common'
+import { cn } from '@/lib/helpers/cn'
 
 const Form = FormProvider
 
@@ -28,9 +28,7 @@ type FormFieldContextValue<
 	name: TName
 }
 
-const FormFieldContext = React.createContext<FormFieldContextValue>(
-	{} as FormFieldContextValue
-)
+const FormFieldContext = React.createContext<FormFieldContextValue>({} as FormFieldContextValue)
 
 const FormField = <
 	TFieldValues extends FieldValues = FieldValues,
@@ -72,9 +70,7 @@ type FormItemContextValue = {
 	id: string
 }
 
-const FormItemContext = React.createContext<FormItemContextValue>(
-	{} as FormItemContextValue
-)
+const FormItemContext = React.createContext<FormItemContextValue>({} as FormItemContextValue)
 
 function FormItem({ className, ...props }: React.ComponentProps<'div'>) {
 	const id = React.useId()
@@ -90,10 +86,7 @@ function FormItem({ className, ...props }: React.ComponentProps<'div'>) {
 	)
 }
 
-function FormLabel({
-	className,
-	...props
-}: React.ComponentProps<typeof LabelPrimitive.Root>) {
+function FormLabel({ className, ...props }: React.ComponentProps<typeof LabelPrimitive.Root>) {
 	const { error, formItemId } = useFormField()
 
 	return (
@@ -117,11 +110,7 @@ function FormControl({ ...props }: React.ComponentProps<typeof Slot>) {
 		<Slot
 			data-slot='form-control'
 			id={formItemId}
-			aria-describedby={
-				!error
-					? `${formDescriptionId}`
-					: `${formDescriptionId} ${formMessageId}`
-			}
+			aria-describedby={!error ? `${formDescriptionId}` : `${formDescriptionId} ${formMessageId}`}
 			aria-invalid={!!error}
 			{...props}
 		/>

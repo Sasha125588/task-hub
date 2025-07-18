@@ -10,5 +10,13 @@ export interface I18nProviderProps {
 }
 
 export const I18nProvider = (props: I18nProviderProps) => (
-	<IntlProvider {...props} />
+	<IntlProvider
+		{...props}
+		defaultLocale='en'
+		onError={err => {
+			if (err.code === 'MISSING_DATA') {
+				console.warn('Missing locale data:', err.message)
+			}
+		}}
+	/>
 )

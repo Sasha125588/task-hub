@@ -39,7 +39,7 @@ import {
 } from 'lucide-react'
 
 import { type IconData } from './types'
-import { createIconData } from '@/lib/helpers/icon'
+import { createIconData } from '@/lib/helpers/icon/createIconData'
 
 export const ACTION_ICONS: IconData[] = [
 	createIconData('Plus', Plus, 'actions'),

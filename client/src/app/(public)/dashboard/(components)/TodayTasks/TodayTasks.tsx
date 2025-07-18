@@ -1,23 +1,21 @@
 'use client'
 
-import { useUnit } from 'effector-react'
-
 import { Card } from '@/components/ui/card'
+
+import { useGetAllTasks } from '@/utils/api'
 
 import { TodayTasksHeader } from './components/TodayTasksHeader/TodayTasksHeader'
 import { TodayTasksTimeline } from './components/TodayTasksTimeline/TodayTasksTimeline'
 import { getCurrentTimePosition } from './components/TodayTasksTimeline/helpers'
-import { $tasks } from '@/stores/task/store'
 
 export function TodayTasks() {
-	const tasks = useUnit($tasks)
-	const todayTasks = tasks.filter(
+	const tasks = useGetAllTasks().data?.tasks || []
+	const todayTasks = tasks?.filter(
 		task =>
-			task.startTime &&
-			task.endTime &&
-			task.dueDate.toDateString() === new Date().toDateString()
+			task?.start_time &&
+			task?.end_time &&
+			new Date(task?.due_date).toDateString() === new Date().toDateString()
 	)
-
 	const currentTimePosition = getCurrentTimePosition()
 
 	return (

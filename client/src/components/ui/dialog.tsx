@@ -1,24 +1,17 @@
 'use client'
 
 import { X } from 'lucide-react'
-import {
-	AnimatePresence,
-	type HTMLMotionProps,
-	type Transition,
-	motion
-} from 'motion/react'
+import { AnimatePresence, type HTMLMotionProps, type Transition, motion } from 'motion/react'
 import { Dialog as DialogPrimitive } from 'radix-ui'
 import * as React from 'react'
 
-import { cn } from '@/lib/helpers/common'
+import { cn } from '@/lib/helpers/cn'
 
 type DialogContextType = {
 	isOpen: boolean
 }
 
-const DialogContext = React.createContext<DialogContextType | undefined>(
-	undefined
-)
+const DialogContext = React.createContext<DialogContextType | undefined>(undefined)
 
 const useDialog = (): DialogContextType => {
 	const context = React.useContext(DialogContext)
@@ -31,9 +24,7 @@ const useDialog = (): DialogContextType => {
 type DialogProps = React.ComponentProps<typeof DialogPrimitive.Root>
 
 function Dialog({ children, ...props }: DialogProps) {
-	const [isOpen, setIsOpen] = React.useState(
-		props?.open ?? props?.defaultOpen ?? false
-	)
+	const [isOpen, setIsOpen] = React.useState(props?.open ?? props?.defaultOpen ?? false)
 
 	React.useEffect(() => {
 		if (props?.open !== undefined) setIsOpen(props.open)
@@ -173,13 +164,13 @@ function DialogContent({
 							}}
 							transition={transition}
 							className={cn(
-								'bg-background fixed left-[50%] top-[50%] z-50 grid w-[calc(100%-2rem)] max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 rounded-xl border p-6 shadow-lg',
+								'bg-background fixed top-[50%] left-[50%] z-50 grid w-[calc(100%-2rem)] max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 rounded-xl border p-6 shadow-lg',
 								className
 							)}
 							{...props}
 						>
 							{children}
-							<DialogPrimitive.Close className='ring-offset-background focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground absolute right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none'>
+							<DialogPrimitive.Close className='ring-offset-background focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground absolute top-4 right-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:pointer-events-none'>
 								<X className='h-4 w-4' />
 								<span className='sr-only'>Close</span>
 							</DialogPrimitive.Close>
@@ -197,10 +188,7 @@ function DialogHeader({ className, ...props }: DialogHeaderProps) {
 	return (
 		<div
 			data-slot='dialog-header'
-			className={cn(
-				'flex flex-col space-y-1.5 text-center sm:text-left',
-				className
-			)}
+			className={cn('flex flex-col space-y-1.5 text-center sm:text-left', className)}
 			{...props}
 		/>
 	)
@@ -212,10 +200,7 @@ function DialogFooter({ className, ...props }: DialogFooterProps) {
 	return (
 		<div
 			data-slot='dialog-footer'
-			className={cn(
-				'flex flex-col-reverse gap-2 sm:flex-row sm:justify-end',
-				className
-			)}
+			className={cn('flex flex-col-reverse gap-2 sm:flex-row sm:justify-end', className)}
 			{...props}
 		/>
 	)
@@ -227,18 +212,13 @@ function DialogTitle({ className, ...props }: DialogTitleProps) {
 	return (
 		<DialogPrimitive.Title
 			data-slot='dialog-title'
-			className={cn(
-				'text-lg font-semibold leading-none tracking-tight',
-				className
-			)}
+			className={cn('text-lg leading-none font-semibold tracking-tight', className)}
 			{...props}
 		/>
 	)
 }
 
-type DialogDescriptionProps = React.ComponentProps<
-	typeof DialogPrimitive.Description
->
+type DialogDescriptionProps = React.ComponentProps<typeof DialogPrimitive.Description>
 
 function DialogDescription({ className, ...props }: DialogDescriptionProps) {
 	return (

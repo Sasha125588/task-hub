@@ -4,15 +4,13 @@ import { AnimatePresence, type Transition, motion } from 'motion/react'
 import { Tooltip as TooltipPrimitive } from 'radix-ui'
 import * as React from 'react'
 
-import { cn } from '@/lib/helpers/common'
+import { cn } from '@/lib/helpers/cn'
 
 type TooltipContextType = {
 	isOpen: boolean
 }
 
-const TooltipContext = React.createContext<TooltipContextType | undefined>(
-	undefined
-)
+const TooltipContext = React.createContext<TooltipContextType | undefined>(undefined)
 
 const useTooltip = (): TooltipContextType => {
 	const context = React.useContext(TooltipContext)
@@ -37,9 +35,7 @@ const getInitialPosition = (side: Side) => {
 	}
 }
 
-type TooltipProviderProps = React.ComponentProps<
-	typeof TooltipPrimitive.Provider
->
+type TooltipProviderProps = React.ComponentProps<typeof TooltipPrimitive.Provider>
 
 function TooltipProvider(props: TooltipProviderProps) {
 	return (
@@ -53,9 +49,7 @@ function TooltipProvider(props: TooltipProviderProps) {
 type TooltipProps = React.ComponentProps<typeof TooltipPrimitive.Root>
 
 function Tooltip(props: TooltipProps) {
-	const [isOpen, setIsOpen] = React.useState(
-		props?.open ?? props?.defaultOpen ?? false
-	)
+	const [isOpen, setIsOpen] = React.useState(props?.open ?? props?.defaultOpen ?? false)
 
 	React.useEffect(() => {
 		if (props?.open !== undefined) setIsOpen(props.open)
@@ -91,9 +85,7 @@ function TooltipTrigger(props: TooltipTriggerProps) {
 	)
 }
 
-type TooltipContentProps = React.ComponentProps<
-	typeof TooltipPrimitive.Content
-> & {
+type TooltipContentProps = React.ComponentProps<typeof TooltipPrimitive.Content> & {
 	transition?: Transition
 	arrow?: boolean
 }
@@ -131,7 +123,7 @@ function TooltipContent({
 							exit={{ opacity: 0, scale: 0, ...initialPosition }}
 							transition={transition}
 							className={cn(
-								'origin-(--radix-tooltip-content-transform-origin) relative w-fit text-balance rounded-md bg-zinc-900 px-3 py-1.5 text-sm text-zinc-50 shadow-md dark:bg-zinc-50 dark:text-zinc-900',
+								'relative w-fit origin-(--radix-tooltip-content-transform-origin) rounded-md bg-zinc-900 px-3 py-1.5 text-sm text-balance text-zinc-50 shadow-md dark:bg-zinc-50 dark:text-zinc-900',
 								className
 							)}
 						>

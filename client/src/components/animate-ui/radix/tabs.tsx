@@ -9,7 +9,7 @@ import {
 	MotionHighlightItem
 } from '@/components/animate-ui/effects/motion-highlight'
 
-import { cn } from '@/lib/helpers/common'
+import { cn } from '@/lib/helpers/cn'
 
 type TabsProps = React.ComponentProps<typeof TabsPrimitive.Root>
 
@@ -43,15 +43,11 @@ function TabsList({
 	const localRef = React.useRef<HTMLDivElement | null>(null)
 	React.useImperativeHandle(ref, () => localRef.current as HTMLDivElement)
 
-	const [activeValue, setActiveValue] = React.useState<string | undefined>(
-		undefined
-	)
+	const [activeValue, setActiveValue] = React.useState<string | undefined>(undefined)
 
 	const getActiveValue = React.useCallback(() => {
 		if (!localRef.current) return
-		const activeTab = localRef.current.querySelector<HTMLElement>(
-			'[data-state=active]'
-		)
+		const activeTab = localRef.current.querySelector<HTMLElement>('[data-state=active]')
 		if (!activeTab) return
 		setActiveValue(activeTab.getAttribute('data-value') ?? undefined)
 	}, [])
@@ -77,10 +73,7 @@ function TabsList({
 	return (
 		<MotionHighlight
 			controlledItems
-			className={cn(
-				'bg-primary/10 dark:bg-primary/15 shadow-xs rounded-lg',
-				activeClassName
-			)}
+			className={cn('bg-primary/10 dark:bg-primary/15 rounded-lg shadow-xs', activeClassName)}
 			value={activeValue}
 			transition={transition}
 		>
@@ -110,7 +103,7 @@ function TabsTrigger({ className, value, ...props }: TabsTriggerProps) {
 			<TabsPrimitive.Trigger
 				data-slot='tabs-trigger'
 				className={cn(
-					'z-[1] inline-flex size-full cursor-pointer items-center justify-center whitespace-nowrap rounded-full px-2 py-1 text-sm font-medium ring-offset-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:text-zinc-950 dark:ring-offset-zinc-950 dark:focus-visible:ring-zinc-300 dark:data-[state=active]:text-zinc-50',
+					'z-[1] inline-flex size-full cursor-pointer items-center justify-center rounded-full px-2 py-1 text-sm font-medium whitespace-nowrap ring-offset-white transition-all focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 data-[state=active]:text-zinc-950 dark:ring-offset-zinc-950 dark:focus-visible:ring-zinc-300 dark:data-[state=active]:text-zinc-50',
 					className
 				)}
 				value={value}

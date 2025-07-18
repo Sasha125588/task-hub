@@ -1,15 +1,10 @@
 'use client'
 
-import {
-	AnimatePresence,
-	LayoutGroup,
-	type Transition,
-	motion
-} from 'motion/react'
+import { AnimatePresence, LayoutGroup, type Transition, motion } from 'motion/react'
 import * as React from 'react'
 import { createPortal } from 'react-dom'
 
-import { cn } from '@/lib/helpers/common'
+import { cn } from '@/lib/helpers/cn'
 
 type Side = 'top' | 'bottom' | 'left' | 'right'
 
@@ -34,9 +29,7 @@ type GlobalTooltipContextType = {
 	globalId: string
 }
 
-const GlobalTooltipContext = React.createContext<
-	GlobalTooltipContextType | undefined
->(undefined)
+const GlobalTooltipContext = React.createContext<GlobalTooltipContextType | undefined>(undefined)
 
 const useGlobalTooltip = () => {
 	const context = React.useContext(GlobalTooltipContext)
@@ -180,8 +173,7 @@ function TooltipProvider({
 	transition = { type: 'spring', stiffness: 300, damping: 25 }
 }: TooltipProviderProps) {
 	const globalId = React.useId()
-	const [currentTooltip, setCurrentTooltip] =
-		React.useState<TooltipData | null>(null)
+	const [currentTooltip, setCurrentTooltip] = React.useState<TooltipData | null>(null)
 	const timeoutRef = React.useRef<number | null>(null)
 	const lastCloseTimeRef = React.useRef<number>(0)
 
@@ -194,10 +186,7 @@ function TooltipProvider({
 			}
 			const now = Date.now()
 			const delay = now - lastCloseTimeRef.current < closeDelay ? 0 : openDelay
-			timeoutRef.current = window.setTimeout(
-				() => setCurrentTooltip(data),
-				delay
-			)
+			timeoutRef.current = window.setTimeout(() => setCurrentTooltip(data), delay)
 		},
 		[openDelay, closeDelay, currentTooltip]
 	)
@@ -301,13 +290,11 @@ function TooltipOverlay() {
 							animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
 							exit={{ opacity: 0, scale: 0, ...position.initial }}
 							transition={transition}
-							className='fill-primary relative w-fit text-balance rounded-md bg-zinc-900 px-3 py-1.5 text-sm text-zinc-50 shadow-md dark:bg-zinc-50 dark:text-zinc-900'
+							className='fill-primary relative w-fit rounded-md bg-zinc-900 px-3 py-1.5 text-sm text-balance text-zinc-50 shadow-md dark:bg-zinc-50 dark:text-zinc-900'
 						>
 							{currentTooltip.content}
 
-							{currentTooltip.arrow && (
-								<TooltipArrow side={currentTooltip.side} />
-							)}
+							{currentTooltip.arrow && <TooltipArrow side={currentTooltip.side} />}
 						</motion.div>
 					</motion.div>
 				</TooltipPortal>
@@ -328,9 +315,7 @@ type TooltipContextType = {
 	id: string
 }
 
-const TooltipContext = React.createContext<TooltipContextType | undefined>(
-	undefined
-)
+const TooltipContext = React.createContext<TooltipContextType | undefined>(undefined)
 
 const useTooltip = () => {
 	const context = React.useContext(TooltipContext)
@@ -397,8 +382,7 @@ type TooltipTriggerProps = {
 }
 
 function TooltipTrigger({ children }: TooltipTriggerProps) {
-	const { content, side, sideOffset, align, alignOffset, id, arrow } =
-		useTooltip()
+	const { content, side, sideOffset, align, alignOffset, id, arrow } = useTooltip()
 	const { showTooltip, hideTooltip, currentTooltip } = useGlobalTooltip()
 	const triggerRef = React.useRef<HTMLElement>(null)
 
@@ -453,8 +437,7 @@ function TooltipTrigger({ children }: TooltipTriggerProps) {
 		if (currentTooltip?.id !== id) return
 		if (!triggerRef.current) return
 
-		if (currentTooltip.content === content && currentTooltip.arrow === arrow)
-			return
+		if (currentTooltip.content === content && currentTooltip.arrow === arrow) return
 
 		const rect = triggerRef.current.getBoundingClientRect()
 		showTooltip({

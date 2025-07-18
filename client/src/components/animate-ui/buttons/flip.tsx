@@ -1,14 +1,9 @@
 'use client'
 
-import {
-	type HTMLMotionProps,
-	type Transition,
-	type Variant,
-	motion
-} from 'motion/react'
+import { type HTMLMotionProps, type Transition, type Variant, motion } from 'motion/react'
 import * as React from 'react'
 
-import { cn } from '@/lib/helpers/common'
+import { cn } from '@/lib/helpers/cn'
 
 type FlipDirection = 'top' | 'bottom' | 'left' | 'right'
 
@@ -22,8 +17,7 @@ type FlipButtonProps = HTMLMotionProps<'button'> & {
 	from?: FlipDirection
 }
 
-const DEFAULT_SPAN_CLASS_NAME =
-	'absolute inset-0 flex items-center justify-center rounded-lg'
+const DEFAULT_SPAN_CLASS_NAME = 'absolute inset-0 flex items-center justify-center rounded-lg'
 
 function FlipButton({
 	frontText,
@@ -81,7 +75,7 @@ function FlipButton({
 			animate={currentState}
 			whileTap={flipped ? 'initial' : 'hover'}
 			className={cn(
-				'perspective-[1000px] relative inline-block h-10 cursor-pointer px-3 py-2 text-sm font-medium focus:outline-none',
+				'relative inline-block h-10 cursor-pointer px-3 py-2 text-sm font-medium perspective-[1000px] focus:outline-none',
 				className
 			)}
 			onClick={handleClick}
@@ -103,11 +97,7 @@ function FlipButton({
 				data-slot='flip-button-back'
 				variants={backVariants}
 				transition={transition}
-				className={cn(
-					DEFAULT_SPAN_CLASS_NAME,
-					'bg-primary text-primary-foreground',
-					backClassName
-				)}
+				className={cn(DEFAULT_SPAN_CLASS_NAME, 'bg-primary text-primary-foreground', backClassName)}
 			>
 				{backText}
 			</motion.span>

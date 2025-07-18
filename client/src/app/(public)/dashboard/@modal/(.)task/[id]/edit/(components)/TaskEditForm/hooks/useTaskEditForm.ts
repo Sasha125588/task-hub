@@ -2,45 +2,65 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { format } from 'date-fns'
-import { useUnit } from 'effector-react'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
+import { useGetTaskById, useUpdateTask } from '@/utils/api'
 import { useI18n } from '@/utils/providers'
 
 import { taskEditFormSchema } from '../constants/taskEditFormSchema'
-
-import { $getTaskByID, taskUpdated as updateTask } from '@/stores/task/store'
 
 type TaskFormValues = z.infer<typeof taskEditFormSchema>
 
 export const useTaskEditForm = (id: string) => {
 	const i18n = useI18n()
-	const [loading, setLoading] = useState(false)
 	const router = useRouter()
-	const task = useUnit($getTaskByID)(id)
+	const { data, isLoading } = useGetTaskById(id)
+	const updateTask = useUpdateTask().mutateAsync
 
 	const form = useForm<TaskFormValues>({
 		resolver: zodResolver(taskEditFormSchema),
-		defaultValues: task
+		defaultValues: {
+			title: '',
+			dueDate: new Date(),
+			iconName: '',
+			subTasks: []
+		}
 	})
 
-	const onSubmit = form.handleSubmit((values: TaskFormValues) => {
-		setLoading(true)
-		updateTask({ id, ...values })
+	const onSubmit = form.handleSubmit(async (values: TaskFormValues) => {
+		await updateTask({
+			id,
+			params: {
+				title: values.title,
+				due_date: values.dueDate.toISOString(),
+				icon_name: values.iconName
+			}
+		})
 		toast.success(i18n.formatMessage({ id: 'toast.taskUpdated' }), {
 			description: `${format(new Date(), 'Pp')}`
 		})
-		setLoading(false)
 		router.back()
 	})
 
+	useEffect(() => {
+		if (data) {
+			form.reset({
+				title: data.title,
+				dueDate: new Date(data.due_date),
+				iconName: data.icon_name,
+				subTasks: data.sub_tasks
+			})
+		}
+	}, [data, form])
+
 	return {
 		state: {
-			loading
+			data,
+			isLoading
 		},
 		form,
 		functions: { onSubmit }

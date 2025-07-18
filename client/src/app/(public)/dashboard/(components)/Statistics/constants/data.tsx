@@ -1,4 +1,4 @@
-import type { StatisticsCard } from '@/types/statistics.card.types'
+import type { StatisticsCard } from './statistics.card.types'
 
 export const STATISTICS_CARDS: StatisticsCard[] = [
 	{

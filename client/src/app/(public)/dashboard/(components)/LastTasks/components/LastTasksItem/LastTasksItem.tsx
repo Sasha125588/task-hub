@@ -1,12 +1,8 @@
-import { useUnit } from 'effector-react'
 import { Image as ImageIcon } from 'lucide-react'
 import { motion } from 'motion/react'
 import Link from 'next/link'
 
-import {
-	AvatarGroup,
-	AvatarGroupTooltip
-} from '@/components/animate-ui/components/avatar-group'
+import { AvatarGroup, AvatarGroupTooltip } from '@/components/animate-ui/components/avatar-group'
 import { BrushIcon } from '@/components/animate-ui/icons/brush-icon'
 import { MessageSquareMore } from '@/components/animate-ui/icons/message-square-more-icon'
 import { PlusIcon } from '@/components/animate-ui/icons/plus-icon'
@@ -17,23 +13,27 @@ import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { Card, CardContent } from '@/components/ui/card'
 import { GlowingEffect } from '@/components/ui/glowing-effect'
 
-import type { Task } from '@/types/task.types'
-
+import { useDeleteTask } from '@/utils/api'
 import { useI18n } from '@/utils/providers'
 
+import type { ModelsTask } from '../../../../../../../../generated/api'
+
 import { PAGES_CONFIG } from '@/configs/pages.config'
-import { getDaysUntilDue } from '@/lib/helpers/date'
-import { taskDeleted } from '@/stores/task/store'
+import { getDaysUntilDue } from '@/lib/helpers/date/getDaysUntilDue'
 
 interface Props {
-	item: Task
+	item: ModelsTask
 }
 
 export function LastTasksItem({ item }: Props) {
 	const i18n = useI18n()
 
-	const deleteTask = useUnit(taskDeleted)
-	const dueDate = getDaysUntilDue(item.dueDate)
+	const deleteTaskMutation = useDeleteTask().mutate
+	const dueDate = getDaysUntilDue(new Date(item.due_date ?? ''))
+
+	const handleDeleteTask = () => {
+		deleteTaskMutation(item.id!)
+	}
 
 	return (
 		<Card className='relative overflow-visible'>
@@ -48,7 +48,7 @@ export function LastTasksItem({ item }: Props) {
 				<div className='flex items-center justify-between'>
 					<div className='flex min-w-0 items-center gap-2'>
 						<div className='bg-primary/10 flex size-10 shrink-0 items-center justify-center rounded-lg shadow-md'>
-							<IconDisplay iconName={item.iconName} />
+							<IconDisplay iconName={item.icon_name} />
 						</div>
 						<div className='@container w-[250px]'>
 							<h3 className='truncate text-sm font-medium @[400px]:whitespace-normal @[600px]:truncate'>
@@ -60,22 +60,24 @@ export function LastTasksItem({ item }: Props) {
 							</p>
 						</div>
 					</div>
-					<AvatarGroup className='-space-x-3'>
-						{item.users.map((user, idx) => (
-							<Avatar
-								key={idx}
-								className='border-background size-9 border-1'
-							>
-								<AvatarImage src={user.src} />
-								<AvatarGroupTooltip>
-									<p>{user.name}</p>
-								</AvatarGroupTooltip>
-							</Avatar>
-						))}
-					</AvatarGroup>
+					{item.users && (
+						<AvatarGroup className='-space-x-3'>
+							{item.users.map((user, idx) => (
+								<Avatar
+									key={idx}
+									className='border-background size-9 border-1'
+								>
+									<AvatarImage src={user.src} />
+									<AvatarGroupTooltip>
+										<p>{user.name}</p>
+									</AvatarGroupTooltip>
+								</Avatar>
+							))}
+						</AvatarGroup>
+					)}
 				</div>
 
-				<ProgressBar progress={item.progress} />
+				<ProgressBar progress={item.progress ?? 0} />
 
 				<div className='text-muted-foreground flex items-center justify-between text-xs'>
 					<div className='flex items-center gap-4'>
@@ -85,9 +87,7 @@ export function LastTasksItem({ item }: Props) {
 								size={18}
 								className='cursor-pointer'
 							/>
-							<p className='text-accent-foreground cursor-default text-base'>
-								{item.comments}
-							</p>
+							<p className='text-accent-foreground cursor-default text-base'>{item.comments}</p>
 						</div>
 						<div className='flex items-center gap-1'>
 							<motion.div
@@ -100,9 +100,7 @@ export function LastTasksItem({ item }: Props) {
 								/>
 							</motion.div>
 
-							<p className='text-accent-foreground cursor-default text-base'>
-								{item.attachments}
-							</p>
+							<p className='text-accent-foreground cursor-default text-base'>{item.attachments}</p>
 						</div>
 						<div className='flex items-center gap-1'>
 							<SquareArrowOutUpRight
@@ -110,25 +108,12 @@ export function LastTasksItem({ item }: Props) {
 								size={18}
 								animateOnHover
 							/>
-							<p className='text-accent-foreground cursor-default text-base'>
-								{item.links}
-							</p>
+							<p className='text-accent-foreground cursor-default text-base'>{item.links}</p>
 						</div>
 					</div>
 					<div className='flex gap-3'>
-						<div
-							onClick={() => deleteTask(item.id)}
-							className='bg-primary dark:bg-chart-3 flex size-9 items-center justify-center rounded-full'
-						>
-							<PlusIcon
-								color='white'
-								className='cursor-pointer'
-								animateOnHover
-								size={24}
-							/>
-						</div>
 						<div className='border-primary/75 flex size-9 items-center justify-center rounded-full border-[1.5px]'>
-							<Link href={PAGES_CONFIG.EDIT_TASK_URL(item.id)}>
+							<Link href={PAGES_CONFIG.EDIT_TASK_URL(item.id!)}>
 								<BrushIcon
 									className='cursor-pointer'
 									animateOnHover
@@ -136,6 +121,17 @@ export function LastTasksItem({ item }: Props) {
 									color='var(--primary)'
 								/>
 							</Link>
+						</div>
+						<div
+							onClick={handleDeleteTask}
+							className='flex size-9 items-center justify-center rounded-full bg-rose-600'
+						>
+							<PlusIcon
+								color='white'
+								className='cursor-pointer'
+								animateOnHover
+								size={24}
+							/>
 						</div>
 					</div>
 				</div>

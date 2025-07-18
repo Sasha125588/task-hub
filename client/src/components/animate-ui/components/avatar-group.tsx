@@ -12,7 +12,7 @@ import {
 	TooltipTrigger
 } from '@/components/animate-ui/components/tooltip'
 
-import { cn } from '@/lib/helpers/common'
+import { cn } from '@/lib/helpers/cn'
 
 type AvatarProps = TooltipProps & {
 	children: React.ReactNode
@@ -21,13 +21,7 @@ type AvatarProps = TooltipProps & {
 	translate: string | number
 }
 
-function AvatarContainer({
-	children,
-	zIndex,
-	transition,
-	translate,
-	...props
-}: AvatarProps) {
+function AvatarContainer({ children, zIndex, transition, translate, ...props }: AvatarProps) {
 	return (
 		<Tooltip {...props}>
 			<TooltipTrigger>
@@ -92,9 +86,7 @@ function AvatarGroup({
 				{children?.map((child, index) => (
 					<AvatarContainer
 						key={index}
-						zIndex={
-							invertOverlap ? React.Children.count(children) - index : index
-						}
+						zIndex={invertOverlap ? React.Children.count(children) - index : index}
 						transition={transition}
 						translate={translate}
 						{...tooltipProps}
@@ -107,9 +99,4 @@ function AvatarGroup({
 	)
 }
 
-export {
-	AvatarGroup,
-	AvatarGroupTooltip,
-	type AvatarGroupProps,
-	type AvatarGroupTooltipProps
-}
+export { AvatarGroup, AvatarGroupTooltip, type AvatarGroupProps, type AvatarGroupTooltipProps }
