@@ -4,22 +4,17 @@ import React, { useState } from 'react'
 
 import { Checkbox } from '@/components/ui/checkbox'
 
-import type { subTask } from '@/types/task.types'
+import type { ModelsSubTask } from '../../../../../../../../../../../../../../generated/api'
 
 interface Props {
-	item: subTask
+	item: ModelsSubTask
 }
 
 export function SubTaskItem({ item }: Props) {
 	const [checked] = useState<boolean>(item.status === 'completed')
-	const {
-		attributes,
-		listeners,
-		setNodeRef,
-		transform,
-		transition,
-		isDragging
-	} = useSortable({ id: item.id })
+	const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+		id: item.id!
+	})
 
 	const style = {
 		transform: CSS.Transform.toString(transform),
@@ -42,9 +37,7 @@ export function SubTaskItem({ item }: Props) {
 				>
 					<div className='flex-1'>
 						<h4 className='text-sm font-medium'>{item.title}</h4>
-						{item.description && (
-							<p className='mt-1 text-xs text-gray-400'>{item.description}</p>
-						)}
+						{item.description && <p className='mt-1 text-xs text-gray-400'>{item.description}</p>}
 					</div>
 				</div>
 			</div>
