@@ -113,9 +113,7 @@ export function Account() {
 			</Avatar>
 			<div className='grid flex-1 text-left text-sm leading-tight'>
 				<span className='truncate font-medium'>{userName}</span>
-				<span className='text-muted-foreground truncate text-xs'>
-					{userEmail}
-				</span>
+				<span className='text-muted-foreground truncate text-xs'>{userEmail}</span>
 			</div>
 		</div>
 	)

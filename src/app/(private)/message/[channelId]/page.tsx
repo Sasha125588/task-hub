@@ -2,7 +2,6 @@
 
 import { use } from 'react'
 
-import { sendMessage } from '@/utils/api'
 import { useChatStore } from '@/utils/hooks/useChatStore'
 
 import { ChatWindow } from '../(components)/ChatWindow/ChatWindow'
@@ -13,13 +12,12 @@ interface ChannelPageProps {
 
 export default function ChannelPage({ params }: ChannelPageProps) {
 	const { channelId } = use(params)
-	const channelIdNumber = parseInt(channelId)
 
 	const { messages, channels } = useChatStore({
-		channelId: channelIdNumber
+		channelId
 	})
 
-	const currentChannel = channels.find(ch => ch.id === channelIdNumber)
+	const currentChannel = channels.find(ch => ch.id === channelId)
 
 	if (!currentChannel) {
 		return (
@@ -34,16 +32,10 @@ export default function ChannelPage({ params }: ChannelPageProps) {
 		)
 	}
 
-	const handleSendMessage = async (message: string, channelId: number, userId: string) => {
-		await sendMessage(message, channelId, userId)
-	}
-
 	return (
 		<ChatWindow
 			channel={currentChannel}
 			messages={messages}
-			isConnected={true}
-			onSendMessage={handleSendMessage}
 		/>
 	)
 }

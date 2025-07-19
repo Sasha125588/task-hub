@@ -8,25 +8,24 @@ import { Input } from '@/components/ui/input'
 
 import type { ChatChannel, ChatMessage } from '@/types/chat.types'
 
+import { useSendMessage } from '@/utils/api/hooks/chat/usePostSendMessage'
 import { useChatScroll } from '@/utils/hooks/useChatScroll'
 import { useChatUser } from '@/utils/hooks/useChatUser'
 
 import { ChatMessageItem } from './components/MessageItem/ChatMessageItem'
-import { cn } from '@/lib/helpers/cn'
 
 interface ChatWindowProps {
 	channel: ChatChannel
 	messages: ChatMessage[]
-	isConnected: boolean
-	onSendMessage: (message: string, channelId: number, userId: string) => void
 }
 
-export function ChatWindow({ channel, messages, onSendMessage, isConnected }: ChatWindowProps) {
+export function ChatWindow({ channel, messages }: ChatWindowProps) {
 	const { containerRef, scrollToBottom } = useChatScroll()
-	const { userId, username } = useChatUser()
+	const { userId } = useChatUser()
 
 	const [newMessage, setNewMessage] = useState('')
-	const [isSending, setIsSending] = useState(false)
+
+	const { mutate: sendMessage, isPending } = useSendMessage()
 
 	useEffect(() => {
 		scrollToBottom()
@@ -35,16 +34,8 @@ export function ChatWindow({ channel, messages, onSendMessage, isConnected }: Ch
 	const handleSendMessage = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 
-		setIsSending(true)
-
-		try {
-			onSendMessage(newMessage, channel.id, userId!)
-			setNewMessage('')
-		} catch (error) {
-			console.error(error)
-		} finally {
-			setIsSending(false)
-		}
+		sendMessage({ message: newMessage, channelId: channel.id, userId: userId! })
+		setNewMessage('')
 	}
 
 	return (
@@ -53,13 +44,6 @@ export function ChatWindow({ channel, messages, onSendMessage, isConnected }: Ch
 				<div className='flex items-center gap-2'>
 					<span className='text-muted-foreground text-xl'>#</span>
 					<h1 className='text-lg font-semibold'>{channel.slug}</h1>
-					<div
-						className={cn(
-							'ml-auto h-2 w-2 rounded-full transition-colors duration-300',
-							isConnected ? 'bg-green-500' : 'bg-yellow-500'
-						)}
-						title={isConnected ? 'Connected' : 'Connecting...'}
-					/>
 				</div>
 			</div>
 
@@ -78,7 +62,6 @@ export function ChatWindow({ channel, messages, onSendMessage, isConnected }: Ch
 								<ChatMessageItem
 									key={message.id}
 									message={message}
-									username={username}
 								/>
 							)
 						})}
@@ -96,15 +79,15 @@ export function ChatWindow({ channel, messages, onSendMessage, isConnected }: Ch
 					value={newMessage}
 					onChange={e => setNewMessage(e.target.value)}
 					placeholder={`Message #${channel.slug}...`}
-					disabled={isSending}
+					disabled={isPending}
 				/>
 				{newMessage && (
 					<Button
 						className='aspect-square rounded-full'
 						type='submit'
-						disabled={isSending}
+						disabled={isPending}
 					>
-						{isSending ? (
+						{isPending ? (
 							<div className='h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent' />
 						) : (
 							<Send className='size-4' />

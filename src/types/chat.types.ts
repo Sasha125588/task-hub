@@ -5,18 +5,18 @@ export interface ChatUser {
 }
 
 export interface ChatChannel {
-	id: number
+	id: string
 	inserted_at: string
 	slug: string
 	created_by: string
 }
 
 export interface ChatMessage {
-	id: number
+	id: string
 	inserted_at: string
 	message: string
 	user_id: string
-	channel_id: number
+	channel_id: string
 	author?: ChatUser
 }
 
@@ -24,7 +24,7 @@ export interface ChatState {
 	channels: ChatChannel[]
 	messages: ChatMessage[]
 	users: Map<string, ChatUser>
-	currentChannelId: number | null
+	currentChannelId: string | null
 	isConnected: boolean
 	isLoading: boolean
 }

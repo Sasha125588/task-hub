@@ -2,13 +2,17 @@ import { formatDate } from 'date-fns'
 
 import type { ChatMessage } from '@/types/chat.types'
 
+import { useGetUser } from '@/utils/api/hooks/chat/useGetUser'
+
 interface ChatMessageItemProps {
 	message: ChatMessage
-	username: string
 }
 
-export function ChatMessageItem({ message, username }: ChatMessageItemProps) {
+export function ChatMessageItem({ message }: ChatMessageItemProps) {
 	const formattedTime = formatDate(message.inserted_at, 'p')
+	const { data: user } = useGetUser(message.user_id)
+
+	const username = user?.name
 
 	return (
 		<div className='group hover:bg-muted/50 relative rounded-lg px-4 py-1 transition-colors'>

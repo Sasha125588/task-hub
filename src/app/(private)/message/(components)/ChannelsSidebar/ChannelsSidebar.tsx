@@ -47,7 +47,7 @@ export function ChannelsSidebar() {
 		}
 	}
 
-	const handleDeleteChannel = async (channelId: number) => {
+	const handleDeleteChannel = async (channelId: string) => {
 		try {
 			await deleteChannel(channelId)
 		} catch (error) {

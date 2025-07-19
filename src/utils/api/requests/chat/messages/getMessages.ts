@@ -3,7 +3,7 @@ import type { ChatMessage } from '@/types/chat.types'
 import { supabase } from '@/lib/supabase/client'
 
 export const getMessages = async (
-	channelId: number,
+	channelId: string,
 	setState?: (messages: ChatMessage[]) => void
 ) => {
 	try {

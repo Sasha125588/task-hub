@@ -21,6 +21,7 @@ export const auth = betterAuth({
 	database: new Pool({
 		connectionString: process.env.NEXT_PUBLIC_DATABASE_URL
 	}),
+
 	emailAndPassword: {
 		enabled: true,
 		requireEmailVerification: false
