@@ -25,5 +25,11 @@ export const auth = betterAuth({
 		enabled: true,
 		requireEmailVerification: false
 	},
-	plugins: [nextCookies()]
+	plugins: [nextCookies()],
+	trustedOrigins: [
+		'http://localhost:3000',
+		(process.env.NEXT_PUBLIC_VERCEL_URL
+			? `${process.env.NEXT_PUBLIC_VERCEL_URL}`
+			: undefined) as string
+	]
 })
