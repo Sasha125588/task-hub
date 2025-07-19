@@ -7,7 +7,8 @@ import { Separator } from '@/components/ui/separator'
 
 import { useI18n } from '@/utils/providers'
 
-import { LanguageSwitcher } from './LanguageSwitcher'
+import { LanguageSwitcher } from '../../common/LanguageSwitcher'
+
 import { SearchForm } from './Search'
 
 export function Header() {
