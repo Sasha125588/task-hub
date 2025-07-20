@@ -1,9 +1,9 @@
 import { useSession } from '@/lib/better-auth/auth-client'
 
-export const useChatUser = () => {
-	const { data: session, isPending } = useSession()
+export const useUser = () => {
+	const { data, isPending } = useSession()
 
-	const currentUser = session?.user
+	const currentUser = data?.user
 	const userId = currentUser?.id
 	const username = currentUser?.name || currentUser?.email || 'Anonymous'
 
@@ -11,6 +11,6 @@ export const useChatUser = () => {
 		currentUser,
 		userId,
 		username,
-		isLoading: isPending
+		isPending
 	}
 }

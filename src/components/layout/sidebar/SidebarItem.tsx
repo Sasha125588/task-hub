@@ -3,7 +3,6 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { match } from 'path-to-regexp'
-import * as React from 'react'
 
 import {
 	SidebarGroup,
@@ -21,7 +20,6 @@ import type { SidebarSection } from './types'
 export function SidebarItem({ item }: { item: SidebarSection }) {
 	const pathname = usePathname()
 	const pageName = pathname === '/' ? '/' : '/' + pathname.split('/')[1]
-	console.log(pageName)
 	const i18n = useI18n()
 	return (
 		<SidebarGroup key={item.title}>
@@ -48,9 +46,7 @@ export function SidebarItem({ item }: { item: SidebarSection }) {
 											href={item.url}
 											className='flex items-center gap-3'
 										>
-											<div className={`m-0 flex h-5 w-5 items-center p-0`}>
-												{item.icon}
-											</div>
+											<div className={`m-0 flex h-5 w-5 items-center p-0`}>{item.icon}</div>
 											<p>
 												{i18n.formatMessage({
 													id: `sidebar.menu.${item.title}`

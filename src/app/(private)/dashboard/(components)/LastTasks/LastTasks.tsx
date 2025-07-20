@@ -7,7 +7,7 @@ import { Tabs } from '@/components/animate-ui/radix/tabs'
 
 import { StatusFilter, type TStatusFilter, type TaskStatuses } from '@/types/task.types'
 
-import { useGetAllTasks } from '@/utils/api'
+import { useGetAllTasksQuery } from '@/utils/api'
 
 import { LastTasksContent } from './components/LastTasksContent/LastTasksContent'
 import { LastTasksHeader } from './components/LastTasksHeader/LastTasksHeader'
@@ -18,7 +18,7 @@ import { $statusType, statusTypeUpdated as updateStatusType } from '@/stores/tas
 export function LastTasks() {
 	const statusType = useUnit($statusType)
 	const sortType = useUnit($sortType)
-	const { data } = useGetAllTasks({
+	const { data } = useGetAllTasksQuery({
 		status: statusType,
 		sort_by: 'due_date',
 		sort_type: sortType,

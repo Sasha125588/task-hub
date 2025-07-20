@@ -2,7 +2,7 @@ import { formatDate } from 'date-fns'
 
 import type { ChatMessage } from '@/types/chat.types'
 
-import { useGetUser } from '@/utils/api/hooks/chat/useGetUser'
+import { useGetUserQuery } from '@/utils/api/hooks/chat/useGetUserQuery'
 
 interface ChatMessageItemProps {
 	message: ChatMessage
@@ -10,7 +10,7 @@ interface ChatMessageItemProps {
 
 export function ChatMessageItem({ message }: ChatMessageItemProps) {
 	const formattedTime = formatDate(message.inserted_at, 'p')
-	const { data: user } = useGetUser(message.user_id)
+	const { data: user } = useGetUserQuery(message.user_id)
 
 	const username = user?.name
 

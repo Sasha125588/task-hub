@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid'
 
-import type { sendMessageRequest } from '@/utils/api/hooks/chat/usePostSendMessage'
+import type { sendMessageRequest } from '@/utils/api/hooks/chat/usePostSendMessageMutation'
 
 import { supabase } from '@/lib/supabase/client'
 

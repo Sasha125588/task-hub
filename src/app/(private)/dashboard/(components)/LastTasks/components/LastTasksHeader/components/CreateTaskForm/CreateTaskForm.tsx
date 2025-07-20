@@ -16,7 +16,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 
-import { useCreateTask } from '@/utils/api'
+import { usePostCreateTaskMutation } from '@/utils/api'
 import { getIcon } from '@/utils/constants/icons'
 import { useI18n } from '@/utils/providers'
 
@@ -37,7 +37,7 @@ interface CreateTaskFormProps {
 
 export function CreateTaskForm({ isOpen, onClose }: CreateTaskFormProps) {
 	const i18n = useI18n()
-	const createTask = useCreateTask().mutate
+	const createTask = usePostCreateTaskMutation().mutate
 
 	const form = useForm<FormValues>({
 		resolver: zodResolver(formSchema),

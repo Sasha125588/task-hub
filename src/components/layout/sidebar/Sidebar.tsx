@@ -1,4 +1,4 @@
-import * as React from 'react'
+import type { ComponentProps } from 'react'
 
 import {
 	Sidebar,
@@ -11,7 +11,7 @@ import { SIDEBAR_MENU_DATA } from '@/components/layout/sidebar/constants/data/si
 import { Account } from './Account'
 import { SidebarItem } from './SidebarItem'
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
 	return (
 		<Sidebar
 			collapsible='offcanvas'

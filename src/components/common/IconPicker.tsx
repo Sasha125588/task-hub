@@ -1,6 +1,14 @@
 'use client'
 
-import React, { useCallback, useMemo, useState } from 'react'
+import {
+	type ChangeEvent,
+	type ComponentPropsWithoutRef,
+	type ReactNode,
+	memo,
+	useCallback,
+	useMemo,
+	useState
+} from 'react'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -22,7 +30,7 @@ interface IconPickerProps {
 	placeholder?: string
 }
 
-const IconGridItem = React.memo(
+const IconGridItem = memo(
 	({ name, onSelect }: { name: string; onSelect: (name: string) => void }) => {
 		const handleClick = useCallback(() => onSelect(name), [name, onSelect])
 
@@ -45,14 +53,8 @@ const IconGridItem = React.memo(
 
 IconGridItem.displayName = 'IconGridItem'
 
-const IconGrid = React.memo(
-	({
-		icons,
-		onSelect
-	}: {
-		icons: { name: string }[]
-		onSelect: (name: string) => void
-	}) => {
+const IconGrid = memo(
+	({ icons, onSelect }: { icons: { name: string }[]; onSelect: (name: string) => void }) => {
 		const visibleIcons = useMemo(() => icons.slice(0, 200), [icons])
 
 		return (
@@ -71,11 +73,7 @@ const IconGrid = React.memo(
 
 IconGrid.displayName = 'IconGrid'
 
-export const IconPicker = ({
-	value,
-	onChange,
-	placeholder = 'Select icon'
-}: IconPickerProps) => {
+export const IconPicker = ({ value, onChange, placeholder = 'Select icon' }: IconPickerProps) => {
 	const [open, setOpen] = useState(false)
 	const { search, setSearch, icons } = useIconRegistry()
 
@@ -92,7 +90,7 @@ export const IconPicker = ({
 	}, [setSearch])
 
 	const handleSearchChange = useCallback(
-		(e: React.ChangeEvent<HTMLInputElement>) => {
+		(e: ChangeEvent<HTMLInputElement>) => {
 			setSearch(e.target.value)
 		},
 		[setSearch]
@@ -160,7 +158,7 @@ export const IconPicker = ({
 	)
 }
 
-export const IconDisplay = React.memo(
+export const IconDisplay = memo(
 	({
 		iconName,
 		size = 24,
@@ -185,7 +183,7 @@ export const IconDisplay = React.memo(
 
 IconDisplay.displayName = 'IconDisplay'
 
-export const IconComponent = React.memo(
+export const IconComponent = memo(
 	({
 		name,
 		size = 16,
@@ -195,9 +193,9 @@ export const IconComponent = React.memo(
 	}: {
 		name: string
 		size?: number
-		fallback?: React.ReactNode
+		fallback?: ReactNode
 		className?: string
-	} & React.ComponentPropsWithoutRef<'svg'>) => {
+	} & ComponentPropsWithoutRef<'svg'>) => {
 		const iconData = useMemo(() => getIcon(name), [name])
 
 		if (!iconData) {

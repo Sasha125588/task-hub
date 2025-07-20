@@ -8,9 +8,9 @@ import { Input } from '@/components/ui/input'
 
 import type { ChatChannel, ChatMessage } from '@/types/chat.types'
 
-import { useSendMessage } from '@/utils/api/hooks/chat/usePostSendMessage'
+import { usePostSendMessageMutation } from '@/utils/api/hooks/chat/usePostSendMessageMutation'
 import { useChatScroll } from '@/utils/hooks/useChatScroll'
-import { useChatUser } from '@/utils/hooks/useChatUser'
+import { useUser } from '@/utils/hooks/useUser'
 
 import { ChatMessageItem } from './components/MessageItem/ChatMessageItem'
 
@@ -21,11 +21,11 @@ interface ChatWindowProps {
 
 export function ChatWindow({ channel, messages }: ChatWindowProps) {
 	const { containerRef, scrollToBottom } = useChatScroll()
-	const { userId } = useChatUser()
+	const { userId } = useUser()
 
 	const [newMessage, setNewMessage] = useState('')
 
-	const { mutate: sendMessage, isPending } = useSendMessage()
+	const { mutate: sendMessage, isPending } = usePostSendMessageMutation()
 
 	useEffect(() => {
 		scrollToBottom()

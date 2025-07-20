@@ -13,7 +13,7 @@ import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { Card, CardContent } from '@/components/ui/card'
 import { GlowingEffect } from '@/components/ui/glowing-effect'
 
-import { useDeleteTask } from '@/utils/api'
+import { useDeleteTaskMutation } from '@/utils/api'
 import { useI18n } from '@/utils/providers'
 
 import type { ModelsTask } from '../../../../../../../../generated/api'
@@ -28,7 +28,7 @@ interface Props {
 export function LastTasksItem({ item }: Props) {
 	const i18n = useI18n()
 
-	const deleteTaskMutation = useDeleteTask().mutate
+	const deleteTaskMutation = useDeleteTaskMutation().mutate
 	const dueDate = getDaysUntilDue(new Date(item.due_date ?? ''))
 
 	const handleDeleteTask = () => {

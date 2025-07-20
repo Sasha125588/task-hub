@@ -1,15 +1,15 @@
-"use client";
+import { type PropsWithChildren } from 'react'
 
-import { type PropsWithChildren } from "react";
-import { LoadingSpinner } from "../../ui/loading-spinner";
-import { useSession } from "@/lib/better-auth/auth-client";
+import { useUser } from '@/utils/hooks/useUser'
+
+import { LoadingSpinner } from '../../ui/loading-spinner'
 
 export function AuthLoader({ children }: PropsWithChildren) {
-  const { isPending } = useSession();
+	const { isPending } = useUser()
 
-  if (isPending) {
-    return <LoadingSpinner />;
-  }
+	if (isPending) {
+		return <LoadingSpinner />
+	}
 
-  return <>{children}</>;
+	return <>{children}</>
 }

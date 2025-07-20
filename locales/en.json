@@ -84,7 +84,7 @@
 	"form.back": "Back",
 
 	"auth.form.orContinueWith": "Or continue with",
-	"auth.form.dontHaveAccount": "Don&apos;t have an account?",
+	"auth.form.dontHaveAccount": "Dont have an account?",
 	"auth.form.alreadyHaveAccount": "Already have an account?",
 	"auth.form.forgotPassword": "Forgot your password?",
 	"auth.form.passwordRequirements": "Password must be at least 8 characters and contain uppercase, lowercase, and numbers",

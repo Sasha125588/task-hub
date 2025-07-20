@@ -30,16 +30,17 @@ import {
 	DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
 
+import { useUser } from '@/utils/hooks/useUser'
 import { useI18n } from '@/utils/providers'
 
-import { authClient, signOut, useSession } from '@/lib/better-auth/auth-client'
+import { authClient, signOut } from '@/lib/better-auth/auth-client'
 
 export function Account() {
 	const router = useRouter()
 	const { isMobile } = useSidebar()
-	const { data: user, isPending } = useSession()
-	const userName = user?.user.name
-	const userEmail = user?.user.email
+	const { currentUser, isPending } = useUser()
+	const userName = currentUser?.name
+	const userEmail = currentUser?.email
 	const i18n = useI18n()
 
 	const handleSignOut = () => {

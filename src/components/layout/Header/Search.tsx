@@ -1,11 +1,12 @@
 import { Search } from 'lucide-react'
+import type { ComponentProps } from 'react'
 
 import { SidebarInput } from '@/components/animate-ui/radix/sidebar'
 import { Label } from '@/components/ui/label'
 
 import { useI18n } from '@/utils/providers'
 
-export function SearchForm({ ...props }: React.ComponentProps<'form'>) {
+export function SearchForm({ ...props }: ComponentProps<'form'>) {
 	const i18n = useI18n()
 	return (
 		<form {...props}>

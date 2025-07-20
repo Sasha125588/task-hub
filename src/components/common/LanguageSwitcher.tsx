@@ -19,6 +19,7 @@ const languages = [
 export function LanguageSwitcher() {
 	const i18n = useI18n()
 	const locale = i18n.locale ?? 'en'
+	const currentLanguage = languages.find(l => l.code === locale)?.label ?? locale
 
 	const handleChange = (lang: string) => {
 		if (lang !== locale) {
@@ -34,7 +35,7 @@ export function LanguageSwitcher() {
 					variant='outline'
 					size='sm'
 				>
-					{languages.find(l => l.code === locale)?.label ?? locale}
+					{currentLanguage}
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align='end'>

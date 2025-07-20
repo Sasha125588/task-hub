@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
-import { useSignUpMutation } from '@/utils/api'
+import { usePostSignUpMutation } from '@/utils/api'
 
 import { signUpFormSchema } from '../constants/signUpSchema'
 
@@ -18,7 +18,7 @@ interface SignUpForm {
 
 export const useSignUpForm = () => {
 	const router = useRouter()
-	const signUpMutation = useSignUpMutation()
+	const signUpMutation = usePostSignUpMutation()
 
 	const signUpForm = useForm<SignUpForm>({
 		resolver: zodResolver(signUpFormSchema),

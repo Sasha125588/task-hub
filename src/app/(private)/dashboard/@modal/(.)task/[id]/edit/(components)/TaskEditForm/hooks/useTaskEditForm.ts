@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
-import { useGetTaskById, useUpdateTask } from '@/utils/api'
+import { useGetTaskByIdQuery, usePutUpdateTaskMutation } from '@/utils/api'
 import { useI18n } from '@/utils/providers'
 
 import { taskEditFormSchema } from '../constants/taskEditFormSchema'
@@ -18,8 +18,8 @@ type TaskFormValues = z.infer<typeof taskEditFormSchema>
 export const useTaskEditForm = (id: string) => {
 	const i18n = useI18n()
 	const router = useRouter()
-	const { data, isLoading } = useGetTaskById(id)
-	const updateTask = useUpdateTask().mutateAsync
+	const { data, isLoading } = useGetTaskByIdQuery(id)
+	const updateTask = usePutUpdateTaskMutation().mutateAsync
 
 	const form = useForm<TaskFormValues>({
 		resolver: zodResolver(taskEditFormSchema),

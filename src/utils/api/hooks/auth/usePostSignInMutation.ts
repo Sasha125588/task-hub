@@ -7,7 +7,7 @@ interface SignInParams {
 	password: string
 }
 
-export const useSignInMutation = () =>
+export const usePostSignInMutation = () =>
 	useMutation({
 		mutationFn: ({ email, password }: SignInParams) => {
 			return signIn.email({

@@ -2,14 +2,14 @@
 
 import { format, parse } from 'date-fns'
 import { CalendarIcon } from 'lucide-react'
-import * as React from 'react'
+import { useEffect, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { Input } from '@/components/ui/input'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 
-function formatDate(date: Date | undefined) {
+function formatDate(date: Date) {
 	if (!date) {
 		return ''
 	}
@@ -17,28 +17,20 @@ function formatDate(date: Date | undefined) {
 	return format(date, 'PP')
 }
 
-function isValidDate(date: Date | undefined) {
-	if (!date) {
-		return false
-	}
-	return !isNaN(date.getTime())
-}
-
 interface Props {
 	dateForm: Date
-	onChangeForm: (date: Date | undefined) => void
+	onChangeForm: (date: Date) => void
 }
 
-export function DatePicker({ dateForm: dateP, onChangeForm: onChange }: Props) {
-	const [open, setOpen] = React.useState(false)
-	const [date, setDate] = React.useState<Date | undefined>(dateP)
-	const [value, setValue] = React.useState(formatDate(date))
+export function DatePicker({ dateForm, onChangeForm }: Props) {
+	const [open, setOpen] = useState(false)
+	const [date, setDate] = useState<Date>(dateForm)
+	const [value, setValue] = useState(formatDate(date))
 
-	// Обновляем внутреннее состояние при изменении dateForm
-	React.useEffect(() => {
-		setDate(dateP)
-		setValue(formatDate(dateP))
-	}, [dateP])
+	useEffect(() => {
+		setDate(dateForm)
+		setValue(formatDate(dateForm))
+	}, [dateForm])
 
 	return (
 		<div className='flex flex-col gap-3'>
@@ -51,16 +43,8 @@ export function DatePicker({ dateForm: dateP, onChangeForm: onChange }: Props) {
 					onChange={e => {
 						const date = parse(e.target.value, 'PP', new Date())
 						setValue(e.target.value)
-						if (isValidDate(date)) {
-							setDate(date)
-							onChange?.(date)
-						}
-					}}
-					onKeyDown={e => {
-						if (e.key === 'ArrowDown') {
-							e.preventDefault()
-							setOpen(true)
-						}
+						setDate(date)
+						onChangeForm(date)
 					}}
 				/>
 				<Popover
@@ -88,10 +72,12 @@ export function DatePicker({ dateForm: dateP, onChangeForm: onChange }: Props) {
 							selected={date}
 							captionLayout='dropdown'
 							onSelect={date => {
-								setDate(date)
-								setValue(formatDate(date))
-								setOpen(false)
-								onChange?.(date)
+								if (date) {
+									setDate(date)
+									setValue(formatDate(date))
+									setOpen(false)
+									onChangeForm(date)
+								}
 							}}
 						/>
 					</PopoverContent>

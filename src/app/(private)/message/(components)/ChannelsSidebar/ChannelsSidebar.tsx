@@ -12,7 +12,7 @@ import { Input } from '@/components/ui/input'
 import { createChannel } from '@/utils/api/requests/chat/channels/createChannel'
 import { deleteChannel } from '@/utils/api/requests/chat/channels/deleteChannel'
 import { useChatStore } from '@/utils/hooks/useChatStore'
-import { useChatUser } from '@/utils/hooks/useChatUser'
+import { useUser } from '@/utils/hooks/useUser'
 
 import { cn } from '@/lib/helpers/cn'
 
@@ -23,7 +23,7 @@ export function ChannelsSidebar() {
 	const [newChannelName, setNewChannelName] = useState('')
 	const [isCreating, setIsCreating] = useState(false)
 
-	const { userId } = useChatUser()
+	const { userId } = useUser()
 	const { channels } = useChatStore()
 
 	const handleCreateChannel = async (e: FormEvent<HTMLFormElement>) => {

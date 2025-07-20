@@ -2,10 +2,10 @@ import { useMutation } from '@tanstack/react-query'
 
 import { queryClient } from '@/utils/providers'
 
-import type { ModelsUpdateTaskRequest } from '../../../../generated/api'
-import { updateTask } from '../requests'
+import type { ModelsUpdateTaskRequest } from '../../../../../generated/api'
+import { updateTask } from '../../requests'
 
-export const useUpdateTask = () =>
+export const usePutUpdateTaskMutation = () =>
 	useMutation({
 		mutationFn: ({ id, params }: { id: string; params: ModelsUpdateTaskRequest }) =>
 			updateTask({ id, params }),

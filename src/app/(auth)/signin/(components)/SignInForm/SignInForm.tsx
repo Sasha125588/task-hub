@@ -1,5 +1,3 @@
-'use client'
-
 import { SocialLoginButtons } from '@/components/common/SocialLoginButtons'
 import { Button } from '@/components/ui/button'
 import {

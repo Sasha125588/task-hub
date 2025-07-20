@@ -8,5 +8,5 @@ export interface sendMessageRequest {
 	userId: string
 }
 
-export const useSendMessage = () =>
+export const usePostSendMessageMutation = () =>
 	useMutation({ mutationFn: (props: sendMessageRequest) => sendMessage(props) })
