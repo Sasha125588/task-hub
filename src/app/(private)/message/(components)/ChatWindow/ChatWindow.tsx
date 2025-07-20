@@ -39,7 +39,7 @@ export function ChatWindow({ channel, messages }: ChatWindowProps) {
 	}
 
 	return (
-		<div className='bg-background flex h-full w-full flex-col'>
+		<div className='flex h-[780px] w-full flex-col'>
 			<div className='p-4'>
 				<div className='flex items-center gap-2'>
 					<span className='text-muted-foreground text-xl'>#</span>
@@ -49,7 +49,7 @@ export function ChatWindow({ channel, messages }: ChatWindowProps) {
 
 			<div
 				ref={containerRef}
-				className='flex-1 space-y-4 overflow-y-auto p-4'
+				className='flex-1 overflow-y-auto p-4'
 			>
 				{messages.length === 0 ? (
 					<div className='text-muted-foreground text-center text-sm'>
@@ -71,10 +71,10 @@ export function ChatWindow({ channel, messages }: ChatWindowProps) {
 
 			<form
 				onSubmit={handleSendMessage}
-				className='flex w-full gap-2 p-4'
+				className='flex w-full gap-2 bg-transparent px-4'
 			>
 				<Input
-					className='bg-background rounded-full text-sm'
+					className='rounded-full bg-transparent text-sm'
 					type='text'
 					value={newMessage}
 					onChange={e => setNewMessage(e.target.value)}

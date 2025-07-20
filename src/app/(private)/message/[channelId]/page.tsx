@@ -21,7 +21,7 @@ export default function ChannelPage({ params }: ChannelPageProps) {
 
 	if (!currentChannel) {
 		return (
-			<div className='flex h-full items-center justify-center'>
+			<div className='flex h-[calc(100%+40px)] w-full items-center justify-center'>
 				<div className='text-center'>
 					<h2 className='mb-2 text-lg font-semibold'>Channel not found</h2>
 					<p className='text-muted-foreground'>

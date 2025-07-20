@@ -1,5 +1,6 @@
 'use client'
 
+import { useClickOutside } from '@siberiacancode/reactuse'
 import { Hash, Plus, Settings, Trash2 } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
@@ -23,12 +24,13 @@ export function ChannelsSidebar() {
 	const [newChannelName, setNewChannelName] = useState('')
 	const [isCreating, setIsCreating] = useState(false)
 
+	const ref = useClickOutside<HTMLFormElement>(() => setShowCreateForm(false))
+
 	const { userId } = useUser()
 	const { channels } = useChatStore()
 
-	const handleCreateChannel = async (e: FormEvent<HTMLFormElement>) => {
-		e.preventDefault()
-
+	const handleCreateChannel = async (event: FormEvent<HTMLFormElement>) => {
+		event.preventDefault()
 		setIsCreating(true)
 
 		try {
@@ -37,13 +39,12 @@ export function ChannelsSidebar() {
 			if (newChannel && newChannel[0]) {
 				router.push(`/message/${newChannel[0].id}`)
 			}
-
-			setShowCreateForm(false)
-			setNewChannelName('')
 		} catch (error) {
 			console.error('Failed to create channel:', error)
 		} finally {
 			setIsCreating(false)
+			setShowCreateForm(false)
+			setNewChannelName('')
 		}
 	}
 
@@ -72,6 +73,7 @@ export function ChannelsSidebar() {
 
 				{showCreateForm && (
 					<form
+						ref={ref}
 						onSubmit={handleCreateChannel}
 						className='mt-2 space-y-2'
 					>

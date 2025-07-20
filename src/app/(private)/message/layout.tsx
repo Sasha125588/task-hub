@@ -4,8 +4,8 @@ import { ChannelsSidebar } from './(components)/ChannelsSidebar/ChannelsSidebar'
 
 export default function ChatLayout({ children }: PropsWithChildren) {
 	return (
-		<div className='mt-[-20px] mr-[-20px] mb-[-20px] ml-[-20px] flex h-screen'>
-			<div className='border-border w-64 border-r'>
+		<div className='mt-[-20px] mr-[-20px] ml-[-20px] flex h-[calc(100%+40px)] w-[calc(100%+40px)]'>
+			<div className='border-border w-56 border-r'>
 				<ChannelsSidebar />
 			</div>
 
