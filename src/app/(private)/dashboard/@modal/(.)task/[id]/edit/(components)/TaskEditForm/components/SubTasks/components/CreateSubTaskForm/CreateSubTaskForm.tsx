@@ -6,6 +6,7 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { Button } from '@/components/ui/button'
+import { Dialog, DialogContent } from '@/components/ui/dialog'
 import {
 	Form,
 	FormControl,
@@ -22,8 +23,6 @@ import {
 } from '@/components/ui/multi-step-form-wrapper'
 
 import { useI18n } from '@/utils/providers'
-
-import { Dialog, DialogContent } from './dialog'
 
 const SubTaskStatuses = ['not-started', 'in-progress', 'completed'] as const
 
@@ -43,7 +42,7 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>
 
-export function MultiStepForm({ taskId }: { taskId: string }) {
+export function CreateSubTaskForm({ taskId }: { taskId: string }) {
 	const [isFormVisible, setIsFormVisible] = useState(false)
 	const i18n = useI18n()
 

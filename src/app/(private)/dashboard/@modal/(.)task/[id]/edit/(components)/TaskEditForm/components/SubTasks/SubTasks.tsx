@@ -15,11 +15,10 @@ import {
 } from '@dnd-kit/sortable'
 import { useUnit } from 'effector-react'
 
-import { MultiStepForm } from '@/components/ui/multi-step-form'
-
 import type { ModelsSubTask, ModelsTask } from '../../../../../../../../../../../../generated/api'
 
 import { SubTaskItem } from './components/SubTaskItem/SubTaskItem'
+import { CreateSubTaskForm } from '@/app/(private)/dashboard/@modal/(.)task/[id]/edit/(components)/TaskEditForm/components/SubTasks/components/CreateSubTaskForm/CreateSubTaskForm'
 import { subTasksReorderer } from '@/stores/task/status-type'
 
 interface Props {
@@ -58,7 +57,7 @@ export function SubTasks({ id, task }: Props) {
 			collisionDetection={closestCenter}
 			onDragEnd={handleDragEnd}
 		>
-			<MultiStepForm taskId={id} />
+			<CreateSubTaskForm taskId={id} />
 			<SortableContext
 				items={subTasks.map(item => item.id!)}
 				strategy={verticalListSortingStrategy}

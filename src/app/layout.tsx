@@ -25,6 +25,10 @@ export const metadata: Metadata = {
 		absolute: PAGES_CONFIG.SITE_NAME,
 		template: `${PAGES_CONFIG.SITE_NAME} - %s`
 	},
+	icons: {
+		icon: '/images/favicon.ico',
+		shortcut: '/images/favicon.ico'
+	},
 	description: 'Manage your progress'
 }
 

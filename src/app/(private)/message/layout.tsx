@@ -1,6 +1,11 @@
+import type { Metadata } from 'next'
 import type { PropsWithChildren } from 'react'
 
 import { ChannelsSidebar } from './(components)/ChannelsSidebar/ChannelsSidebar'
+
+export const metadata: Metadata = {
+	title: 'Messages'
+}
 
 export default function ChatLayout({ children }: PropsWithChildren) {
 	return (
