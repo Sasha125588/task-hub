@@ -5,9 +5,12 @@ import { SidebarInset } from '@/components/animate-ui/radix/sidebar'
 import { Header } from '@/components/layout/Header/Header'
 import { AppSidebar } from '@/components/layout/sidebar/Sidebar'
 
+import { getFromCookies } from '@/lib/helpers/common/getFromCookies'
+
 export default async function SidebarLayout({ children }: PropsWithChildren) {
+	const sidebarState = (await getFromCookies('sidebar_state')) === 'true'
 	return (
-		<SidebarProvider>
+		<SidebarProvider defaultOpen={sidebarState}>
 			<AppSidebar variant='inset' />
 			<SidebarInset>
 				<Header />
