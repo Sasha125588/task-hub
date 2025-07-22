@@ -9,6 +9,7 @@ import {
 	Sparkles,
 	User as UserIcon
 } from 'lucide-react'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 
@@ -110,7 +111,18 @@ export function Account() {
 	const AccountInfo = () => (
 		<div className='flex items-center gap-2'>
 			<Avatar className='h-8 w-8'>
-				<AvatarFallback>{userInitials}</AvatarFallback>
+				<AvatarFallback>
+					{currentUser?.image ? (
+						<Image
+							src={currentUser.image}
+							alt={userName}
+							width={32}
+							height={32}
+						/>
+					) : (
+						userInitials
+					)}
+				</AvatarFallback>
 			</Avatar>
 			<div className='grid flex-1 text-left text-sm leading-tight'>
 				<span className='truncate font-medium'>{userName}</span>

@@ -1,8 +1,11 @@
 'use client'
 
+import { Suspense } from 'react'
 import { use } from 'react'
 
-import { useChatStore } from '@/utils/hooks/useChatStore'
+import { LoadingSpinner } from '@/components/ui/loading-spinner'
+
+import { useRealtimeChannels } from '@/utils/hooks/chat/useRealtimeChannels'
 
 import { ChatWindow } from '../(components)/ChatWindow/ChatWindow'
 
@@ -12,11 +15,7 @@ interface ChannelPageProps {
 
 export default function ChannelPage({ params }: ChannelPageProps) {
 	const { channelId } = use(params)
-
-	const { messages, channels } = useChatStore({
-		channelId
-	})
-
+	const channels = useRealtimeChannels()
 	const currentChannel = channels.find(ch => ch.id === channelId)
 
 	if (!currentChannel) {
@@ -33,9 +32,14 @@ export default function ChannelPage({ params }: ChannelPageProps) {
 	}
 
 	return (
-		<ChatWindow
-			channel={currentChannel}
-			messages={messages}
-		/>
+		<Suspense
+			fallback={
+				<div className='flex h-full w-full items-center justify-center'>
+					<LoadingSpinner />
+				</div>
+			}
+		>
+			<ChatWindow channel={currentChannel} />
+		</Suspense>
 	)
 }

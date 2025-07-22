@@ -8,3 +8,4 @@ export const deleteChannel = async (id: string) => {
 		console.log('error', error)
 	}
 }
+

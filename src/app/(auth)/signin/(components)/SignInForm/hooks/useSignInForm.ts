@@ -1,7 +1,5 @@
-'use client'
-
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useRouter } from 'next/navigation'
+import { redirect } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
@@ -17,7 +15,6 @@ interface SignInForm {
 }
 
 export const useSignInForm = () => {
-	const router = useRouter()
 	const signInMutation = usePostSignInMutation()
 
 	const signInForm = useForm<SignInForm>({
@@ -47,10 +44,10 @@ export const useSignInForm = () => {
 		toast.success('Successfully logged in!', {
 			id: loadingToast
 		})
-		router.push('/dashboard')
+		redirect('/dashboard')
 	})
 
-	const goToSignUp = () => router.push('/signup')
+	const goToSignUp = () => redirect('/signup')
 
 	return {
 		state: {

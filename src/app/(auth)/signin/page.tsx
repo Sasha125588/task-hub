@@ -33,9 +33,7 @@ export default function SignInPage() {
 						{ id: 'auth.agreement' },
 						{
 							terms: <a href='#'>{i18n.formatMessage({ id: 'auth.terms' })}</a>,
-							privacy: (
-								<a href='#'>{i18n.formatMessage({ id: 'auth.privacy' })}</a>
-							)
+							privacy: <a href='#'>{i18n.formatMessage({ id: 'auth.privacy' })}</a>
 						}
 					)}
 				</div>

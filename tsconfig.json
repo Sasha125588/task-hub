@@ -28,8 +28,7 @@
 		"**/*.ts",
 		"**/*.tsx",
 		".next/types/**/*.ts",
-		"src/utils/providers/react-intl-provider",
-		"src/lib/supabase/store.js"
+		"src/utils/providers/react-intl-provider"
 	],
 	"exclude": ["node_modules"]
 }
