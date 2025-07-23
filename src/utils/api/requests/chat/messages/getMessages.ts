@@ -1,10 +1,10 @@
-import { supabase } from '@/lib/supabase/client'
+import supabase from "@/lib/supabase/client"
 
 export const getMessages = async (channelId: string) => {
 	try {
 		const { data } = await supabase
 			.from('messages')
-			.select(`*, author:user_id(*)`)
+			.select(`*`)
 			.eq('channel_id', channelId)
 			.order('inserted_at', { ascending: true })
 		return data

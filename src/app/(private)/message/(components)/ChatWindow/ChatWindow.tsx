@@ -74,7 +74,7 @@ export function ChatWindow({ channel }: ChatWindowProps) {
 					}
 				>
 					<MessageList
-						channelId={channel.id}
+						messages={messages}
 						channelSlug={channel.slug!}
 					/>
 				</Suspense>

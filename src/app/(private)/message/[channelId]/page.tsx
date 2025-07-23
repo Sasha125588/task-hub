@@ -5,7 +5,7 @@ import { use } from 'react'
 
 import { LoadingSpinner } from '@/components/ui/loading-spinner'
 
-import { useRealtimeChannels } from '@/utils/hooks/chat/useRealtimeChannels'
+import { useGetChannelQuery } from '@/utils/api/hooks/chat/useGetChannelQuery'
 
 import { ChatWindow } from '../(components)/ChatWindow/ChatWindow'
 
@@ -15,10 +15,18 @@ interface ChannelPageProps {
 
 export default function ChannelPage({ params }: ChannelPageProps) {
 	const { channelId } = use(params)
-	const channels = useRealtimeChannels()
-	const currentChannel = channels.find(ch => ch.id === channelId)
 
-	if (!currentChannel) {
+	const { data, isLoading } = useGetChannelQuery(channelId)
+
+	if (isLoading) {
+		return (
+			<div className='flex h-[calc(100%+40px)] w-full items-center justify-center'>
+				<LoadingSpinner />
+			</div>
+		)
+	}
+
+	if (!data) {
 		return (
 			<div className='flex h-[calc(100%+40px)] w-full items-center justify-center'>
 				<div className='text-center'>
@@ -39,7 +47,7 @@ export default function ChannelPage({ params }: ChannelPageProps) {
 				</div>
 			}
 		>
-			<ChatWindow channel={currentChannel} />
+			<ChatWindow channel={data} />
 		</Suspense>
 	)
 }

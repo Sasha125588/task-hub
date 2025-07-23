@@ -1,15 +1,15 @@
-import { useRealtimeMessages } from '@/utils/hooks/chat/useRealtimeMessages'
+'use client'
+
+import type { Database } from '../../../../../../generated/database.types'
 
 import { ChatMessageItem } from './components/MessageItem/ChatMessageItem'
 
 interface MessageListProps {
-	channelId: string
+	messages: Database['public']['Tables']['messages']['Row'][]
 	channelSlug: string
 }
 
-export function MessageList({ channelId, channelSlug }: MessageListProps) {
-	const messages = useRealtimeMessages(channelId)
-
+export function MessageList({ messages, channelSlug }: MessageListProps) {
 	if (!messages?.length) {
 		return (
 			<div className='text-muted-foreground text-center text-sm'>

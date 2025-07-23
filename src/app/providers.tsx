@@ -8,10 +8,7 @@ import { AppConfigProvider } from '@/utils/providers/app-config/app-config-provi
 import { QueryProvider } from '@/utils/providers/query/query-provider'
 import { ThemeProvider } from '@/utils/providers/theme/theme-provider'
 
-export function Providers({
-	i18n,
-	children
-}: PropsWithChildren<{ i18n: I18nProviderProps }>) {
+export function Providers({ i18n, children }: PropsWithChildren<{ i18n: I18nProviderProps }>) {
 	return (
 		<QueryProvider>
 			<I18nProvider {...i18n}>

@@ -1,42 +1,46 @@
 'use client'
 
-import { createClient } from "@/lib/supabase/client"
-import { useEffect, useState } from "react"
-import type { Database } from "../../../../generated/database.types"
-import { getChannels } from "@/utils/api"
+import { useEffect, useState } from 'react'
+
+import { getChannels } from '@/utils/api'
+
+import type { Database } from '../../../../generated/database.types'
+
+import supabase from '@/lib/supabase/client'
 
 export const useRealtimeChannels = () => {
-    const supabase = createClient()
-    const [channels, setChannels] = useState<Database["public"]["Tables"]["channels"]["Row"][]>([])
-	
+	const [channels, setChannels] = useState<Database['public']['Tables']['channels']['Row'][]>([])
 
 	useEffect(() => {
 		const getInitialChannels = async () => {
-			const data =  await getChannels() 
-			if(data) {
+			const data = await getChannels()
+			if (data) {
 				setChannels(data)
 			}
 		}
 		getInitialChannels()
-		
-	}, [channels])
+	}, [])
 
-    useEffect(() => {
-			const channelListener = supabase
-			.channel('public:channels')
+	useEffect(() => {
+		const channel = supabase.channel('channels_list')
+
+		channel
 			.on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'channels' }, payload =>
-				setChannels((channels) => [...channels, payload.new as Database['public']['Tables']['channels']['Row']])
+				setChannels(channels => [
+					...channels,
+					payload.new as Database['public']['Tables']['channels']['Row']
+				])
 			)
 			.on('postgres_changes', { event: 'DELETE', schema: 'public', table: 'channels' }, payload =>
 				setChannels(channels?.filter(channel => channel.id !== payload.old.id))
-
 			)
-			.subscribe()
+
+		channel.subscribe()
 
 		return () => {
-			supabase.removeChannel(channelListener)
+			channel.unsubscribe()
 		}
 	}, [])
 
-    return channels
+	return channels
 }
