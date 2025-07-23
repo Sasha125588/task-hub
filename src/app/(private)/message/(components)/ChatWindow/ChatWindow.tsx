@@ -1,6 +1,7 @@
 'use client'
 
 import { Send } from 'lucide-react'
+import { motion } from 'motion/react'
 import { type FormEvent, Suspense, useEffect, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
@@ -9,6 +10,7 @@ import { LoadingSpinner } from '@/components/ui/loading-spinner'
 
 import { sendMessage, useGetUserQuery } from '@/utils/api'
 import { useChatScroll } from '@/utils/hooks/chat/useChatScroll'
+import { useOnlineUsers } from '@/utils/hooks/chat/usePresence'
 import { useRealtimeMessages } from '@/utils/hooks/chat/useRealtimeMessages'
 import { useUser } from '@/utils/hooks/useUser'
 
@@ -27,7 +29,9 @@ export function ChatWindow({ channel }: ChatWindowProps) {
 	const { data } = useGetUserQuery(channel.created_by!)
 	const [newMessage, setNewMessage] = useState('')
 	const [isSending, setIsSending] = useState(false)
+
 	const messages = useRealtimeMessages(channel.id)
+	const onlineUsers = useOnlineUsers(channel.id, userId!)
 
 	const handleSendMessage = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
@@ -58,6 +62,26 @@ export function ChatWindow({ channel }: ChatWindowProps) {
 				<div className='flex items-center gap-2'>
 					<span className='text-muted-foreground text-xl'>#</span>
 					<h1 className='text-lg font-semibold'>{channel.slug}</h1>
+					<motion.div
+						className='bg-muted/30 inline-flex items-center rounded-full px-2 py-0.5'
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						transition={{ duration: 0.3 }}
+					>
+						<motion.div
+							className='mr-2 h-2 w-2 rounded-full bg-emerald-500'
+							animate={{
+								scale: [1, 1.2, 1],
+								opacity: [0.7, 1, 0.7]
+							}}
+							transition={{
+								duration: 3,
+								repeat: Infinity,
+								ease: 'easeInOut'
+							}}
+						/>
+						<span className='text-muted-foreground text-sm'>{onlineUsers} online</span>
+					</motion.div>
 				</div>
 				{data && <CreatedBy user={data} />}
 			</div>

@@ -22,24 +22,24 @@ export const useRealtimeMessages = (channelId: string) => {
 	}, [channelId])
 
 	useEffect(() => {
-		const channel = supabase.channel('messages_' + channelId)
+		const channel = supabase.channel(`messages:${channelId}`)
 
-		channel.on(
-			'postgres_changes',
-			{
-				event: 'INSERT',
-				schema: 'public',
-				table: 'messages',
-				filter: `channel_id=eq.${channelId}`
-			},
-			payload =>
-				setMessages(messages => [
-					...messages,
-					payload.new as Database['public']['Tables']['messages']['Row']
-				])
-		)
-
-		channel.subscribe()
+		channel
+			.on(
+				'postgres_changes',
+				{
+					event: 'INSERT',
+					schema: 'public',
+					table: 'messages',
+					filter: `channel_id=eq.${channelId}`
+				},
+				payload =>
+					setMessages(messages => [
+						...messages,
+						payload.new as Database['public']['Tables']['messages']['Row']
+					])
+			)
+			.subscribe()
 
 		return () => {
 			channel.unsubscribe()

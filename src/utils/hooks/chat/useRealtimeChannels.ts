@@ -26,16 +26,15 @@ export const useRealtimeChannels = () => {
 
 		channel
 			.on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'channels' }, payload =>
-				setChannels(channels => [
-					...channels,
+				setChannels(current => [
+					...current,
 					payload.new as Database['public']['Tables']['channels']['Row']
 				])
 			)
 			.on('postgres_changes', { event: 'DELETE', schema: 'public', table: 'channels' }, payload =>
-				setChannels(channels?.filter(channel => channel.id !== payload.old.id))
+				setChannels(current => current?.filter(channel => channel.id !== payload.old.id))
 			)
-
-		channel.subscribe()
+			.subscribe()
 
 		return () => {
 			channel.unsubscribe()
