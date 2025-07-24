@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 
 import { useGetUserQuery } from '@/utils/api/hooks/chat/useGetUserQuery'
 
-import type { Database } from '../../../../../../../../generated/database.types'
+import type { Database } from '../../../../../../../../../../generated/database.types'
 
 interface ChatMessageItemProps {
 	message: Database['public']['Tables']['messages']['Row']
