@@ -9,29 +9,32 @@ import { Input } from '@/components/ui/input'
 import { LoadingSpinner } from '@/components/ui/loading-spinner'
 
 import { sendMessage, useGetUserQuery } from '@/utils/api'
+import { useChannelDeletion } from '@/utils/hooks/chat/useChannelDeletion'
 import { useChatScroll } from '@/utils/hooks/chat/useChatScroll'
-import { useOnlineUsers } from '@/utils/hooks/chat/usePresence'
+import { useOnlineUsers } from '@/utils/hooks/chat/useOnlineUsers'
 import { useRealtimeMessages } from '@/utils/hooks/chat/useRealtimeMessages'
 import { useUser } from '@/utils/hooks/useUser'
 
 import type { Database } from '../../../../../../generated/database.types'
 
-import { MessageList } from './MessageList'
 import { CreatedBy } from './components/CreatedBy/CreatedBy'
+import { MessageList } from './components/MessageList/MessageList'
 
 interface ChatWindowProps {
 	channel: Database['public']['Tables']['channels']['Row']
 }
 
 export function ChatWindow({ channel }: ChatWindowProps) {
-	const { containerRef, scrollToBottom } = useChatScroll()
-	const { userId } = useUser()
-	const { data } = useGetUserQuery(channel.created_by!)
 	const [newMessage, setNewMessage] = useState('')
 	const [isSending, setIsSending] = useState(false)
+	const { containerRef, scrollToBottom } = useChatScroll()
+	const { userId } = useUser()
+	const getUserResponse = useGetUserQuery(channel.created_by!)
 
 	const messages = useRealtimeMessages(channel.id)
 	const onlineUsers = useOnlineUsers(channel.id, userId!)
+
+	useChannelDeletion(channel.id)
 
 	const handleSendMessage = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
@@ -57,7 +60,7 @@ export function ChatWindow({ channel }: ChatWindowProps) {
 	}, [scrollToBottom, messages])
 
 	return (
-		<div className='flex h-[780px] w-full flex-col'>
+		<div className='flex h-full w-full flex-col'>
 			<div className='flex items-center justify-between p-4'>
 				<div className='flex items-center gap-2'>
 					<span className='text-muted-foreground text-xl'>#</span>
@@ -83,7 +86,7 @@ export function ChatWindow({ channel }: ChatWindowProps) {
 						<span className='text-muted-foreground text-sm'>{onlineUsers} online</span>
 					</motion.div>
 				</div>
-				{data && <CreatedBy user={data} />}
+				{getUserResponse.data && <CreatedBy user={getUserResponse.data} />}
 			</div>
 
 			<div
@@ -106,7 +109,7 @@ export function ChatWindow({ channel }: ChatWindowProps) {
 
 			<form
 				onSubmit={handleSendMessage}
-				className='flex w-full max-w-xl gap-2 bg-transparent px-4'
+				className='flex w-full max-w-xl gap-2 bg-transparent px-4 pb-4'
 			>
 				<Input
 					className='rounded-full bg-transparent text-sm'

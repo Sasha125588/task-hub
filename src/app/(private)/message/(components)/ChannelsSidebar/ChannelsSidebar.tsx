@@ -2,9 +2,10 @@
 
 import { Hash, Plus, Settings, Trash2 } from 'lucide-react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { match } from 'path-to-regexp'
 import { useState } from 'react'
+import { toast } from 'sonner'
 
 import { Button } from '@/components/ui/button'
 
@@ -16,16 +17,21 @@ import { CreateChannelForm } from './CreateChannelForm'
 import { cn } from '@/lib/helpers/cn'
 
 export function ChannelsSidebar() {
-	const pathname = usePathname()
 	const [showCreateForm, setShowCreateForm] = useState(false)
+	const pathname = usePathname()
+	const router = useRouter()
 	const { userId } = useUser()
 	const channels = useRealtimeChannels()
 
 	const handleDeleteChannel = async (channelId: string) => {
 		try {
 			await deleteChannel(channelId)
+			toast.success('Channel deleted successfully')
+			router.push('/message')
 		} catch (error) {
-			console.error('Failed to delete channel:', error)
+			toast.error('Failed to delete channel', {
+				description: error instanceof Error ? error.message : 'Unknown error'
+			})
 		}
 	}
 

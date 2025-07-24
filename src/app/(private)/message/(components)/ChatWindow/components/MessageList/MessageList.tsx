@@ -1,8 +1,8 @@
 'use client'
 
-import type { Database } from '../../../../../../generated/database.types'
+import type { Database } from '../../../../../../../../generated/database.types'
 
-import { ChatMessageItem } from './components/MessageItem/ChatMessageItem'
+import { ChatMessageItem } from '@/app/(private)/message/(components)/ChatWindow/components/MessageList/components/MessageItem/ChatMessageItem'
 
 interface MessageListProps {
 	messages: Database['public']['Tables']['messages']['Row'][]

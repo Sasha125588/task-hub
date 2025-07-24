@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
@@ -7,7 +8,6 @@ import { createChannel } from '@/utils/api'
 import { useUser } from '@/utils/hooks/useUser'
 
 import { createChannelSchema } from '../constants/createChannelSchema'
-import { useState } from 'react'
 
 interface CreateChannelForm {
 	name: string
@@ -36,7 +36,7 @@ export const useCreateChannelForm = ({ onClose }: UseCreateChannelFormProps) => 
 
 		try {
 			setLoading(true)
-			const data = await createChannel(values.name,userId)
+			const data = await createChannel(values.name, userId)
 
 			if (data) {
 				toast.success('Channel created successfully!', {
@@ -46,10 +46,19 @@ export const useCreateChannelForm = ({ onClose }: UseCreateChannelFormProps) => 
 				onClose()
 			}
 		} catch (error) {
-            console.log(error)
-			toast.error('Failed to create channel.', {
-				id: loadingToast
-			})
+			if (error instanceof Error && error.message === 'Channel with this name already exists') {
+				toast.error('Channel with this name already exists.', {
+					id: loadingToast
+				})
+				createChannelForm.setError('name', {
+					type: 'manual',
+					message: 'Channel with this name already exists'
+				})
+			} else {
+				toast.error('Failed to create channel.', {
+					id: loadingToast
+				})
+			}
 		} finally {
 			setLoading(false)
 		}
@@ -62,4 +71,4 @@ export const useCreateChannelForm = ({ onClose }: UseCreateChannelFormProps) => 
 		form: createChannelForm,
 		functions: { onSubmit }
 	}
-} 
+}

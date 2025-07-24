@@ -20,7 +20,7 @@ export default function ChannelPage({ params }: ChannelPageProps) {
 
 	if (isLoading) {
 		return (
-			<div className='flex h-[calc(100%+40px)] w-full items-center justify-center'>
+			<div className='flex h-full w-full items-center justify-center'>
 				<LoadingSpinner />
 			</div>
 		)
