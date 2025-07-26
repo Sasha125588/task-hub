@@ -3,10 +3,9 @@ import type { PropsWithChildren } from 'react'
 import { SidebarProvider } from '@/components/animate-ui/radix/sidebar'
 import { SidebarInset } from '@/components/animate-ui/radix/sidebar'
 import { Header } from '@/components/layout/Header/Header'
+import { AppSidebar } from '@/components/layout/Sidebar/Sidebar'
 
 import { getFromCookies } from '@/utils/helpers/cookies/getFromCookies'
-
-import { AppSidebar } from '../../components/layout/Sidebar/Sidebar'
 
 export default async function SidebarLayout({ children }: PropsWithChildren) {
 	const sidebarState = (await getFromCookies('sidebar_state')) === 'true'
