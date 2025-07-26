@@ -9,12 +9,12 @@ import { TodayTasksTimeline } from './components/TodayTasksTimeline/TodayTasksTi
 import { getCurrentTimePosition } from './components/TodayTasksTimeline/helpers'
 
 export function TodayTasks() {
-	const tasks = useGetAllTasksQuery().data?.tasks || []
-	const todayTasks = tasks?.filter(
+	const tasks = useGetAllTasksQuery().data ?? []
+	const todayTasks = tasks.filter(
 		task =>
-			task?.start_time &&
-			task?.end_time &&
-			new Date(task?.due_date).toDateString() === new Date().toDateString()
+			task.start_time &&
+			task.end_time &&
+			new Date(task.due_date).toDateString() === new Date().toDateString()
 	)
 	const currentTimePosition = getCurrentTimePosition()
 

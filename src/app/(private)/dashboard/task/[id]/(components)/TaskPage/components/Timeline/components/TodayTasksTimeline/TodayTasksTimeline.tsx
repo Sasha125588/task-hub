@@ -3,14 +3,14 @@ import Link from 'next/link'
 
 import { IconDisplay } from '@/components/common/IconPicker'
 
-import type { ModelsTask } from '../../../../../../../../../../../../generated/api'
+import type { DBTask } from '@/types/db.types'
 
 import { timeSlots } from './constants/data'
 import { getTaskWidth, getTimePosition } from './helpers'
 import { PAGES_CONFIG } from '@/configs/pages.config'
 
 interface Props {
-	tasks: ModelsTask[]
+	tasks: DBTask[]
 	currentTimePosition: number
 }
 
@@ -43,8 +43,8 @@ export function TodayTasksTimeline({ tasks, currentTimePosition }: Props) {
 					)}
 
 					{tasks.map((task, index) => {
-						const leftPosition = getTimePosition(task.start_time)
-						const width = getTaskWidth(task.start_time, task.end_time)
+						const leftPosition = getTimePosition(task.start_time ?? '')
+						const width = getTaskWidth(task.start_time ?? '', task.end_time ?? '')
 						const verticalPosition = (index % 3) * 30 + 10
 
 						return (

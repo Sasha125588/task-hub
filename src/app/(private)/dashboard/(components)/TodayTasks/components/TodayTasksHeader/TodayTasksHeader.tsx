@@ -1,12 +1,12 @@
-import { AvatarGroup, AvatarGroupTooltip } from '@/components/animate-ui/components/avatar-group'
-import { Avatar, AvatarImage } from '@/components/ui/avatar'
+// import { AvatarGroup, AvatarGroupTooltip } from '@/components/animate-ui/components/avatar-group'
+// import { Avatar, AvatarImage } from '@/components/ui/avatar'
+// TODO: fix avatar group
+import type { DBTask } from '@/types/db.types'
 
 import { useI18n } from '@/utils/providers'
 
-import type { ModelsTask } from '../../../../../../../../generated/api'
-
 interface Props {
-	tasks: ModelsTask[]
+	tasks: DBTask[]
 }
 
 export function TodayTasksHeader({ tasks }: Props) {
@@ -32,7 +32,7 @@ export function TodayTasksHeader({ tasks }: Props) {
 							})}
 				</p>
 			</div>
-			<AvatarGroup className='-space-x-3'>
+			{/* <AvatarGroup className='-space-x-3'>
 				{Array.from(new Set(tasks.flatMap(task => task.users))).map((user, idx) => (
 					<Avatar
 						key={idx}
@@ -44,7 +44,7 @@ export function TodayTasksHeader({ tasks }: Props) {
 						</AvatarGroupTooltip>
 					</Avatar>
 				))}
-			</AvatarGroup>
+			</AvatarGroup> */}
 		</div>
 	)
 }

@@ -1,23 +1,15 @@
 import { v4 as uuidv4 } from 'uuid'
 
 import type { DBTask } from '@/types/db.types'
-import type { TaskStatuses } from '@/types/task.types'
 
 import supabase from '@/lib/supabase/client'
 
-export interface CreateTaskParams {
-	title: string
-	description?: string
-	status: TaskStatuses
-	due_date: string
-	icon_name: string
-	assignee_id?: string
-	start_time?: string
-	end_time?: string
-}
-
-export const createTask = async (params: CreateTaskParams): Promise<DBTask> => {
+export const createTask = async (params: Partial<DBTask>): Promise<DBTask> => {
 	try {
+		if (!params.title || !params.icon_name || !params.due_date || !params.status) {
+			throw new Error('Missing required fields: title, icon_name, due_date, status')
+		}
+
 		const taskData = {
 			id: uuidv4(),
 			title: params.title,
