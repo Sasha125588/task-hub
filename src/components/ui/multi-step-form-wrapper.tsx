@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -11,26 +10,6 @@ import { Button } from '@/components/ui/button'
 
 import { cn } from '@/utils/helpers/cn'
 import { useI18n } from '@/utils/providers'
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
 
 type FormData = Record<string, unknown>
 
@@ -52,6 +31,7 @@ interface MultiStepFormContextType<T extends FormData = FormData> {
 	stepErrors: Record<number, string>
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const MultiStepFormContext = createContext<MultiStepFormContextType<any> | undefined>(undefined)
 
 export function useMultiStepForm<T extends FormData = FormData>() {
@@ -67,6 +47,7 @@ export interface StepProps<T extends FormData = FormData> {
 	title?: string
 	description?: string
 	validate?: (data: T) => Promise<boolean> | boolean
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	schema?: z.ZodObject<any>
 	canSkip?: boolean
 	isOptional?: boolean
@@ -90,6 +71,7 @@ export interface MultiStepFormWrapperProps<T extends FormData = FormData> {
 	onStepChange?: (prevStep: number, nextStep: number) => void
 	schema?: z.ZodType<T>
 	persistKey?: string
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	onStepValidationError?: (step: number, errors: any) => void
 	showProgressBar?: boolean
 	allowStepReset?: boolean
@@ -133,9 +115,11 @@ export function MultiStepFormWrapper<T extends FormData = FormData>({
 
 	const prepareDefaultValues = useCallback(
 		(initialData: Partial<T>, schema?: z.ZodType<T>): DefaultValues<T> => {
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			const defaultValues = { ...initialData } as Record<string, any>
 
 			if (schema && 'shape' in schema) {
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				const shapes = (schema as any).shape
 				Object.keys(shapes).forEach(key => {
 					if (defaultValues[key] === undefined) {
@@ -158,6 +142,7 @@ export function MultiStepFormWrapper<T extends FormData = FormData>({
 
 	const form = useForm<T>({
 		defaultValues: prepareDefaultValues(initialData, schema),
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		resolver: schema ? zodResolver(schema as any) : undefined,
 		mode: 'onChange'
 	})
@@ -197,6 +182,7 @@ export function MultiStepFormWrapper<T extends FormData = FormData>({
 				setFormData(prevData => ({ ...prevData, ...parsedData }))
 
 				Object.entries(parsedData).forEach(([key, value]) => {
+					// eslint-disable-next-line @typescript-eslint/no-explicit-any
 					form.setValue(key as any, value as any)
 				})
 			}
@@ -231,6 +217,7 @@ export function MultiStepFormWrapper<T extends FormData = FormData>({
 			})
 
 			Object.entries(stepData).forEach(([key, value]) => {
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				form.setValue(key as any, value as any)
 			})
 		},
@@ -275,6 +262,7 @@ export function MultiStepFormWrapper<T extends FormData = FormData>({
 			setIsValidating(true)
 			try {
 				const stepFields = Object.keys(stepSchema.shape)
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				const result = await form.trigger(stepFields as any)
 				if (!result) {
 					const formErrors = form.formState.errors

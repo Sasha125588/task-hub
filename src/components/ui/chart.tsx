@@ -1,30 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import * as React from 'react'
 import * as RechartsPrimitive from 'recharts'
 
 import { cn } from '@/utils/helpers/cn'
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
 
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { light: '', dark: '.dark' } as const
@@ -141,7 +120,9 @@ function ChartTooltipContent({
 		indicator?: 'line' | 'dot' | 'dashed' | undefined
 		nameKey?: string | undefined
 		labelKey?: string | undefined
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		payload?: any
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		label?: any
 	}): React.JSX.Element | null {
 	const { config } = useChart()
@@ -187,6 +168,7 @@ function ChartTooltipContent({
 		>
 			{!nestLabel ? tooltipLabel : null}
 			<div className='grid gap-1.5'>
+				{/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
 				{payload.map((item: any, index: number) => {
 					const key = `${nameKey || item.name || item.dataKey || 'value'}`
 					const itemConfig = getPayloadConfigFromPayload(config, item, key)
@@ -268,6 +250,7 @@ function ChartLegendContent({
 	Pick<RechartsPrimitive.LegendProps, 'payloadUniqBy' | 'verticalAlign'> & {
 		hideIcon?: boolean
 		nameKey?: string
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		payload: any
 	}) {
 	const { config } = useChart()
@@ -284,6 +267,7 @@ function ChartLegendContent({
 				className
 			)}
 		>
+			{/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
 			{payload.map((item: any) => {
 				const key = `${nameKey || item.dataKey || 'value'}`
 				const itemConfig = getPayloadConfigFromPayload(config, item, key)

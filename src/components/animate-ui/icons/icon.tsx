@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import {
@@ -10,26 +9,6 @@ import {
 import * as React from 'react'
 
 import { cn } from '@/utils/helpers/cn'
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
 
 const staticAnimations = {
 	path: {
@@ -81,6 +60,7 @@ interface DefaultIconProps<T = string> {
 }
 
 interface AnimateIconProps<T = string> extends DefaultIconProps<T> {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	children: React.ReactElement<any, any>
 }
 
@@ -287,6 +267,7 @@ function IconWrapper<T extends string>({
 	)
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function getVariants<
 	V extends { default: T; [key: string]: T },
 	T extends Record<string, Variants>
@@ -310,6 +291,7 @@ function getVariants<
 
 	if (loop) {
 		for (const key in result) {
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			const state = result[key] as any
 			const transition = state.animate?.transition
 			if (!transition) continue

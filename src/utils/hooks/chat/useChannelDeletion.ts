@@ -28,5 +28,5 @@ export const useChannelDeletion = (channelId: string) => {
 		return () => {
 			channel.unsubscribe()
 		}
-	}, [channelId])
+	}, [channelId, router])
 }
