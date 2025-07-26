@@ -30,6 +30,8 @@ import { useI18n } from '@/utils/providers'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 type FormData = Record<string, unknown>
 
 interface MultiStepFormContextType<T extends FormData = FormData> {

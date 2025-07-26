@@ -29,6 +29,8 @@ import { cn } from '@/utils/helpers/cn'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 const staticAnimations = {
 	path: {
 		initial: { pathLength: 1, opacity: 1 },
