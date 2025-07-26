@@ -2,14 +2,14 @@
 
 import { useEffect, useState } from 'react'
 
-import { getChannels } from '@/utils/api'
+import type { DBChannel } from '@/types/db.types'
 
-import type { Database } from '../../../../generated/database.types'
+import { getChannels } from '@/utils/api'
 
 import supabase from '@/lib/supabase/client'
 
 export const useRealtimeChannels = () => {
-	const [channels, setChannels] = useState<Database['public']['Tables']['channels']['Row'][]>([])
+	const [channels, setChannels] = useState<DBChannel[]>([])
 
 	useEffect(() => {
 		const getInitialChannels = async () => {
@@ -26,10 +26,7 @@ export const useRealtimeChannels = () => {
 
 		channel
 			.on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'channels' }, payload =>
-				setChannels(current => [
-					...current,
-					payload.new as Database['public']['Tables']['channels']['Row']
-				])
+				setChannels(current => [...current, payload.new as DBChannel])
 			)
 			.on('postgres_changes', { event: 'DELETE', schema: 'public', table: 'channels' }, payload =>
 				setChannels(current => current?.filter(channel => channel.id !== payload.old.id))

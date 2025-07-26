@@ -9,8 +9,9 @@ import {
 	XCircle
 } from 'lucide-react'
 
+import { createIconData } from '@/utils/helpers/icon/createIconData'
+
 import { type IconData } from './types'
-import { createIconData } from '@/lib/helpers/icon/createIconData'
 
 export const STATUS_ICONS: IconData[] = [
 	createIconData('CheckCircle', CheckCircle, 'status'),

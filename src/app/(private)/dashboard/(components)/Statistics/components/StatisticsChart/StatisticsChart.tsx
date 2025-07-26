@@ -3,18 +3,8 @@
 import { useState } from 'react'
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from 'recharts'
 
-import {
-	Card,
-	CardAction,
-	CardContent,
-	CardHeader,
-	CardTitle
-} from '@/components/ui/card'
-import {
-	ChartContainer,
-	ChartTooltip,
-	ChartTooltipContent
-} from '@/components/ui/chart'
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart'
 import {
 	Select,
 	SelectContent,
@@ -47,7 +37,7 @@ export function StatisticsChart() {
 	return (
 		<Card className='h-full w-full'>
 			<CardHeader className='flex items-center'>
-				<CardTitle className='font-geist-sans text-foreground/95 flex-1 text-2xl'>
+				<CardTitle className='text-foreground/95 flex-1 text-2xl'>
 					{i18n.formatMessage({ id: 'statistics.chart.title' })}
 				</CardTitle>
 				<CardAction>

@@ -15,9 +15,8 @@ import {
 
 import { Label } from '@/components/ui/label'
 
+import { cn } from '@/utils/helpers/cn'
 import { useI18n } from '@/utils/providers'
-
-import { cn } from '@/lib/helpers/cn'
 
 const Form = FormProvider
 

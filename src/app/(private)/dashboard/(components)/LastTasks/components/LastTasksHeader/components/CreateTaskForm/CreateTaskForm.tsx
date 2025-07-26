@@ -59,8 +59,8 @@ export function CreateTaskForm({ isOpen, onClose }: CreateTaskFormProps) {
 			icon_name: iconData.name,
 			status: 'not-started',
 			title: data.title,
-			start_time: data.startTime || undefined,
-			end_time: data.endTime || undefined
+			start_time: data.startTime,
+			end_time: data.endTime
 		})
 		form.reset()
 		onClose()

@@ -11,8 +11,9 @@ import {
 	Underline
 } from 'lucide-react'
 
+import { createIconData } from '@/utils/helpers/icon/createIconData'
+
 import { type IconData } from './types'
-import { createIconData } from '@/lib/helpers/icon/createIconData'
 
 export const DESIGN_ICONS: IconData[] = [
 	createIconData('Paintbrush', Paintbrush, 'design'),

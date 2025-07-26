@@ -6,9 +6,8 @@ import {
 	DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
 
+import { setLocale } from '@/utils/helpers/i18n/setLocale'
 import { useI18n } from '@/utils/providers'
-
-import { setLocale } from '@/lib/helpers/i18n/setLocale'
 
 const languages = [
 	{ code: 'en', label: 'EN' },

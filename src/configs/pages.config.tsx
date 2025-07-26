@@ -10,5 +10,5 @@ export class PAGES_CONFIG {
 	static REPORT_URL = this.BASE_URL + 'report'
 	static SETTINGS_URL = this.BASE_URL + 'settings'
 
-	static EDIT_TASK_URL = (id: string) => this.DASHBOARD_URL + `/task/${id}/edit`
+	static EDIT_TASK_URL = (id: string) => this.DASHBOARD_URL + `/task/${id}`
 }

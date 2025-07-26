@@ -31,7 +31,7 @@ import {
 	DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
 
-import { useUser } from '@/utils/hooks/useUser'
+import { useUser } from '@/utils/hooks/auth/useUser'
 import { useI18n } from '@/utils/providers'
 
 import { authClient, signOut } from '@/lib/better-auth/auth-client'

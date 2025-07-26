@@ -1,9 +1,8 @@
 import { SquareCheck } from 'lucide-react'
 import { useMemo } from 'react'
 
+import { cn } from '@/utils/helpers/cn'
 import { useI18n } from '@/utils/providers'
-
-import { cn } from '@/lib/helpers/cn'
 
 interface Props {
 	progress: number
@@ -39,7 +38,7 @@ export function ProgressBar({ progress }: Props) {
 	}, [clamped])
 
 	return (
-		<div className='bg-primary/12 font-geist-sans relative h-12 w-full overflow-hidden rounded-full'>
+		<div className='bg-primary/12 relative h-12 w-full overflow-hidden rounded-full'>
 			<div
 				className={cn(
 					'flex h-full cursor-default items-center justify-center rounded-full bg-[length:56px_56px] font-medium text-white',

@@ -2,14 +2,14 @@
 
 import { useEffect, useState } from 'react'
 
-import { getMessages } from '@/utils/api'
+import type { DBMessage } from '@/types/db.types'
 
-import type { Database } from '../../../../generated/database.types'
+import { getMessages } from '@/utils/api'
 
 import supabase from '@/lib/supabase/client'
 
 export const useRealtimeMessages = (channelId: string) => {
-	const [messages, setMessages] = useState<Database['public']['Tables']['messages']['Row'][]>([])
+	const [messages, setMessages] = useState<DBMessage[]>([])
 
 	useEffect(() => {
 		const getInitialMessages = async () => {
@@ -33,11 +33,7 @@ export const useRealtimeMessages = (channelId: string) => {
 					table: 'messages',
 					filter: `channel_id=eq.${channelId}`
 				},
-				payload =>
-					setMessages(messages => [
-						...messages,
-						payload.new as Database['public']['Tables']['messages']['Row']
-					])
+				payload => setMessages(messages => [...messages, payload.new as DBMessage])
 			)
 			.subscribe()
 

@@ -10,11 +10,11 @@ import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 
 import { deleteChannel } from '@/utils/api'
+import { cn } from '@/utils/helpers/cn'
+import { useUser } from '@/utils/hooks/auth/useUser'
 import { useRealtimeChannels } from '@/utils/hooks/chat/useRealtimeChannels'
-import { useUser } from '@/utils/hooks/useUser'
 
 import { CreateChannelForm } from './CreateChannelForm'
-import { cn } from '@/lib/helpers/cn'
 
 export function ChannelsSidebar() {
 	const [showCreateForm, setShowCreateForm] = useState(false)

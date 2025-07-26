@@ -6,7 +6,7 @@ import { AnimatePresence, type HTMLMotionProps, type Transition, motion } from '
 import { Dialog as SheetPrimitive } from 'radix-ui'
 import * as React from 'react'
 
-import { cn } from '@/lib/helpers/cn'
+import { cn } from '@/utils/helpers/cn'
 
 type SheetContextType = {
 	isOpen: boolean

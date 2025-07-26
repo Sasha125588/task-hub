@@ -22,7 +22,7 @@ import {
 import { Input } from '@/components/ui/input'
 
 import { getIcon } from '@/utils/constants/icons'
-import { useIconRegistry } from '@/utils/hooks/useLucideIcons'
+import { useIconRegistry } from '@/utils/hooks/icon/useLucideIcons'
 
 interface IconPickerProps {
 	value?: string

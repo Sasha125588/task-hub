@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -8,9 +9,14 @@ import { z } from 'zod'
 
 import { Button } from '@/components/ui/button'
 
+import { cn } from '@/utils/helpers/cn'
 import { useI18n } from '@/utils/providers'
 
-import { cn } from '@/lib/helpers/cn'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 

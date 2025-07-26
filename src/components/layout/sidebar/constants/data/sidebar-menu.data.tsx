@@ -13,7 +13,7 @@ import {
 	Users
 } from 'lucide-react'
 
-import type { SidebarData } from '@/components/layout/sidebar/types'
+import type { SidebarData } from '@/components/layout/Sidebar/types'
 
 import { PAGES_CONFIG } from '@/configs/pages.config'
 

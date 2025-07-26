@@ -1,4 +1,4 @@
-import supabase from "@/lib/supabase/client"
+import supabase from '@/lib/supabase/client'
 
 export const getMessages = async (channelId: string) => {
 	try {

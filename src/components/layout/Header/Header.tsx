@@ -19,8 +19,8 @@ export function Header() {
 		pathname.split('/')[1][0].charAt(0).toLocaleUpperCase('uk-UA') + pathname.split('/')[1].slice(1)
 
 	return (
-		<header className='flex h-16 shrink-0 items-center justify-between gap-2 border-b px-3 text-3xl transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-16'>
-			<div className='flex w-full items-center gap-2 px-4 font-medium'>
+		<header className='flex h-16 shrink-0 items-center justify-between gap-2 border-b px-3 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-16'>
+			<div className='flex w-full items-center gap-2 px-4 text-3xl font-medium'>
 				<SidebarTrigger className='-ml-1 cursor-pointer' />
 				<Separator
 					orientation='vertical'

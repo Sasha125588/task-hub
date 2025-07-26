@@ -14,7 +14,7 @@ export function TodayTasksHeader({ tasks }: Props) {
 	return (
 		<div className='flex items-center justify-between'>
 			<div>
-				<h2 className='mb-1 text-2xl font-bold'>
+				<h2 className='mb-1 text-2xl font-semibold'>
 					{i18n.formatMessage({ id: 'dashboard.todayTasks.title' })}
 				</h2>
 				<p className='text-muted-foreground text-sm'>

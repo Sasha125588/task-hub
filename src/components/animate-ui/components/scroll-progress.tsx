@@ -3,7 +3,7 @@
 import { type HTMLMotionProps, motion, useScroll, useSpring } from 'motion/react'
 import * as React from 'react'
 
-import { cn } from '@/lib/helpers/cn'
+import { cn } from '@/utils/helpers/cn'
 
 type ScrollProgressProps = React.ComponentProps<'div'> & {
 	progressProps?: HTMLMotionProps<'div'>

@@ -1,5 +1,6 @@
-import type { ModelsUpdateTaskRequest, PutTasksByIdResponse } from '../../../../../generated/api'
-import { api } from '../../instance'
+import type { ModelsUpdateTaskRequest } from '../../../../../generated/api'
+
+import supabase from '@/lib/supabase/client'
 
 export const updateTask = async ({
 	id,
@@ -7,4 +8,12 @@ export const updateTask = async ({
 }: {
 	id: string
 	params: ModelsUpdateTaskRequest
-}): Promise<PutTasksByIdResponse> => await api(`tasks/${id}`, { method: 'PUT', body: params })
+}) => {
+	try {
+		const { data } = await supabase.from('tasks').update(params).match({ id }).single()
+		return data
+	} catch (error) {
+		console.error('Error updating task:', error)
+		throw error
+	}
+}

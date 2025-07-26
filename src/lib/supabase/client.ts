@@ -1,6 +1,5 @@
+import type { Database } from '@generated/database.types'
 import { createBrowserClient } from '@supabase/ssr'
-
-import type { Database } from '../../../generated/database.types'
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_CHAT_URL
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_CHAT_ANON_KEY

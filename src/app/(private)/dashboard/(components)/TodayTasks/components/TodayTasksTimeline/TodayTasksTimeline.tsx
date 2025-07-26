@@ -74,9 +74,7 @@ export function TodayTasksTimeline({ tasks, currentTimePosition }: Props) {
 											/>
 										</div>
 										<div>
-											<h3 className='font-geist-sans text-sm font-semibold text-white'>
-												{task.title}
-											</h3>
+											<h3 className='text-sm font-semibold text-white'>{task.title}</h3>
 											<p className='text-xs text-white/90'>
 												{task.start_time} - {task.end_time}
 											</p>

@@ -4,10 +4,9 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
 import { usePostSignUpMutation } from '@/utils/api'
+import { getErrorMessage } from '@/utils/helpers/auth/getErrorMessage'
 
 import { signUpFormSchema } from '../constants/signUpSchema'
-
-import { getErrorMessage } from '@/lib/helpers/auth/getErrorMessage'
 
 interface SignUpForm {
 	email: string

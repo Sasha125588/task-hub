@@ -13,8 +13,9 @@ import {
 	Trophy
 } from 'lucide-react'
 
+import { createIconData } from '@/utils/helpers/icon/createIconData'
+
 import { type IconData } from './types'
-import { createIconData } from '@/lib/helpers/icon/createIconData'
 
 export const ENTERTAINMENT_ICONS: IconData[] = [
 	createIconData('Lightbulb', Lightbulb, 'entertainment'),

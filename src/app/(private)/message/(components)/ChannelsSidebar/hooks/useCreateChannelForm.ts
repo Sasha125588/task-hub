@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
 import { createChannel } from '@/utils/api'
-import { useUser } from '@/utils/hooks/useUser'
+import { useUser } from '@/utils/hooks/auth/useUser'
 
 import { createChannelSchema } from '../constants/createChannelSchema'
 

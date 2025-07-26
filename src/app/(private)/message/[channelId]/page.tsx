@@ -7,7 +7,7 @@ import { LoadingSpinner } from '@/components/ui/loading-spinner'
 
 import { useGetChannelQuery } from '@/utils/api/hooks/chat/useGetChannelQuery'
 
-import { ChatWindow } from '../(components)/ChatWindow/ChatWindow'
+import { ChatWindow } from '@/app/(private)/message/[channelId]/components/ChatWindow/ChatWindow'
 
 interface ChannelPageProps {
 	params: Promise<{ channelId: string }>

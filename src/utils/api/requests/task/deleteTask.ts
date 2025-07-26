@@ -1,5 +1,12 @@
-import type { DeleteTasksByIdResponse } from '../../../../../generated/api'
-import { api } from '../../instance'
+import supabase from '@/lib/supabase/client'
 
-export const deleteTask = async (id: string): Promise<DeleteTasksByIdResponse> =>
-	await api(`tasks/${id}`, { method: 'DELETE' })
+export const deleteTask = async (id: string) => {
+	try {
+		const { data } = await supabase.from('tasks').delete().match({ id }).single()
+
+		return data
+	} catch (error) {
+		console.error('Error creating task:', error)
+		throw error
+	}
+}

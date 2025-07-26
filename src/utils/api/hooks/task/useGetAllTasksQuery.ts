@@ -1,11 +1,18 @@
 import { useQuery } from '@tanstack/react-query'
 
-import type { GetAllTasksParams } from '../../../../../generated/api'
-import { getAllTasks } from '../../requests'
+import type { DBTask } from '@/types/db.types'
+
+import { type GetAllTasksParams, getAllTasks } from '../../requests'
 
 export const useGetAllTasksQuery = (params?: GetAllTasksParams) =>
-	useQuery({
-		queryKey: ['getAllTasks', params],
-		queryFn: () => getAllTasks(params),
-		placeholderData: prev => prev
+	useQuery<DBTask[]>({
+		queryKey: [
+			'getAllTasks',
+			params?.limit,
+			params?.offset,
+			params?.sort_by,
+			params?.sort_type,
+			params?.status
+		],
+		queryFn: async () => await getAllTasks(params)
 	})

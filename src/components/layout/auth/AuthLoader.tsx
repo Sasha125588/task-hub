@@ -1,6 +1,6 @@
 import { type PropsWithChildren } from 'react'
 
-import { useUser } from '@/utils/hooks/useUser'
+import { useUser } from '@/utils/hooks/auth/useUser'
 
 import { LoadingSpinner } from '../../ui/loading-spinner'
 

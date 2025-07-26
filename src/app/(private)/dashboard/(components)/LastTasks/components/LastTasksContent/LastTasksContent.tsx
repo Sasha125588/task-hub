@@ -4,11 +4,11 @@ import { parseAsBoolean, useQueryState } from 'nuqs'
 
 import { TabsContent } from '@/components/animate-ui/radix/tabs'
 
+import type { DBTask } from '@/types/db.types'
+
 import { useI18n } from '@/utils/providers'
 
-import type { ModelsTask } from '../../../../../../../../generated/api'
-import { LastTasksItem } from '../LastTasksItem/LastTasksItem'
-
+import { Task } from './Task/Task'
 import { TASK_CONFIG } from '@/configs/task.config'
 import { $statusType } from '@/stores/task/status-type'
 
@@ -18,7 +18,7 @@ const ANIMATION_VARIANTS = {
 	transition: { duration: 0.2, layout: { duration: 0.3 } }
 } as const
 
-export function LastTasksContent({ tasks }: { tasks: ModelsTask[] }) {
+export function LastTasksContent({ tasks }: { tasks: DBTask[] }) {
 	const i18n = useI18n()
 
 	const [isShowAll, setIsShowAll] = useQueryState('show-all', parseAsBoolean)
@@ -45,13 +45,13 @@ export function LastTasksContent({ tasks }: { tasks: ModelsTask[] }) {
 							layout
 							{...ANIMATION_VARIANTS}
 						>
-							<LastTasksItem item={task} />
+							<Task item={task} />
 						</motion.div>
 					))}
 				</AnimatePresence>
 			</div>
 			{tasks.length >= TASK_CONFIG.DISPLAYED_TASKS_LIMIT && (
-				<div className='font-geist-sans mt-5 text-center font-medium'>
+				<div className='mt-5 text-center font-medium'>
 					<button
 						onClick={toggleShowAll}
 						className={`cursor-pointer ${

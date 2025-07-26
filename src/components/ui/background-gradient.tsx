@@ -3,7 +3,7 @@
 import { type HTMLMotionProps, type Transition, motion } from 'motion/react'
 import * as React from 'react'
 
-import { cn } from '@/lib/helpers/cn'
+import { cn } from '@/utils/helpers/cn'
 
 type GradientBackgroundProps = HTMLMotionProps<'div'> & {
 	transition?: Transition

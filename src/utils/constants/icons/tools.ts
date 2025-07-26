@@ -1,7 +1,8 @@
 import { Code, Command, Hammer, Ruler, Scissors, Terminal, Timer, Wrench } from 'lucide-react'
 
+import { createIconData } from '@/utils/helpers/icon/createIconData'
+
 import { type IconData } from './types'
-import { createIconData } from '@/lib/helpers/icon/createIconData'
 
 export const TOOL_ICONS: IconData[] = [
 	createIconData('Wrench', Wrench, 'tools'),

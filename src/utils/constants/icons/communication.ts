@@ -17,8 +17,9 @@ import {
 	Users
 } from 'lucide-react'
 
+import { createIconData } from '@/utils/helpers/icon/createIconData'
+
 import { type IconData } from './types'
-import { createIconData } from '@/lib/helpers/icon/createIconData'
 
 export const COMMUNICATION_ICONS: IconData[] = [
 	createIconData('Mail', Mail, 'communication'),

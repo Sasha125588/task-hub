@@ -12,7 +12,7 @@ import {
 	TooltipTrigger
 } from '@/components/animate-ui/components/tooltip'
 
-import { cn } from '@/lib/helpers/cn'
+import { cn } from '@/utils/helpers/cn'
 
 type AvatarProps = TooltipProps & {
 	children: React.ReactNode

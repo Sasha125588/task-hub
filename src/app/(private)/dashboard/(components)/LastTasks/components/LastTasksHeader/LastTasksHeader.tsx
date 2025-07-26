@@ -10,19 +10,18 @@ import {
 } from '@/components/animate-ui/radix/hover-card'
 import { TabsList, TabsTrigger } from '@/components/animate-ui/radix/tabs'
 
+import type { DBTask } from '@/types/db.types'
 import type { TaskStatuses } from '@/types/task.types'
 
+import { getNumOfTasksByStatus } from '@/utils/helpers/task/getNumOfTasksByStatus'
 import { useI18n } from '@/utils/providers'
-
-import type { ModelsTask } from '../../../../../../../../generated/api'
 
 import { CreateTaskForm } from './components/CreateTaskForm/CreateTaskForm'
 import { TABS } from './constants/data'
-import { getNumOfTasksByStatus } from '@/lib/helpers/task/getNumOfTasksByStatus'
 import { $sortType, sortTypeUpdated as updateSortType } from '@/stores/task/sort-type'
 import { $statusType } from '@/stores/task/status-type'
 
-export function LastTasksHeader({ tasks }: { tasks: ModelsTask[] }) {
+export function LastTasksHeader({ tasks }: { tasks: DBTask[] }) {
 	const i18n = useI18n()
 	const [isCreateFormOpen, setIsCreateFormOpen] = useState(false)
 

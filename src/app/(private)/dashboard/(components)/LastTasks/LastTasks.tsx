@@ -19,11 +19,10 @@ export function LastTasks() {
 	const statusType = useUnit($statusType)
 	const sortType = useUnit($sortType)
 	const { data } = useGetAllTasksQuery({
-		status: statusType,
+		status: statusType === 'all' ? undefined : statusType,
 		sort_by: 'due_date',
 		sort_type: sortType,
-		limit: TASK_CONFIG.DISPLAYED_TASKS_LIMIT,
-		offset: 0
+		limit: TASK_CONFIG.DISPLAYED_TASKS_LIMIT.toString()
 	})
 
 	const [, setUrlStatus] = useQueryState<TStatusFilter>(
@@ -43,8 +42,8 @@ export function LastTasks() {
 			dir='rtl'
 			onValueChange={changeStatusType}
 		>
-			<LastTasksHeader tasks={data?.tasks ?? []} />
-			<LastTasksContent tasks={data?.tasks ?? []} />
+			<LastTasksHeader tasks={data ?? []} />
+			<LastTasksContent tasks={data ?? []} />
 		</Tabs>
 	)
 }

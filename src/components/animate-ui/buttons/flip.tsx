@@ -3,7 +3,7 @@
 import { type HTMLMotionProps, type Transition, type Variant, motion } from 'motion/react'
 import * as React from 'react'
 
-import { cn } from '@/lib/helpers/cn'
+import { cn } from '@/utils/helpers/cn'
 
 type FlipDirection = 'top' | 'bottom' | 'left' | 'right'
 

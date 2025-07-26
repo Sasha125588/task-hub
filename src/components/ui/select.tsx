@@ -4,7 +4,7 @@ import * as SelectPrimitive from '@radix-ui/react-select'
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from 'lucide-react'
 import * as React from 'react'
 
-import { cn } from '@/lib/helpers/cn'
+import { cn } from '@/utils/helpers/cn'
 
 function Select({ ...props }: React.ComponentProps<typeof SelectPrimitive.Root>) {
 	return (
@@ -46,7 +46,7 @@ function SelectTrigger({
 			data-slot='select-trigger'
 			data-size={size}
 			className={cn(
-				"focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive font-geist-sans inline-flex items-center justify-between gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-all outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+				"focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive inline-flex items-center justify-between gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-all outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
 
 				// Using colors from your button example
 				'bg-accent text-accent-foreground shadow-xs',

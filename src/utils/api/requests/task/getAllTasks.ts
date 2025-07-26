@@ -1,17 +1,46 @@
-import type { GetAllTasksParams, GetTasksResponse } from '../../../../../generated/api'
-import { api } from '../../instance'
+import type { DBTask } from '@/types/db.types'
 
-export const getAllTasks = async (params?: GetAllTasksParams): Promise<GetTasksResponse> => {
-	const searchParams = new URLSearchParams()
+import supabase from '@/lib/supabase/client'
 
-	if (params?.status) searchParams.append('status', params.status)
-	if (params?.sort_by) searchParams.append('sort_by', params.sort_by)
-	if (params?.sort_type) searchParams.append('sort_type', params.sort_type)
-	if (params?.limit) searchParams.append('limit', params.limit.toString())
-	if (params?.offset) searchParams.append('offset', params.offset.toString())
+export interface GetAllTasksParams {
+	status?: string
+	sort_by?: string
+	sort_type?: string
+	limit?: string
+	offset?: string
+}
 
-	const queryString = searchParams.toString()
-	const url = queryString ? `tasks?${queryString}` : 'tasks'
+export const getAllTasks = async (params?: GetAllTasksParams): Promise<DBTask[]> => {
+	try {
+		let query = supabase.from('tasks').select('*')
 
-	return await api(url, { method: 'GET' })
+		if (params?.status) {
+			query = query.eq('status', params.status)
+		}
+
+		if (params?.sort_by && params?.sort_type) {
+			query = query.order(params.sort_by, {
+				ascending: params.sort_type === 'asc'
+			})
+		}
+
+		if (params?.limit) {
+			query = query.limit(parseInt(params.limit))
+		}
+
+		if (params?.offset) {
+			query = query.range(
+				parseInt(params.offset),
+				parseInt(params.offset) + (params.limit ? parseInt(params.limit) : 10) - 1
+			)
+		}
+
+		const { data, error } = await query
+
+		if (error) throw error
+		return data
+	} catch (error) {
+		console.error('Error fetching tasks:', error)
+		throw error
+	}
 }

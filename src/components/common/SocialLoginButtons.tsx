@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button'
 
-import { usePostAuthWithProviderMutation } from '@/utils/api/hooks/auth/usePostAuthWithProviderMutation'
+import { usePostAuthWithProviderMutation } from '@/utils/api'
 
 export function SocialLoginButtons() {
 	const authWithProvider = usePostAuthWithProviderMutation()

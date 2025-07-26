@@ -24,7 +24,7 @@ export function SidebarItem({ item }: { item: SidebarSection }) {
 	return (
 		<SidebarGroup key={item.title}>
 			<SidebarGroupLabel className='my-0 py-0'>
-				<p className='text-[13px] leading-7 [&:not(:first-child)]:mt-6'>
+				<p className='text-xs leading-7 [&:not(:first-child)]:mt-6'>
 					{i18n.formatMessage({
 						id: `sidebar.menu.${item.title}`
 					})}
@@ -47,7 +47,7 @@ export function SidebarItem({ item }: { item: SidebarSection }) {
 											className='flex items-center gap-3'
 										>
 											<div className={`m-0 flex h-5 w-5 items-center p-0`}>{item.icon}</div>
-											<p>
+											<p className='text-sm font-normal'>
 												{i18n.formatMessage({
 													id: `sidebar.menu.${item.title}`
 												})}

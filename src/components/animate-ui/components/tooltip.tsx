@@ -4,7 +4,7 @@ import { AnimatePresence, LayoutGroup, type Transition, motion } from 'motion/re
 import * as React from 'react'
 import { createPortal } from 'react-dom'
 
-import { cn } from '@/lib/helpers/cn'
+import { cn } from '@/utils/helpers/cn'
 
 type Side = 'top' | 'bottom' | 'left' | 'right'
 
