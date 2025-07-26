@@ -29,7 +29,8 @@ export default function DashboardPage() {
 	return (
 		<Suspense fallback={<>Loading dashboard page</>}>
 			<div className='flex w-full flex-col gap-7'>
-				<Statistic tasks={tasks} />
+				{/* <Statistic tasks={tasks} /> */}
+				<Statistic />
 				<LastTasks
 					tasks={tasks}
 					statusType={statusType as TaskStatuses}
