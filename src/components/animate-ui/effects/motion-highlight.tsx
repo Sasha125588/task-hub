@@ -1,18 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import { AnimatePresence, type Transition, motion } from 'motion/react'
 import * as React from 'react'
 
 import { cn } from '@/utils/helpers/cn'
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
 
 type MotionHighlightMode = 'children' | 'parent'
 
@@ -41,6 +32,7 @@ type MotionHighlightContextType<T extends string> = {
 	forceUpdateBounds?: boolean
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const MotionHighlightContext = React.createContext<MotionHighlightContextType<any> | undefined>(
 	undefined
 )
