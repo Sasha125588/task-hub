@@ -6,10 +6,9 @@ import {
 	SidebarHeader,
 	SidebarRail
 } from '@/components/animate-ui/radix/sidebar'
+import { Account } from '@/components/layout/Sidebar/Account'
+import { SidebarItem } from '@/components/layout/Sidebar/SidebarItem'
 import { SIDEBAR_MENU_DATA } from '@/components/layout/Sidebar/constants/data/sidebar-menu.data'
-
-import { Account } from './Account'
-import { SidebarItem } from './SidebarItem'
 
 export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
 	return (
