@@ -1,30 +1,17 @@
 'use client'
 
-import { useUnit } from 'effector-react'
 import { parseAsStringLiteral, useQueryState } from 'nuqs'
 
 import { Tabs } from '@/components/animate-ui/radix/tabs'
 
+import type { DBTask } from '@/types/db.types'
 import { StatusFilter, type TStatusFilter, type TaskStatuses } from '@/types/task.types'
-
-import { useGetAllTasksQuery } from '@/utils/api'
 
 import { LastTasksContent } from './components/LastTasksContent/LastTasksContent'
 import { LastTasksHeader } from './components/LastTasksHeader/LastTasksHeader'
-import { TASK_CONFIG } from '@/configs/task.config'
-import { $sortType } from '@/stores/task/sort-type'
-import { $statusType, statusTypeUpdated as updateStatusType } from '@/stores/task/status-type'
+import { statusTypeUpdated as updateStatusType } from '@/stores/task/status-type'
 
-export function LastTasks() {
-	const statusType = useUnit($statusType)
-	const sortType = useUnit($sortType)
-	const { data } = useGetAllTasksQuery({
-		status: statusType === 'all' ? undefined : statusType,
-		sort_by: 'due_date',
-		sort_type: sortType,
-		limit: TASK_CONFIG.DISPLAYED_TASKS_LIMIT.toString()
-	})
-
+export function LastTasks({ tasks, statusType }: { tasks: DBTask[]; statusType: TaskStatuses }) {
 	const [, setUrlStatus] = useQueryState<TStatusFilter>(
 		'status',
 		parseAsStringLiteral(StatusFilter).withDefault('all')
@@ -42,8 +29,8 @@ export function LastTasks() {
 			dir='rtl'
 			onValueChange={changeStatusType}
 		>
-			<LastTasksHeader tasks={data ?? []} />
-			<LastTasksContent tasks={data ?? []} />
+			<LastTasksHeader tasks={tasks} />
+			<LastTasksContent tasks={tasks} />
 		</Tabs>
 	)
 }

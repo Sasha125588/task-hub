@@ -2,14 +2,13 @@
 
 import { Card } from '@/components/ui/card'
 
-import { useGetAllTasksQuery } from '@/utils/api'
+import type { DBTask } from '@/types/db.types'
 
 import { TodayTasksHeader } from './components/TodayTasksHeader/TodayTasksHeader'
 import { TodayTasksTimeline } from './components/TodayTasksTimeline/TodayTasksTimeline'
 import { getCurrentTimePosition } from './components/TodayTasksTimeline/helpers'
 
-export function TodayTasks() {
-	const tasks = useGetAllTasksQuery().data ?? []
+export function TodayTasks({ tasks }: { tasks: DBTask[] }) {
 	const todayTasks = tasks.filter(
 		task =>
 			task.start_time &&

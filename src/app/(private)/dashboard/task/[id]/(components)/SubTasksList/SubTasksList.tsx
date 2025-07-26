@@ -2,7 +2,6 @@
 
 import {
 	DndContext,
-	type DragEndEvent,
 	KeyboardSensor,
 	PointerSensor,
 	closestCenter,
@@ -16,27 +15,23 @@ import {
 } from '@dnd-kit/sortable'
 import { useClickOutside } from '@siberiacancode/reactuse'
 import { Check, Plus, X } from 'lucide-react'
-import { useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { CardContent } from '@/components/ui/card'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 
-import { useGetSubTasksQuery } from '@/utils/api/hooks/task/useGetSubTasksQuery'
-import { usePostCreateSubTaskMutation } from '@/utils/api/hooks/task/usePostCreateSubTaskMutation'
-import { usePostReorderSubTasksMutation } from '@/utils/api/hooks/task/usePostReorderSubTasksMutation'
+import type { DBSubTask } from '@/types/db.types'
 
-import { SubTask } from './components/SubTask'
+import { SubTask } from './components/SubTask/SubTask'
+import { useSubTasksList } from '@/app/(private)/dashboard/task/[id]/(components)/SubTasksList/hooks/useSubTasksList'
 
-export function SubTasksList({ id }: { id: string }) {
-	const [showForm, setShowForm] = useState(false)
-	const [taskTitle, setTaskTitle] = useState('')
+export function SubTasksList({ id, subTasks }: { id: string; subTasks: DBSubTask[] }) {
+	const { state, actions, handlers } = useSubTasksList(id, subTasks)
 
-	const { data: subTasks } = useGetSubTasksQuery(id)
-
-	const createSubTask = usePostCreateSubTaskMutation().mutate
-	const reorderSubTasks = usePostReorderSubTasksMutation().mutate
+	const { showForm, taskTitle } = state
+	const { setTaskTitle, setShowForm } = actions
+	const { handleDragEnd, handleCreateTask, handleCancel, handleShowForm } = handlers
 
 	const ref = useClickOutside<HTMLDivElement>(() => setShowForm(false))
 
@@ -47,45 +42,6 @@ export function SubTasksList({ id }: { id: string }) {
 		})
 	)
 
-	function handleDragEnd(event: DragEndEvent) {
-		const { active, over } = event
-
-		if (!active || !over || !subTasks) return
-		if (active.id === over.id) return
-
-		const oldIndex = subTasks.findIndex(t => t.id === active.id)
-		const newIndex = subTasks.findIndex(t => t.id === over.id)
-
-		if (oldIndex !== -1 && newIndex !== -1) {
-			reorderSubTasks({
-				subTasks,
-				sourceIndex: oldIndex,
-				destinationIndex: newIndex
-			})
-		}
-	}
-
-	const handleCreateTask = () => {
-		if (taskTitle.trim()) {
-			createSubTask({ taskId: id, body: { title: taskTitle.trim(), completed: false } })
-			setTaskTitle('')
-			setShowForm(false)
-		}
-	}
-
-	const handleCancel = () => {
-		setTaskTitle('')
-		setShowForm(false)
-	}
-
-	const handleKeyDown = (e: React.KeyboardEvent) => {
-		if (e.key === 'Enter') {
-			handleCreateTask()
-		} else if (e.key === 'Escape') {
-			handleCancel()
-		}
-	}
-
 	return (
 		<Card className='h-full'>
 			<CardContent className='flex flex-col gap-2'>
@@ -95,7 +51,7 @@ export function SubTasksList({ id }: { id: string }) {
 					<Button
 						variant='ghost'
 						className='border-primary/30 h-14 w-full justify-start border-2 border-dashed'
-						onClick={() => setShowForm(true)}
+						onClick={handleShowForm}
 					>
 						<Plus size={16} />
 						New Sub Task
@@ -109,7 +65,6 @@ export function SubTasksList({ id }: { id: string }) {
 							value={taskTitle}
 							onChange={e => setTaskTitle(e.target.value)}
 							placeholder='Enter task title...'
-							onKeyDown={handleKeyDown}
 							autoFocus
 							className='flex-1 border-none !bg-transparent shadow-none focus-visible:ring-0'
 						/>

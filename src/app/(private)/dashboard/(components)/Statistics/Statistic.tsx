@@ -6,10 +6,12 @@ import { type Swapy, createSwapy } from 'swapy'
 
 import { StatisticCard } from '@/components/common/StatisticCard'
 
+import type { DBTask } from '@/types/db.types'
+
 import { StatisticsChart } from './components/StatisticsChart/StatisticsChart'
 import { STATISTICS_CARDS } from './constants/data'
 
-export function Statistic() {
+export function Statistic({ tasks }: { tasks: DBTask[] }) {
 	const swapyRef = useRef<Swapy | null>(null)
 	const containerRef = useRef<HTMLDivElement>(null)
 
