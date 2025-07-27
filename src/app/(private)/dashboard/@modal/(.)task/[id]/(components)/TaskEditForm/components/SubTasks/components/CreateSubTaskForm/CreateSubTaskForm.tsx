@@ -30,8 +30,7 @@ export function CreateSubTaskForm({ taskId }: { taskId: string }) {
 			await createSubTaskMutation.mutateAsync({
 				taskId,
 				body: {
-					title: taskTitle.trim(),
-					completed: false
+					title: taskTitle.trim()
 				}
 			})
 

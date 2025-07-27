@@ -1,8 +1,10 @@
+'use server'
+
 import type { Database } from '@generated/database.types'
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 
-export async function createClient() {
+export async function createServer() {
 	const cookieStore = await cookies()
 
 	return createServerClient<Database>(

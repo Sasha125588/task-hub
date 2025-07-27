@@ -7,7 +7,6 @@ import supabase from '@/lib/supabase/client'
 export interface CreateSubTaskParams {
 	title: string
 	description?: string
-	completed: boolean
 }
 
 export const createSubTask = async (
@@ -21,7 +20,6 @@ export const createSubTask = async (
 			task_id,
 			title: params.title,
 			description: params.description,
-			completed: params.completed,
 			created_at: now,
 			updated_at: now
 		}

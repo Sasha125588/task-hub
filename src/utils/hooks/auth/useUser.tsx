@@ -1,3 +1,5 @@
+'use client'
+
 import { useSession } from '@/lib/better-auth/auth-client'
 
 export const useUser = () => {

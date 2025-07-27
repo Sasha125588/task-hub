@@ -29,9 +29,10 @@ import { useSubTasksList } from '@/app/(private)/dashboard/task/[id]/(components
 export function SubTasksList({ id, subTasks }: { id: string; subTasks: DBSubTask[] }) {
 	const { state, actions, handlers } = useSubTasksList(id, subTasks)
 
-	const { showForm, taskTitle } = state
+	const { showForm, taskTitle, optimisticSubTasks } = state
 	const { setTaskTitle, setShowForm } = actions
-	const { handleDragEnd, handleCreateTask, handleCancel, handleShowForm } = handlers
+	const { handleDragEnd, handleCreateTask, handleCancel, handleShowForm, handleEnterPress } =
+		handlers
 
 	const ref = useClickOutside<HTMLDivElement>(() => setShowForm(false))
 
@@ -64,6 +65,7 @@ export function SubTasksList({ id, subTasks }: { id: string; subTasks: DBSubTask
 						<Input
 							value={taskTitle}
 							onChange={e => setTaskTitle(e.target.value)}
+							onKeyDown={event => handleEnterPress(event)}
 							placeholder='Enter task title...'
 							autoFocus
 							className='flex-1 border-none !bg-transparent shadow-none focus-visible:ring-0'
@@ -92,10 +94,10 @@ export function SubTasksList({ id, subTasks }: { id: string; subTasks: DBSubTask
 				>
 					<div className='flex flex-col gap-2 pt-3'>
 						<SortableContext
-							items={subTasks?.map(task => task.id!) ?? []}
+							items={optimisticSubTasks?.map(task => task.id!) ?? []}
 							strategy={verticalListSortingStrategy}
 						>
-							{subTasks?.map(subTask => (
+							{optimisticSubTasks?.map(subTask => (
 								<SubTask
 									key={subTask.id}
 									subTask={subTask}

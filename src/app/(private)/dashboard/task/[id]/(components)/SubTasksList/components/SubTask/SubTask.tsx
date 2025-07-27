@@ -1,19 +1,23 @@
+'use client'
+
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { format } from 'date-fns'
 import { CalendarDays, GripVertical, MoreVertical, Trash } from 'lucide-react'
+import { useTransition } from 'react'
 
 import { Checkbox } from '@/components/ui/checkbox'
 
 import type { DBSubTask } from '@/types/db.types'
 
-import { useDeleteSubTaskMutation } from '@/utils/api/hooks/task/useDeleteSubTaskMutation'
-import { usePutUpdateSubTaskMutation } from '@/utils/api/hooks/task/usePutUpdateSubTaskMutation'
 import { cn } from '@/utils/helpers/cn'
 
+import { handleDeleteSubTask } from '@/app/(private)/dashboard/task/[id]/(actions)/handleDeleteSubTask'
+import { handleUpdateSubTask } from '@/app/(private)/dashboard/task/[id]/(actions)/handleUpdateSubTask'
+
 export function SubTask({ subTask }: { subTask: DBSubTask }) {
-	const deleteSubTask = useDeleteSubTaskMutation().mutate
-	const updateSubTask = usePutUpdateSubTaskMutation().mutate
+	const [isPending, startTransition] = useTransition()
+
 	const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
 		id: subTask.id
 	})
@@ -24,8 +28,27 @@ export function SubTask({ subTask }: { subTask: DBSubTask }) {
 		opacity: isDragging ? 0.5 : 1
 	}
 
-	const handleToggle = () => {
-		updateSubTask({ id: subTask.id, params: { completed: !subTask.completed } })
+	const handleToggle = async () => {
+		try {
+			startTransition(async () => {
+				await handleUpdateSubTask({
+					taskId: subTask.id,
+					body: { completed: !subTask.completed }
+				})
+			})
+		} catch (error) {
+			console.error('Failed to update sub task:', error)
+		}
+	}
+
+	const handleDelete = async () => {
+		try {
+			startTransition(async () => {
+				await handleDeleteSubTask(subTask.id, subTask.task_id)
+			})
+		} catch (error) {
+			console.error('Failed to delete sub task:', error)
+		}
 	}
 
 	return (
@@ -46,7 +69,8 @@ export function SubTask({ subTask }: { subTask: DBSubTask }) {
 				/>
 				<Checkbox
 					checked={subTask.completed}
-					onCheckedChange={() => handleToggle()}
+					onCheckedChange={handleToggle}
+					disabled={isPending}
 				/>
 				<span className='text-sm font-semibold'>{subTask.title}</span>
 			</div>
@@ -83,7 +107,7 @@ export function SubTask({ subTask }: { subTask: DBSubTask }) {
 					<Trash
 						size={16}
 						className='cursor-pointer'
-						onClick={() => deleteSubTask(subTask.id)}
+						onClick={handleDelete}
 					/>
 				</div>
 			</div>
