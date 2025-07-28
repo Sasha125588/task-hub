@@ -4,4 +4,6 @@ export const StatusFilter = ['all', 'not-started', 'completed', 'in-progress'] a
 
 export type TStatusFilter = (typeof StatusFilter)[number]
 
-export type TaskSortType = 'asc' | 'desc'
+export const SortFilter = ['asc', 'desc'] as const
+
+export type TSortFilter = (typeof SortFilter)[number]

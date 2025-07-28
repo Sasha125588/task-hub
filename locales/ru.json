@@ -103,12 +103,12 @@
 	"statistics.desc.Working Hours": "Рабочие часы",
 	"statistics.desc.On Going Projects": "Текущие проекты",
 
-	"statistics.chart.title": "Статистика проектов",
+	"statistics.chart.title": "Статистика задач",
 	"statistics.chart.yearly": "Годовая",
 	"statistics.chart.monthly": "Месячная",
 	"statistics.chart.weekly": "Недельная",
 
-	"statistics.chart.config.label": "Проекты",
+	"statistics.chart.config.label": "Задачи",
 
 	"last-tasks.title": "Последние задачи",
 	"last-tasks.show-less": "Скрыть",

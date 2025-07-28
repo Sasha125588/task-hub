@@ -1,67 +1,64 @@
 'use client'
 
 import type { DragEndEvent } from '@dnd-kit/core'
-import { type KeyboardEvent, useEffect, useState, useTransition } from 'react'
+import { type KeyboardEvent, useState } from 'react'
 
 import type { DBSubTask } from '@/types/db.types'
 
-import { handleCreateSubTask } from '@/app/(private)/dashboard/task/[id]/(actions)/handleCreateSubTask'
-import { handleReorderSubTasks } from '@/app/(private)/dashboard/task/[id]/(actions)/handleReorderSubTasks'
+import {
+	useDeleteSubTaskMutation,
+	usePostCreateSubTaskMutation,
+	usePostReorderSubTasksMutation,
+	usePutUpdateSubTaskMutation
+} from '@/utils/api/hooks/task'
 
 export function useSubTasksList(taskId: string, subTasks: DBSubTask[]) {
-	const [optimisticSubTasks, setOptimisticSubTasks] = useState<DBSubTask[]>(subTasks)
 	const [showForm, setShowForm] = useState(false)
 	const [taskTitle, setTaskTitle] = useState('')
-	const [isPending, startTransition] = useTransition()
 
-	useEffect(() => {
-		setOptimisticSubTasks(subTasks)
-	}, [subTasks])
+	const createSubTaskMutation = usePostCreateSubTaskMutation()
+	const updateSubTaskMutation = usePutUpdateSubTaskMutation()
+	const deleteSubTaskMutation = useDeleteSubTaskMutation()
+	const reorderSubTasksMutation = usePostReorderSubTasksMutation()
 
 	function handleDragEnd(event: DragEndEvent) {
 		const { active, over } = event
 
-		if (!active || !over || !optimisticSubTasks) return
+		if (!active || !over || !subTasks) return
 		if (active.id === over.id) return
 
-		const oldIndex = optimisticSubTasks.findIndex(t => t.id === active.id)
-		const newIndex = optimisticSubTasks.findIndex(t => t.id === over.id)
+		const oldIndex = subTasks.findIndex(t => t.id === active.id)
+		const newIndex = subTasks.findIndex(t => t.id === over.id)
 
 		if (oldIndex !== -1 && newIndex !== -1) {
-			const newOptimisticSubTasks = [...optimisticSubTasks]
-			const [movedItem] = newOptimisticSubTasks.splice(oldIndex, 1)
-
-			newOptimisticSubTasks.splice(newIndex, 0, movedItem)
-			setOptimisticSubTasks(newOptimisticSubTasks)
-
-			startTransition(async () => {
-				try {
-					await handleReorderSubTasks({
-						subTasks: optimisticSubTasks,
-						sourceIndex: oldIndex,
-						destinationIndex: newIndex,
-						taskId
-					})
-				} catch (error) {
-					console.error('Failed to reorder sub tasks:', error)
-					setOptimisticSubTasks(optimisticSubTasks)
-				}
+			reorderSubTasksMutation.mutate({
+				subTasks,
+				sourceIndex: oldIndex,
+				destinationIndex: newIndex
 			})
 		}
 	}
 
 	const handleCreateTask = () => {
 		if (taskTitle.trim()) {
-			startTransition(async () => {
-				try {
-					await handleCreateSubTask({ taskId, body: { title: taskTitle.trim() } })
-					setTaskTitle('')
-					setShowForm(false)
-				} catch (error) {
-					console.error('Failed to create sub task:', error)
+			createSubTaskMutation.mutate(
+				{ taskId, body: { title: taskTitle.trim() } },
+				{
+					onSuccess: () => {
+						setTaskTitle('')
+						setShowForm(false)
+					}
 				}
-			})
+			)
 		}
+	}
+
+	const handleUpdateSubTask = (subTaskId: string, completed: boolean) => {
+		updateSubTaskMutation.mutate({ id: subTaskId, params: { completed } })
+	}
+
+	const handleDeleteSubTask = (subTaskId: string) => {
+		deleteSubTaskMutation.mutate(subTaskId)
 	}
 
 	const handleCancel = () => {
@@ -81,10 +78,14 @@ export function useSubTasksList(taskId: string, subTasks: DBSubTask[]) {
 
 	return {
 		state: {
-			optimisticSubTasks,
+			subTasks,
 			showForm,
 			taskTitle,
-			isPending
+			isPending:
+				createSubTaskMutation.isPending ||
+				deleteSubTaskMutation.isPending ||
+				reorderSubTasksMutation.isPending ||
+				updateSubTaskMutation.isPending
 		},
 		actions: {
 			setTaskTitle,
@@ -93,9 +94,11 @@ export function useSubTasksList(taskId: string, subTasks: DBSubTask[]) {
 		handlers: {
 			handleDragEnd,
 			handleCreateTask,
+			handleDeleteSubTask,
 			handleCancel,
 			handleShowForm,
-			handleEnterPress
+			handleEnterPress,
+			handleUpdateSubTask
 		}
 	}
 }

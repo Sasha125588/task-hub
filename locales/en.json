@@ -3,7 +3,6 @@
 	"site.description": "Manage your progress",
 	"site.loading": "Loading...",
 	"site.home": "Welcome to Task Hub!",
-	"loading.task": "Loading task...",
 
 	"button.addSubTask": "Add Sub Task",
 	"button.addTask": "Add Task",
@@ -45,6 +44,8 @@
 
 	"form.nameRequired": "Name is required",
 	"form.descriptionTooShort": "Description is too short",
+
+	"loading.task": "Loading task...",
 
 	"toast.subTaskAdded": "Sub task added!",
 	"toast.loggedOut": "Logged out successfully",
@@ -103,12 +104,12 @@
 	"statistics.desc.Working Hours": "Working Hours",
 	"statistics.desc.On Going Projects": "On Going Projects",
 
-	"statistics.chart.title": "Projects Statistic",
+	"statistics.chart.title": "Tasks Statistic",
 	"statistics.chart.yearly": "Yearly",
 	"statistics.chart.monthly": "Monthly",
 	"statistics.chart.weekly": "Weekly",
 
-	"statistics.chart.config.label": "Projects",
+	"statistics.chart.config.label": "Tasks",
 
 	"last-tasks.title": "Last Tasks",
 	"last-tasks.show-less": "Show less",

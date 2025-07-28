@@ -6,15 +6,21 @@ import { type Swapy, createSwapy } from 'swapy'
 
 import { StatisticCard } from '@/components/common/StatisticCard'
 
-// import type { DBTask } from '@/types/db.types'
+import type { DBTask } from '@/types/db.types'
+
+import { getNumOfTasksByStatus } from '@/utils/helpers/task/getNumOfTasksByStatus'
+import { getWorkingHours } from '@/utils/helpers/task/getWorkingHours'
 
 import { StatisticsChart } from './components/StatisticsChart/StatisticsChart'
 import { STATISTICS_CARDS } from './constants/data'
 
-//{ tasks }: { tasks: DBTask[] }
-export function Statistic() {
+export function Statistic({ tasks }: { tasks: DBTask[] }) {
 	const swapyRef = useRef<Swapy | null>(null)
 	const containerRef = useRef<HTMLDivElement>(null)
+
+	const statistics = getNumOfTasksByStatus(tasks)
+
+	const workingHours = getWorkingHours(tasks)
 
 	useEffect(() => {
 		if (containerRef.current) {
@@ -52,7 +58,11 @@ export function Statistic() {
 							whileTap={{ scale: 0.95 }}
 						>
 							<StatisticCard
-								title={card.title}
+								title={
+									card.id === 'completed'
+										? workingHours.toString()
+										: statistics[card.id as keyof typeof statistics].toString()
+								}
 								desc={card.desc}
 								imgSrc={card.imgSrc}
 								colorClass={card.colorClass}
@@ -63,7 +73,7 @@ export function Statistic() {
 				))}
 			</div>
 			<div className='h-full flex-1'>
-				<StatisticsChart />
+				<StatisticsChart tasks={tasks} />
 			</div>
 		</div>
 	)

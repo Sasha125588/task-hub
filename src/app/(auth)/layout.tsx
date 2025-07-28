@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { type PropsWithChildren } from 'react'
 
-import { AuthBackground } from '@/components/layout/auth/AuthBackground'
+import { Background } from '@/components/common/Background'
 
 export const metadata: Metadata = {
 	title: 'Auth',
@@ -10,8 +10,8 @@ export const metadata: Metadata = {
 
 export default function AuthLayout({ children }: PropsWithChildren) {
 	return (
-		<AuthBackground>
+		<Background>
 			<div className='flex h-screen items-center justify-center'>{children}</div>
-		</AuthBackground>
+		</Background>
 	)
 }

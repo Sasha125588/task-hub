@@ -2,23 +2,23 @@ import type { StatisticsCard } from './statistics.card.types'
 
 export const STATISTICS_CARDS: StatisticsCard[] = [
 	{
-		id: 'active-projects',
-		title: '92',
+		id: 'all',
+		title: 'all',
 		desc: 'Active Projects',
 		imgSrc: '/images/active-projects.svg',
 		colorClass: 'bg-[#d6bcfa]',
 		darkColorClass: 'dark:bg-[#6366f1]'
 	},
 	{
-		id: 'ongoing-projects',
-		title: '35',
+		id: 'in-progress',
+		title: 'in-progress',
 		desc: 'On Going Projects',
 		imgSrc: '/images/ongoing-projects.svg',
 		colorClass: 'bg-[#faf089]',
 		darkColorClass: 'dark:bg-[#ac35d4]'
 	},
 	{
-		id: 'working-hours',
+		id: 'completed',
 		title: '19h 3m',
 		desc: 'Working Hours',
 		imgSrc: '/images/working-hours.svg',

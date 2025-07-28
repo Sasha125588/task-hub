@@ -10,7 +10,7 @@ import {
 	type TooltipProps,
 	TooltipProvider,
 	TooltipTrigger
-} from '@/components/animate-ui/components-animate-ui/tooltip'
+} from '@/components/animate-ui/components/tooltip'
 
 import { cn } from '@/utils/helpers/cn'
 

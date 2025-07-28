@@ -14,5 +14,6 @@ export const useGetAllTasksQuery = (params?: GetAllTasksParams) =>
 			params?.sort_type,
 			params?.status
 		],
-		queryFn: async () => await getAllTasks(params)
+		queryFn: async () => await getAllTasks(params),
+		placeholderData: prev => prev
 	})

@@ -1,5 +1,3 @@
-import { v4 as uuidv4 } from 'uuid'
-
 import { getRandomColor } from '@/utils/helpers/common/getRandomColor'
 
 import { statisticData } from './constants/data'
@@ -18,7 +16,7 @@ export const Statistics = function Statistics({
 
 				return (
 					<StatisticsCard
-						key={uuidv4()}
+						key={card.id}
 						card={card}
 						value={value}
 						randomColor={randomColor}

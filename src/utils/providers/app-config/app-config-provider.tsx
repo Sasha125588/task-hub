@@ -1,8 +1,7 @@
 import { Analytics } from '@vercel/analytics/react'
 import type { PropsWithChildren } from 'react'
 
-import { ScrollProgress } from '@/components/animate-ui/components-animate-ui/scroll-progress'
-import { AuthLoader } from '@/components/layout/auth/AuthLoader'
+import { ScrollProgress } from '@/components/animate-ui/components/scroll-progress'
 import { Toaster } from '@/components/ui/sonner'
 
 export function AppConfigProvider({ children }: PropsWithChildren) {
@@ -14,7 +13,7 @@ export function AppConfigProvider({ children }: PropsWithChildren) {
 				richColors
 				duration={1500}
 			/>
-			<AuthLoader>{children}</AuthLoader>
+			{children}
 		</>
 	)
 }

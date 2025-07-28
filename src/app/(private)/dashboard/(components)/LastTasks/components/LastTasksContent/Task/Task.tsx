@@ -2,11 +2,12 @@ import { Image as ImageIcon } from 'lucide-react'
 import { motion } from 'motion/react'
 import Link from 'next/link'
 
-// import { AvatarGroup, AvatarGroupTooltip } from '@/components/animate-ui/components/avatar-group'
 import { BrushIcon } from '@/components/animate-ui/icons/brush-icon'
 import { MessageSquareMore } from '@/components/animate-ui/icons/message-square-more-icon'
-import { PlusIcon } from '@/components/animate-ui/icons/plus-icon'
 import { SquareArrowOutUpRight } from '@/components/animate-ui/icons/square-arrow-out-up-right-icon'
+// import { AvatarGroup, AvatarGroupTooltip } from '@/components/animate-ui/components/avatar-group'
+import { TrashIcon } from '@/components/animate-ui/icons/trash-icon'
+import { I18nText } from '@/components/common/I18nText/I18nText'
 import { IconDisplay } from '@/components/common/IconPicker'
 import { ProgressBar } from '@/components/common/ProgressBar'
 // import { Avatar, AvatarImage } from '@/components/ui/avatar'
@@ -17,13 +18,10 @@ import type { DBTask } from '@/types/db.types'
 
 import { useDeleteTaskMutation } from '@/utils/api'
 import { getDaysUntilDue } from '@/utils/helpers/date/getDaysUntilDue'
-import { useI18n } from '@/utils/providers'
 
 import { PAGES_CONFIG } from '@/configs/pages.config'
 
 export function Task({ item }: { item: DBTask }) {
-	const i18n = useI18n()
-
 	const deleteTaskMutation = useDeleteTaskMutation().mutate
 	const dueDate = getDaysUntilDue(new Date(item.due_date ?? ''))
 
@@ -46,13 +44,10 @@ export function Task({ item }: { item: DBTask }) {
 						<div className='bg-primary/10 flex size-10 shrink-0 items-center justify-center rounded-lg shadow-md'>
 							<IconDisplay iconName={item.icon_name} />
 						</div>
-						<div className='@container w-[250px]'>
-							<h3 className='truncate text-sm font-medium @[400px]:whitespace-normal @[600px]:truncate'>
-								{item.title}
-							</h3>
+						<div className='min-w-0 flex-1'>
+							<h3 className='truncate text-sm font-medium'>{item.title}</h3>
 							<p className='text-muted-foreground text-xs'>
-								{i18n.formatMessage({ id: 'last-tasks.due' })}: {dueDate}{' '}
-								{i18n.formatMessage({ id: 'last-tasks.days' })}
+								<I18nText path='last-tasks.due' />: {dueDate} <I18nText path='last-tasks.days' />
 							</p>
 						</div>
 					</div>
@@ -123,11 +118,11 @@ export function Task({ item }: { item: DBTask }) {
 							onClick={handleDeleteTask}
 							className='flex size-9 items-center justify-center rounded-full bg-rose-600'
 						>
-							<PlusIcon
+							<TrashIcon
 								color='white'
 								className='cursor-pointer'
 								animateOnHover
-								size={24}
+								size={19}
 							/>
 						</div>
 					</div>

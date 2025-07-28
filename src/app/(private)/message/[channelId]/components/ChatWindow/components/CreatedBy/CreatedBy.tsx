@@ -9,8 +9,6 @@ interface CreatedByProps {
 }
 
 export function CreatedBy({ user }: CreatedByProps) {
-	if (!user) return null
-
 	return (
 		<div className='flex items-center gap-2'>
 			<span className='text-muted-foreground text-sm'>Created by</span>

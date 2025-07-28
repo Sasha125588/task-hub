@@ -9,18 +9,16 @@ import { StatusFilter, type TStatusFilter, type TaskStatuses } from '@/types/tas
 
 import { LastTasksContent } from './components/LastTasksContent/LastTasksContent'
 import { LastTasksHeader } from './components/LastTasksHeader/LastTasksHeader'
-import { statusTypeUpdated as updateStatusType } from '@/stores/task/status-type'
 
 export function LastTasks({ tasks, statusType }: { tasks: DBTask[]; statusType: TaskStatuses }) {
-	const [, setUrlStatus] = useQueryState<TStatusFilter>(
+	const [, setStatus] = useQueryState<TStatusFilter>(
 		'status',
 		parseAsStringLiteral(StatusFilter).withDefault('all')
 	)
 
 	const changeStatusType = (value: string) => {
 		const newType = value as TaskStatuses
-		setUrlStatus(newType)
-		updateStatusType(newType)
+		setStatus(newType)
 	}
 
 	return (
@@ -29,8 +27,10 @@ export function LastTasks({ tasks, statusType }: { tasks: DBTask[]; statusType: 
 			dir='rtl'
 			onValueChange={changeStatusType}
 		>
-			<LastTasksHeader tasks={tasks} />
-			<LastTasksContent tasks={tasks} />
+			<div className='flex flex-col gap-3'>
+				<LastTasksHeader tasks={tasks} />
+				<LastTasksContent tasks={tasks} />
+			</div>
 		</Tabs>
 	)
 }

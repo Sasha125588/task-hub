@@ -103,12 +103,12 @@
 	"statistics.desc.Working Hours": "Робочі години",
 	"statistics.desc.On Going Projects": "Поточні проєкти",
 
-	"statistics.chart.title": "Статистика проєктів",
+	"statistics.chart.title": "Статистика завдань",
 	"statistics.chart.yearly": "Річна",
 	"statistics.chart.monthly": "Місячна",
 	"statistics.chart.weekly": "Тижнева",
 
-	"statistics.chart.config.label": "Проєкти",
+	"statistics.chart.config.label": "Завдання",
 
 	"last-tasks.title": "Останні завдання",
 	"last-tasks.show-less": "Приховати",

@@ -15,7 +15,7 @@ import {
 
 import { useI18n } from '@/utils/providers'
 
-import type { SidebarSection } from './types'
+import type { SidebarSection } from '@/app/(components)/Sidebar/constants/types'
 
 export function SidebarItem({ item }: { item: SidebarSection }) {
 	const pathname = usePathname()

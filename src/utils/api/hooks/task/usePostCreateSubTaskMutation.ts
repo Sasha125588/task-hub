@@ -5,9 +5,13 @@ import { queryClient } from '@/utils/providers'
 
 export const usePostCreateSubTaskMutation = () =>
 	useMutation({
-		mutationFn: ({ taskId, body }: { taskId: string; body: CreateSubTaskParams }) =>
-			createSubTask(taskId, body),
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ['getSubTasks'] })
+		mutationFn: async ({ taskId, body }: { taskId: string; body: CreateSubTaskParams }) =>
+			await createSubTask(taskId, body),
+		onSuccess: data => {
+			if (data?.task_id) {
+				queryClient.invalidateQueries({ queryKey: ['getSubTasks', data.task_id] })
+				queryClient.invalidateQueries({ queryKey: ['getTaskById', data.task_id] })
+				queryClient.invalidateQueries({ queryKey: ['getAllTasks'] })
+			}
 		}
 	})

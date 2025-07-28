@@ -29,7 +29,7 @@ export function ChatWindow({ channel }: ChatWindowProps) {
 	const [isSending, setIsSending] = useState(false)
 	const { containerRef, scrollToBottom } = useChatScroll()
 	const { userId } = useUser()
-	const getUserResponse = useGetUserQuery(channel.created_by!)
+	const { data: user } = useGetUserQuery(channel.created_by!)
 
 	const messages = useRealtimeMessages(channel.id)
 	const onlineUsers = useOnlineUsers(channel.id, userId!)
@@ -86,7 +86,7 @@ export function ChatWindow({ channel }: ChatWindowProps) {
 						<span className='text-muted-foreground text-sm'>{onlineUsers} online</span>
 					</motion.div>
 				</div>
-				{getUserResponse.data && <CreatedBy user={getUserResponse.data} />}
+				{user && <CreatedBy user={user} />}
 			</div>
 
 			<div

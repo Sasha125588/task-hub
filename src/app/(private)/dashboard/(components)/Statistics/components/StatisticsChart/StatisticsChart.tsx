@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from 'recharts'
 
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -13,27 +13,46 @@ import {
 	SelectValue
 } from '@/components/ui/select'
 
+import type { DBTask } from '@/types/db.types'
+
 import { useI18n } from '@/utils/providers'
 
-import { CHART_DATA } from './constants/data'
+import type { Chart } from './constants/types'
 
-export function StatisticsChart() {
+export function StatisticsChart({ tasks }: { tasks: DBTask[] }) {
 	const i18n = useI18n()
 	const [timeRange, setTimeRange] = useState('7d')
 
-	const filteredData = CHART_DATA.filter(item => {
-		const date = new Date(item.date)
-		const referenceDate = new Date('2024-06-30')
-		let daysToSubtract = 90
-		if (timeRange === '30d') {
-			daysToSubtract = 30
-		} else if (timeRange === '7d') {
-			daysToSubtract = 7
+	const chartData = useMemo(() => {
+		const tasksByDate = new Map<string, number>()
+
+		const now = new Date()
+		const daysToShow = timeRange === '90d' ? 90 : timeRange === '30d' ? 30 : 7
+		const startDate = new Date()
+		startDate.setDate(startDate.getDate() - daysToShow)
+
+		for (let d = new Date(startDate); d <= now; d.setDate(d.getDate() + 1)) {
+			const dateStr = d.toISOString().split('T')[0]
+			tasksByDate.set(dateStr, 0)
 		}
-		const startDate = new Date(referenceDate)
-		startDate.setDate(startDate.getDate() - daysToSubtract)
-		return date >= startDate
-	})
+
+		tasks.forEach(task => {
+			const createdAt = new Date(task.created_at!)
+			if (createdAt >= startDate && createdAt <= now) {
+				const dateStr = createdAt.toISOString().split('T')[0]
+				tasksByDate.set(dateStr, (tasksByDate.get(dateStr) || 0) + 1)
+			}
+		})
+
+		const data: Chart[] = Array.from(tasksByDate.entries()).map(([date, count]) => ({
+			date,
+			month: new Date(date).toLocaleString('default', { month: 'long' }),
+			tasks: count
+		}))
+
+		return data.sort((a, b) => a.date.localeCompare(b.date))
+	}, [tasks, timeRange])
+
 	return (
 		<Card className='h-full w-full'>
 			<CardHeader className='flex items-center'>
@@ -70,7 +89,7 @@ export function StatisticsChart() {
 				<ChartContainer
 					className='h-full w-full'
 					config={{
-						projects: {
+						tasks: {
 							label: i18n.formatMessage({
 								id: 'statistics.chart.config.label'
 							}),
@@ -80,7 +99,7 @@ export function StatisticsChart() {
 				>
 					<AreaChart
 						accessibilityLayer
-						data={filteredData}
+						data={chartData}
 						width={undefined}
 						height={undefined}
 						margin={{
@@ -124,20 +143,18 @@ export function StatisticsChart() {
 							}}
 						/>
 						<YAxis
-							dataKey='projects'
+							dataKey='tasks'
 							tickLine={false}
 							axisLine={false}
 							tickMargin={8}
-							tickFormatter={(value: string) =>
-								typeof value === 'string' ? value.slice(0, 3) : value
-							}
+							tickFormatter={(value: number) => Math.round(value).toString()}
 						/>
 						<ChartTooltip
 							cursor={false}
 							content={<ChartTooltipContent indicator='line' />}
 						/>
 						<Area
-							dataKey='projects'
+							dataKey='tasks'
 							type='bump'
 							fill='url(#projectsGradient)'
 							animationDuration={500}

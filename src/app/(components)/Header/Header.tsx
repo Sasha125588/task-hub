@@ -3,13 +3,12 @@
 import { usePathname } from 'next/navigation'
 
 import { SidebarTrigger } from '@/components/animate-ui/radix/sidebar'
+import { LanguageSwitcher } from '@/components/common/LanguageSwitcher'
 import { Separator } from '@/components/ui/separator'
 
 import { useI18n } from '@/utils/providers'
 
-import { LanguageSwitcher } from '../../common/LanguageSwitcher'
-
-import { SearchForm } from './Search'
+import { SearchForm } from './components/Search/Search'
 
 export function Header() {
 	const i18n = useI18n()

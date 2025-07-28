@@ -7,9 +7,12 @@ import { queryClient } from '@/utils/providers'
 
 export const usePutUpdateSubTaskMutation = () =>
 	useMutation({
-		mutationFn: ({ id, params }: { id: string; params: Partial<DBSubTask> }) =>
-			updateSubTask({ id, params }),
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ['getSubTasks'] })
+		mutationFn: async ({ id, params }: { id: string; params: Partial<DBSubTask> }) =>
+			await updateSubTask({ id, params }),
+		onSuccess: data => {
+			if (data?.task_id) {
+				queryClient.invalidateQueries({ queryKey: ['getSubTasks', data.task_id] })
+				queryClient.invalidateQueries({ queryKey: ['getAllTasks'] })
+			}
 		}
 	})

@@ -1,6 +1,10 @@
 'use client'
 
+import { ArrowUpRight } from 'lucide-react'
+import { motion } from 'motion/react'
+
 import { DatePicker } from '@/components/common/DatePicker'
+import { I18nText } from '@/components/common/I18nText/I18nText'
 import { IconPicker } from '@/components/common/IconPicker'
 import { Button } from '@/components/ui/button'
 import {
@@ -32,7 +36,9 @@ export function TaskEditForm({ id }: Props) {
 			<div className='flex items-center justify-center p-8'>
 				<div className='text-center'>
 					<div className='border-primary mx-auto mb-4 h-8 w-8 animate-spin rounded-full border-b-2'></div>
-					<p className='text-muted-foreground'>{i18n.formatMessage({ id: 'loading.task' })}</p>
+					<p className='text-muted-foreground'>
+						<I18nText path='loading.task' />
+					</p>
 				</div>
 			</div>
 		)
@@ -45,32 +51,52 @@ export function TaskEditForm({ id }: Props) {
 				className='grid grid-cols-2 gap-8'
 			>
 				<div className='space-y-8'>
-					<FormField
-						control={form.control}
-						name='title'
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>{i18n.formatMessage({ id: 'field.title.label' })}</FormLabel>
-								<FormControl>
-									<Input
-										disabled={state.isLoading}
-										placeholder={i18n.formatMessage({
-											id: 'field.title.placeholder'
-										})}
-										aria-label='Task title'
-										{...field}
-									/>
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
+					<div className='flex items-center justify-between'>
+						<FormField
+							control={form.control}
+							name='title'
+							render={({ field }) => (
+								<FormItem className='flex-1'>
+									<FormLabel>
+										<I18nText path='field.title.label' />
+									</FormLabel>
+									<FormControl>
+										<Input
+											disabled={state.isLoading}
+											placeholder={i18n.formatMessage({
+												id: 'field.title.placeholder'
+											})}
+											aria-label='Task title'
+											{...field}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<motion.div
+							whileHover={{ scale: 1.05 }}
+							whileTap={{ scale: 0.95 }}
+							className='mt-6 ml-4'
+						>
+							<Button
+								variant='outline'
+								size='icon'
+								className='bg-primary/5 hover:bg-primary/10 border-primary/20 cursor-pointer'
+								onClick={() => window.location.reload()}
+							>
+								<ArrowUpRight className='text-primary h-4 w-4' />
+							</Button>
+						</motion.div>
+					</div>
 					<FormField
 						control={form.control}
 						name='dueDate'
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>{i18n.formatMessage({ id: 'field.dueDate.label' })}</FormLabel>
+								<FormLabel>
+									<I18nText path='field.dueDate.label' />
+								</FormLabel>
 								<FormControl>
 									<DatePicker
 										dateForm={field.value}
@@ -86,7 +112,9 @@ export function TaskEditForm({ id }: Props) {
 						name='iconName'
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>{i18n.formatMessage({ id: 'field.icon.label' })}</FormLabel>
+								<FormLabel>
+									<I18nText path='field.icon.label' />
+								</FormLabel>
 								<FormControl>
 									<IconPicker
 										value={field.value}
@@ -102,7 +130,7 @@ export function TaskEditForm({ id }: Props) {
 						type='submit'
 						disabled={state.isLoading}
 					>
-						{i18n.formatMessage({ id: 'button.submit' })}
+						<I18nText path='button.submit' />
 					</Button>
 				</div>
 				<div className='space-y-8'>

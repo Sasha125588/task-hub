@@ -20,6 +20,7 @@ import { Button } from '@/components/ui/button'
 import { CardContent } from '@/components/ui/card'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
+import { LoadingSpinner } from '@/components/ui/loading-spinner'
 
 import type { DBSubTask } from '@/types/db.types'
 
@@ -29,10 +30,17 @@ import { useSubTasksList } from '@/app/(private)/dashboard/task/[id]/(components
 export function SubTasksList({ id, subTasks }: { id: string; subTasks: DBSubTask[] }) {
 	const { state, actions, handlers } = useSubTasksList(id, subTasks)
 
-	const { showForm, taskTitle, optimisticSubTasks } = state
+	const { showForm, taskTitle, isPending } = state
 	const { setTaskTitle, setShowForm } = actions
-	const { handleDragEnd, handleCreateTask, handleCancel, handleShowForm, handleEnterPress } =
-		handlers
+	const {
+		handleDragEnd,
+		handleCreateTask,
+		handleDeleteSubTask,
+		handleCancel,
+		handleShowForm,
+		handleEnterPress,
+		handleUpdateSubTask
+	} = handlers
 
 	const ref = useClickOutside<HTMLDivElement>(() => setShowForm(false))
 
@@ -53,6 +61,7 @@ export function SubTasksList({ id, subTasks }: { id: string; subTasks: DBSubTask
 						variant='ghost'
 						className='border-primary/30 h-14 w-full justify-start border-2 border-dashed'
 						onClick={handleShowForm}
+						disabled={isPending}
 					>
 						<Plus size={16} />
 						New Sub Task
@@ -68,18 +77,20 @@ export function SubTasksList({ id, subTasks }: { id: string; subTasks: DBSubTask
 							onKeyDown={event => handleEnterPress(event)}
 							placeholder='Enter task title...'
 							autoFocus
+							disabled={isPending}
 							className='flex-1 border-none !bg-transparent shadow-none focus-visible:ring-0'
 						/>
 						<Button
 							onClick={handleCreateTask}
-							disabled={!taskTitle.trim()}
+							disabled={!taskTitle.trim() || isPending}
 							className='size-7'
 						>
-							<Check />
+							{isPending ? <LoadingSpinner /> : <Check />}
 						</Button>
 						<Button
 							variant='ghost'
 							onClick={handleCancel}
+							disabled={isPending}
 							className='size-7'
 						>
 							<X />
@@ -94,13 +105,15 @@ export function SubTasksList({ id, subTasks }: { id: string; subTasks: DBSubTask
 				>
 					<div className='flex flex-col gap-2 pt-3'>
 						<SortableContext
-							items={optimisticSubTasks?.map(task => task.id!) ?? []}
+							items={subTasks?.map(task => task.id!) ?? []}
 							strategy={verticalListSortingStrategy}
 						>
-							{optimisticSubTasks?.map(subTask => (
+							{subTasks?.map(subTask => (
 								<SubTask
 									key={subTask.id}
 									subTask={subTask}
+									onDelete={() => handleDeleteSubTask(subTask.id)}
+									handleUpdate={handleUpdateSubTask}
 								/>
 							))}
 						</SortableContext>

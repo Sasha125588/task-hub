@@ -1,29 +1,30 @@
-import { useUnit } from 'effector-react'
 import { AnimatePresence, motion } from 'motion/react'
-import { parseAsBoolean, useQueryState } from 'nuqs'
+import { parseAsBoolean, parseAsStringLiteral, useQueryState } from 'nuqs'
 
 import { TabsContent } from '@/components/animate-ui/radix/tabs'
+import { I18nText } from '@/components/common/I18nText/I18nText'
 
 import type { DBTask } from '@/types/db.types'
-
-import { useI18n } from '@/utils/providers'
+import { StatusFilter, type TStatusFilter } from '@/types/task.types'
 
 import { Task } from './Task/Task'
 import { TASK_CONFIG } from '@/configs/task.config'
-import { $statusType } from '@/stores/task/status-type'
 
 const ANIMATION_VARIANTS = {
-	exit: { opacity: 0, scale: 0.9 },
+	initial: { opacity: 0, y: 10 },
+	animate: { opacity: 1, y: 0 },
+	exit: { opacity: 0, y: 10 },
 	whileHover: { y: -2 },
 	transition: { duration: 0.2, layout: { duration: 0.3 } }
 } as const
 
 export function LastTasksContent({ tasks }: { tasks: DBTask[] }) {
-	const i18n = useI18n()
-
 	const [isShowAll, setIsShowAll] = useQueryState('show-all', parseAsBoolean)
 
-	const statusType = useUnit($statusType)
+	const [statusType] = useQueryState<TStatusFilter>(
+		'status',
+		parseAsStringLiteral(StatusFilter).withDefault('all')
+	)
 
 	const toggleShowAll = () => {
 		setIsShowAll(!isShowAll)
@@ -61,9 +62,13 @@ export function LastTasksContent({ tasks }: { tasks: DBTask[] }) {
 						}`}
 					>
 						{isShowAll ? (
-							<div>{i18n.formatMessage({ id: 'last-tasks.show-less' })}</div>
+							<div>
+								<I18nText path='last-tasks.show-less' />
+							</div>
 						) : (
-							<div>{i18n.formatMessage({ id: 'last-tasks.show-all' })}</div>
+							<div>
+								<I18nText path='last-tasks.show-all' />
+							</div>
 						)}
 					</button>
 				</div>

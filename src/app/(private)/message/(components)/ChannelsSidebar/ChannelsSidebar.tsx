@@ -14,7 +14,7 @@ import { cn } from '@/utils/helpers/cn'
 import { useUser } from '@/utils/hooks/auth/useUser'
 import { useRealtimeChannels } from '@/utils/hooks/chat/useRealtimeChannels'
 
-import { CreateChannelForm } from './CreateChannelForm'
+import { CreateChannelForm } from './components/CreateChannelForm/CreateChannelForm'
 
 export function ChannelsSidebar() {
 	const [showCreateForm, setShowCreateForm] = useState(false)
@@ -54,48 +54,47 @@ export function ChannelsSidebar() {
 			</div>
 
 			<div className='flex-1 space-y-1 overflow-y-auto'>
-				{channels &&
-					channels.map(channel => {
-						const isActive = match(`/message/${channel.id}`)(pathname)
+				{channels.map(channel => {
+					const isActive = match(`/message/${channel.id}`)(pathname)
 
-						return (
-							<div
-								key={channel.id}
-								className={cn(
-									'group hover:bg-accent flex items-center justify-between rounded-md px-3 py-2 text-sm transition-colors',
-									isActive && 'bg-accent font-medium'
-								)}
+					return (
+						<div
+							key={channel.id}
+							className={cn(
+								'group hover:bg-accent flex items-center justify-between rounded-md px-3 py-2 text-sm transition-colors',
+								isActive && 'bg-accent font-medium'
+							)}
+						>
+							<Link
+								href={`/message/${channel.id}`}
+								className='flex min-h-7 flex-1 items-center gap-2'
 							>
-								<Link
-									href={`/message/${channel.id}`}
-									className='flex min-h-7 flex-1 items-center gap-2'
-								>
-									<Hash className='text-muted-foreground h-4 w-4' />
-									<span className='truncate'>{channel.slug}</span>
-								</Link>
+								<Hash className='text-muted-foreground h-4 w-4' />
+								<span className='truncate'>{channel.slug}</span>
+							</Link>
 
-								{channel.created_by === userId && (
-									<div className='opacity-0 transition-opacity group-hover:opacity-100'>
-										<Button
-											size='sm'
-											variant='ghost'
-											className='text-muted-foreground hover:text-destructive h-6 w-6 p-0'
-											onClick={() => handleDeleteChannel(channel.id)}
-										>
-											<Trash2 className='h-3 w-3' />
-										</Button>
-									</div>
-								)}
-							</div>
-						)
-					})}
+							{channel.created_by === userId && (
+								<div className='opacity-0 transition-opacity group-hover:opacity-100'>
+									<Button
+										size='sm'
+										variant='ghost'
+										className='text-muted-foreground hover:text-destructive h-6 w-6 p-0'
+										onClick={() => handleDeleteChannel(channel.id)}
+									>
+										<Trash2 className='h-3 w-3' />
+									</Button>
+								</div>
+							)}
+						</div>
+					)
+				})}
 			</div>
 
 			<div className='mt-4 pt-4'>
 				<Button
 					variant='ghost'
 					size='sm'
-					className='w-full justify-start'
+					className='w-full cursor-pointer justify-start'
 				>
 					<Settings className='mr-2 h-4 w-4' />
 					Settings

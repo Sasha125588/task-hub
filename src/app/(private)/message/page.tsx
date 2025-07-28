@@ -1,4 +1,4 @@
-export default function MessagePage() {
+export default function MessagesPage() {
 	return (
 		<div className='flex h-full items-center justify-center'>
 			<div className='text-center'>

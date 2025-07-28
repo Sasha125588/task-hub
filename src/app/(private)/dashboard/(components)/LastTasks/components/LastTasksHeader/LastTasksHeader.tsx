@@ -1,5 +1,5 @@
-import { useUnit } from 'effector-react'
 import { PlusIcon } from 'lucide-react'
+import { parseAsStringLiteral, useQueryState } from 'nuqs'
 import { useState } from 'react'
 
 import { FlipButton as ChangeSortTypeButton } from '@/components/animate-ui/buttons/flip'
@@ -11,27 +11,39 @@ import {
 import { TabsList, TabsTrigger } from '@/components/animate-ui/radix/tabs'
 
 import type { DBTask } from '@/types/db.types'
-import type { TaskStatuses } from '@/types/task.types'
+import {
+	SortFilter,
+	StatusFilter,
+	type TSortFilter,
+	type TStatusFilter,
+	type TaskStatuses
+} from '@/types/task.types'
 
 import { getNumOfTasksByStatus } from '@/utils/helpers/task/getNumOfTasksByStatus'
 import { useI18n } from '@/utils/providers'
 
 import { CreateTaskForm } from './components/CreateTaskForm/CreateTaskForm'
 import { TABS } from './constants/data'
-import { $sortType, sortTypeUpdated as updateSortType } from '@/stores/task/sort-type'
-import { $statusType } from '@/stores/task/status-type'
 
 export function LastTasksHeader({ tasks }: { tasks: DBTask[] }) {
 	const i18n = useI18n()
 	const [isCreateFormOpen, setIsCreateFormOpen] = useState(false)
 
-	const statusType = useUnit($statusType)
-	const sortType = useUnit($sortType)
+	const [statusType] = useQueryState<TStatusFilter>(
+		'status',
+		parseAsStringLiteral(StatusFilter).withDefault('all')
+	)
+
+	const [sortType, setSortType] = useQueryState<TSortFilter>(
+		'sort',
+		parseAsStringLiteral(SortFilter).withDefault('asc')
+	)
+
 	const numOfTasksByStatus = getNumOfTasksByStatus(tasks)
 
 	const changeSortType = () => {
 		const newSortType = sortType === 'asc' ? 'desc' : 'asc'
-		updateSortType(newSortType)
+		setSortType(newSortType)
 	}
 
 	return (

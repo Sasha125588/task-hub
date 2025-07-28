@@ -27,7 +27,7 @@ export function CreateSubTaskForm({ taskId }: { taskId: string }) {
 
 		setIsLoading(true)
 		try {
-			await createSubTaskMutation.mutateAsync({
+			createSubTaskMutation.mutate({
 				taskId,
 				body: {
 					title: taskTitle.trim()

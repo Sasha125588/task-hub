@@ -1,6 +1,6 @@
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import React, { useState } from 'react'
+import React from 'react'
 
 import { Checkbox } from '@/components/ui/checkbox'
 
@@ -12,7 +12,6 @@ interface Props {
 }
 
 export function SubTaskItem({ item, handleCheck }: Props) {
-	const [checked] = useState<boolean>(item.completed)
 	const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
 		id: item.id!
 	})
@@ -32,8 +31,8 @@ export function SubTaskItem({ item, handleCheck }: Props) {
 				className={`mb-2 flex cursor-pointer items-center gap-4 rounded-lg p-1 px-5 text-sm font-medium transition-colors duration-20 hover:bg-neutral-100 hover:dark:bg-neutral-800 ${isDragging ? 'z-10 shadow-lg' : ''} `}
 			>
 				<Checkbox
-					defaultChecked={checked}
-					onCheckedChange={() => handleCheck(item.id!, !checked)}
+					checked={item.completed}
+					onCheckedChange={() => handleCheck(item.id!, !item.completed)}
 				/>
 				<div
 					{...listeners}

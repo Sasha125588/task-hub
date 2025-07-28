@@ -4,9 +4,9 @@ import { type PropsWithChildren } from 'react'
 
 import { useUser } from '@/utils/hooks/auth/useUser'
 
-import { LoadingSpinner } from '../../ui/loading-spinner'
+import { LoadingSpinner } from '../ui/loading-spinner'
 
-export function AuthLoader({ children }: PropsWithChildren) {
+export function Loader({ children }: PropsWithChildren) {
 	const { isPending } = useUser()
 
 	if (isPending) {

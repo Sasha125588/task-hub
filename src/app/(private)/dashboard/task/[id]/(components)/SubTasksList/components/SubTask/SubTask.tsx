@@ -3,20 +3,26 @@
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { format } from 'date-fns'
-import { CalendarDays, GripVertical, MoreVertical, Trash } from 'lucide-react'
+import { CalendarDays, GripVertical, MoreVertical } from 'lucide-react'
 import { useTransition } from 'react'
 
+import { TrashIcon } from '@/components/animate-ui/icons/trash-icon'
 import { Checkbox } from '@/components/ui/checkbox'
 
 import type { DBSubTask } from '@/types/db.types'
 
 import { cn } from '@/utils/helpers/cn'
 
-import { handleDeleteSubTask } from '@/app/(private)/dashboard/task/[id]/(actions)/handleDeleteSubTask'
-import { handleUpdateSubTask } from '@/app/(private)/dashboard/task/[id]/(actions)/handleUpdateSubTask'
-
-export function SubTask({ subTask }: { subTask: DBSubTask }) {
-	const [isPending, startTransition] = useTransition()
+export function SubTask({
+	subTask,
+	onDelete,
+	handleUpdate
+}: {
+	subTask: DBSubTask
+	onDelete: () => void
+	handleUpdate: (subTaskId: string, completed: boolean) => void
+}) {
+	const [, startTransition] = useTransition()
 
 	const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
 		id: subTask.id
@@ -31,20 +37,17 @@ export function SubTask({ subTask }: { subTask: DBSubTask }) {
 	const handleToggle = async () => {
 		try {
 			startTransition(async () => {
-				await handleUpdateSubTask({
-					taskId: subTask.id,
-					body: { completed: !subTask.completed }
-				})
+				handleUpdate(subTask.id, !subTask.completed)
 			})
 		} catch (error) {
 			console.error('Failed to update sub task:', error)
 		}
 	}
 
-	const handleDelete = async () => {
+	const handleDelete = () => {
 		try {
-			startTransition(async () => {
-				await handleDeleteSubTask(subTask.id, subTask.task_id)
+			startTransition(() => {
+				onDelete()
 			})
 		} catch (error) {
 			console.error('Failed to delete sub task:', error)
@@ -56,35 +59,48 @@ export function SubTask({ subTask }: { subTask: DBSubTask }) {
 			ref={setNodeRef}
 			style={style}
 			className={cn(
-				'hover:bg-primary/10 flex items-center justify-between rounded-lg border p-4 transition-colors duration-300',
+				'hover:bg-primary/10 group flex h-17 items-center gap-4 rounded-lg border p-4 transition-colors duration-300',
 				subTask.completed && 'bg-primary/10'
 			)}
 			{...attributes}
 		>
-			<div className='flex items-center gap-3'>
+			<div className='flex min-w-0 flex-[0.6] items-center gap-3'>
 				<GripVertical
 					size={16}
-					className='cursor-grab'
+					aria-label='Drag and drop'
+					className='flex-shrink-0 cursor-grab opacity-50 transition-opacity group-hover:opacity-100'
 					{...listeners}
 				/>
 				<Checkbox
+					aria-label='Toggle sub task'
 					checked={subTask.completed}
 					onCheckedChange={handleToggle}
-					disabled={isPending}
 				/>
-				<span className='text-sm font-semibold'>{subTask.title}</span>
+				<span
+					className={cn(
+						'text-sm font-medium',
+						subTask.completed && 'text-muted-foreground line-through'
+					)}
+				>
+					{subTask.title}
+				</span>
 			</div>
 
-			<div className='border-l-muted-foreground/30 flex w-1/2 items-center justify-between border-l-[1px] pl-3'>
+			<div className='border-border/50 flex flex-[0.4] items-center justify-between border-l pl-4'>
 				<div className='flex items-center gap-3'>
-					<div className='flex items-center gap-1'>
-						<CalendarDays size={16} />
-						<span className='text-xs text-gray-500'>
-							{format(subTask.created_at ?? new Date(), 'MMM dd,yyyy')}
+					<div className='text-muted-foreground flex items-center gap-1.5'>
+						<CalendarDays
+							aria-label='Created at'
+							size={14}
+							className='opacity-70'
+						/>
+						<span className='text-xs'>
+							{format(subTask.created_at ?? new Date(), 'MMM dd, yyyy')}
 						</span>
 					</div>
 
 					<div className='flex gap-1'>
+						{/* TODO: implement tags */}
 						{/* {subTask.tags?.map(tag => (
 							<span
 								key={tag.id}
@@ -99,15 +115,18 @@ export function SubTask({ subTask }: { subTask: DBSubTask }) {
 						))} */}
 					</div>
 				</div>
-				<div className='flex items-center gap-2'>
+				<div className='flex items-center gap-3'>
 					<MoreVertical
+						aria-label='More options'
 						size={16}
-						className='cursor-pointer'
+						className='text-muted-foreground cursor-pointer opacity-50 transition-opacity hover:opacity-100'
 					/>
-					<Trash
-						size={16}
-						className='cursor-pointer'
+					<TrashIcon
+						aria-label='Delete sub task'
 						onClick={handleDelete}
+						className='text-destructive cursor-pointer opacity-50 transition-opacity hover:opacity-100'
+						animateOnHover
+						size={16}
 					/>
 				</div>
 			</div>

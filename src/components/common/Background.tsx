@@ -5,7 +5,7 @@ import type { PropsWithChildren } from 'react'
 
 import { GradientBackground } from '@/components/ui/background-gradient'
 
-export function AuthBackground({ children }: PropsWithChildren) {
+export function Background({ children }: PropsWithChildren) {
 	const { theme } = useTheme()
 
 	return (
