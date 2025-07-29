@@ -4,17 +4,15 @@ import { Card, CardContent } from '@/components/ui/card'
 
 import { useI18n } from '@/utils/providers'
 
-// TODO: Compound component
-
 export function StatisticCard({
 	title,
-	desc,
+	description,
 	imgSrc,
 	colorClass,
 	darkColorClass
 }: {
 	title: string
-	desc: string
+	description: string
 	value?: number
 	imgSrc: string
 	colorClass: string
@@ -33,7 +31,7 @@ export function StatisticCard({
 					</h1>
 					<p className='leading-7 font-medium'>
 						{i18n.formatMessage({
-							id: `statistics.desc.${desc}`
+							id: `statistics.desc.${description}`
 						})}
 					</p>
 				</div>

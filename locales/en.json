@@ -14,6 +14,7 @@
 	"button.next": "Next",
 	"button.back": "Back",
 	"button.create": "Create",
+	"button.loading": "Loading...",
 
 	"form.basicInfo": "Basic Info",
 	"form.additionalInfo": "Additional Info",
@@ -115,6 +116,8 @@
 	"last-tasks.show-less": "Show less",
 	"last-tasks.show-all": "Show all tasks",
 
+	"tasks.notFound": "No tasks found",
+
 	"last-tasks.status.all": "All",
 	"last-tasks.status.not-started": "Not Started",
 	"last-tasks.status.in-progress": "In Progress",
@@ -122,6 +125,8 @@
 
 	"last-tasks.sort.asc": "Soonest",
 	"last-tasks.sort.desc": "Latest",
+
+	"subTasksList.title": "Sub Tasks List",
 
 	"last-tasks.due": "Due",
 	"last-tasks.days": "days",
@@ -149,5 +154,21 @@
 	"create-task.form.icon": "Task Icon",
 	"create-task.form.dueDate": "Due Date",
 	"create-task.form.startTime": "Start Time",
-	"create-task.form.endTime": "End Time"
+	"create-task.form.endTime": "End Time",
+
+	"create-sub-task.title": "Create Sub Task",
+
+	"chat.greeting": "Welcome to Chat",
+	"chat.description": "Select a channel from the sidebar to start chatting!",
+	"chat.channelNotFound": "Channel not found",
+	"chat.channelNotFoundDescription": "This channel may have been deleted or doesn't exist.",
+	"chat.onlineUsers": "online",
+	"chat.message.placeholder": "Message",
+	"chat.noMessages": "No messages in #{channelSlug} yet. Start the conversation!",
+
+	"createChannelForm.placeholder": "Channel name",
+
+	"createdBy": "Created by",
+	"channels": "Channels",
+	"settings": "Settings"
 }

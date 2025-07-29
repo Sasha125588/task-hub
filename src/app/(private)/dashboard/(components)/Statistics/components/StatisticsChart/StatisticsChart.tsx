@@ -1,8 +1,7 @@
-'use client'
-
 import { useMemo, useState } from 'react'
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from 'recharts'
 
+import { I18nText } from '@/components/common/I18nText/I18nText'
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart'
 import {
@@ -15,49 +14,46 @@ import {
 
 import type { DBTask } from '@/types/db.types'
 
-import { useI18n } from '@/utils/providers'
-
-import type { Chart } from './constants/types'
-
 export function StatisticsChart({ tasks }: { tasks: DBTask[] }) {
-	const i18n = useI18n()
 	const [timeRange, setTimeRange] = useState('7d')
 
 	const chartData = useMemo(() => {
-		const tasksByDate = new Map<string, number>()
+		const daysMap = { '7d': 7, '30d': 30, '90d': 90 } as const
+		const daysToShow = daysMap[timeRange as keyof typeof daysMap] || 7
 
 		const now = new Date()
-		const daysToShow = timeRange === '90d' ? 90 : timeRange === '30d' ? 30 : 7
-		const startDate = new Date()
+		const startDate = new Date(now)
 		startDate.setDate(startDate.getDate() - daysToShow)
 
-		for (let d = new Date(startDate); d <= now; d.setDate(d.getDate() + 1)) {
-			const dateStr = d.toISOString().split('T')[0]
-			tasksByDate.set(dateStr, 0)
-		}
-
-		tasks.forEach(task => {
-			const createdAt = new Date(task.created_at!)
-			if (createdAt >= startDate && createdAt <= now) {
-				const dateStr = createdAt.toISOString().split('T')[0]
-				tasksByDate.set(dateStr, (tasksByDate.get(dateStr) || 0) + 1)
-			}
+		const dateRange = Array.from({ length: daysToShow + 1 }, (_, i) => {
+			const date = new Date(startDate)
+			date.setDate(startDate.getDate() + i)
+			return date.toISOString().split('T')[0] // 2025-07-29T11:47:44.737Z
 		})
 
-		const data: Chart[] = Array.from(tasksByDate.entries()).map(([date, count]) => ({
+		const taskCounts = tasks.reduce(
+			(acc, task) => {
+				const taskDate = new Date(task.created_at!).toISOString().split('T')[0]
+				if (dateRange.includes(taskDate)) {
+					acc[taskDate] = (acc[taskDate] ?? 0) + 1
+				}
+				return acc
+			},
+			{} as Record<string, number>
+		)
+
+		return dateRange.map(date => ({
 			date,
 			month: new Date(date).toLocaleString('default', { month: 'long' }),
-			tasks: count
+			tasks: taskCounts[date] || 0
 		}))
-
-		return data.sort((a, b) => a.date.localeCompare(b.date))
 	}, [tasks, timeRange])
 
 	return (
 		<Card className='h-full w-full'>
 			<CardHeader className='flex items-center'>
 				<CardTitle className='text-foreground/95 flex-1 text-2xl'>
-					{i18n.formatMessage({ id: 'statistics.chart.title' })}
+					<I18nText path='statistics.chart.title' />
 				</CardTitle>
 				<CardAction>
 					<Select
@@ -73,13 +69,13 @@ export function StatisticsChart({ tasks }: { tasks: DBTask[] }) {
 						</SelectTrigger>
 						<SelectContent>
 							<SelectItem value='90d'>
-								{i18n.formatMessage({ id: 'statistics.chart.yearly' })}
+								<I18nText path='statistics.chart.yearly' />
 							</SelectItem>
 							<SelectItem value='30d'>
-								{i18n.formatMessage({ id: 'statistics.chart.monthly' })}
+								<I18nText path='statistics.chart.monthly' />
 							</SelectItem>
 							<SelectItem value='7d'>
-								{i18n.formatMessage({ id: 'statistics.chart.weekly' })}
+								<I18nText path='statistics.chart.weekly' />
 							</SelectItem>
 						</SelectContent>
 					</Select>
@@ -90,9 +86,7 @@ export function StatisticsChart({ tasks }: { tasks: DBTask[] }) {
 					className='h-full w-full'
 					config={{
 						tasks: {
-							label: i18n.formatMessage({
-								id: 'statistics.chart.config.label'
-							}),
+							label: <I18nText path='statistics.chart.config.label' />,
 							color: '#8b5cf6'
 						}
 					}}

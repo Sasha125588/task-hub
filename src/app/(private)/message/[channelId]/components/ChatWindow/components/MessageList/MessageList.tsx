@@ -1,3 +1,5 @@
+import { I18nText } from '@/components/common/I18nText/I18nText'
+
 import type { DBMessage } from '@/types/db.types'
 
 import { ChatMessageItem } from '@/app/(private)/message/[channelId]/components/ChatWindow/components/MessageList/components/MessageItem/ChatMessageItem'
@@ -11,7 +13,10 @@ export function MessageList({ messages, channelSlug }: MessageListProps) {
 	if (!messages?.length) {
 		return (
 			<div className='text-muted-foreground text-center text-sm'>
-				No messages in #{channelSlug} yet. Start the conversation!
+				<I18nText
+					path='chat.noMessages'
+					values={{ channelSlug }}
+				/>
 			</div>
 		)
 	}

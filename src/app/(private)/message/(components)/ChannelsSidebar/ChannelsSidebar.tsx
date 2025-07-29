@@ -7,6 +7,7 @@ import { match } from 'path-to-regexp'
 import { useState } from 'react'
 import { toast } from 'sonner'
 
+import { I18nText } from '@/components/common/I18nText/I18nText'
 import { Button } from '@/components/ui/button'
 
 import { deleteChannel } from '@/utils/api'
@@ -17,10 +18,10 @@ import { useRealtimeChannels } from '@/utils/hooks/chat/useRealtimeChannels'
 import { CreateChannelForm } from './components/CreateChannelForm/CreateChannelForm'
 
 export function ChannelsSidebar() {
-	const [showCreateForm, setShowCreateForm] = useState(false)
-	const pathname = usePathname()
 	const router = useRouter()
+	const pathname = usePathname()
 	const { userId } = useUser()
+	const [showCreateForm, setShowCreateForm] = useState(false)
 	const channels = useRealtimeChannels()
 
 	const handleDeleteChannel = async (channelId: string) => {
@@ -39,7 +40,9 @@ export function ChannelsSidebar() {
 		<div className='bg-muted/30 flex h-full flex-col rounded-bl-lg p-4'>
 			<div className='mb-4'>
 				<div className='flex items-center justify-between'>
-					<h2 className='text-lg font-semibold'>Channels</h2>
+					<h2 className='text-lg font-semibold'>
+						<I18nText path='channels' />
+					</h2>
 					<Button
 						size='sm'
 						variant='ghost'
@@ -97,7 +100,7 @@ export function ChannelsSidebar() {
 					className='w-full cursor-pointer justify-start'
 				>
 					<Settings className='mr-2 h-4 w-4' />
-					Settings
+					<I18nText path='settings' />
 				</Button>
 			</div>
 		</div>

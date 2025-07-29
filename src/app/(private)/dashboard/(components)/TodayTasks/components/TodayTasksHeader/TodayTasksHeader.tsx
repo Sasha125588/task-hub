@@ -1,6 +1,8 @@
 // import { AvatarGroup, AvatarGroupTooltip } from '@/components/animate-ui/components/avatar-group'
 // import { Avatar, AvatarImage } from '@/components/ui/avatar'
 // TODO: fix avatar group
+import { I18nText } from '@/components/common/I18nText/I18nText'
+
 import type { DBTask } from '@/types/db.types'
 
 import { useI18n } from '@/utils/providers'
@@ -15,7 +17,7 @@ export function TodayTasksHeader({ tasks }: Props) {
 		<div className='flex items-center justify-between'>
 			<div>
 				<h2 className='mb-1 text-2xl font-semibold'>
-					{i18n.formatMessage({ id: 'dashboard.todayTasks.title' })}
+					<I18nText path='dashboard.todayTasks.title' />
 				</h2>
 				<p className='text-muted-foreground text-sm'>
 					{tasks.length

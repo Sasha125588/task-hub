@@ -3,7 +3,6 @@
 	"site.description": "Керуйте своїм прогресом",
 	"site.loading": "Завантаження...",
 	"site.home": "Ласкаво просимо до Task Hub!",
-	"loading.task": "Завантаження завдання...",
 
 	"button.addSubTask": "Додати підзавдання",
 	"button.addTask": "Додати завдання",
@@ -15,6 +14,7 @@
 	"button.next": "Далі",
 	"button.back": "Назад",
 	"button.create": "Створити",
+	"button.loading": "Завантаження...",
 
 	"form.basicInfo": "Основна інформація",
 	"form.additionalInfo": "Додаткова інформація",
@@ -45,6 +45,8 @@
 
 	"form.nameRequired": "Ім'я обов'язкове",
 	"form.descriptionTooShort": "Опис занадто короткий",
+
+	"loading.task": "Завантаження завдання...",
 
 	"toast.subTaskAdded": "Підзавдання додано!",
 	"toast.loggedOut": "Вихід виконано успішно",
@@ -114,6 +116,8 @@
 	"last-tasks.show-less": "Приховати",
 	"last-tasks.show-all": "Перейти до всіх завдань",
 
+	"tasks.notFound": "Завдання не знайдені",
+
 	"last-tasks.status.all": "Усі",
 	"last-tasks.status.not-started": "Не розпочато",
 	"last-tasks.status.in-progress": "В процесі",
@@ -122,14 +126,16 @@
 	"last-tasks.sort.asc": "Найближчі",
 	"last-tasks.sort.desc": "Останні",
 
+	"subTasksList.title": "Список підзавдань",
+
 	"last-tasks.due": "Термін",
 	"last-tasks.days": "днів",
 
 	"task-edit.title": "Редагувати завдання",
 
 	"dashboard.todayTasks.title": "Завдання на сьогодні",
-	"dashboard.todayTasks.tasksScheduled": "{count, plural, one {# завдання заплановано на сьогодні} few {# завдання заплановано на сьогодні} many {# завдань заплановано на сьогодні} other {# завдань заплановано на сьогодні}}",
 	"dashboard.todayTasks.noTasksScheduled": "Завдань на сьогодні не заплановано",
+	"dashboard.todayTasks.tasksScheduled": "{count, plural, one {# завдання заплановано на сьогодні} few {# завдання заплановано на сьогодні} many {# завдань заплановано на сьогодні} other {# завдань заплановано на сьогодні}}",
 
 	"toggleTheme.label": "Тема",
 	"toggleTheme.light": "Світла",
@@ -142,10 +148,25 @@
 	"pages.Dashboard": "Дашборд",
 	"pages.Settings": "Налаштування",
 	"pages.Message": "Повідомлення",
+
 	"create-task.title": "Створити завдання",
 	"create-task.form.title": "Назва завдання",
 	"create-task.form.icon": "Іконка завдання",
 	"create-task.form.dueDate": "Термін виконання",
 	"create-task.form.startTime": "Час початку",
-	"create-task.form.endTime": "Час закінчення"
+	"create-task.form.endTime": "Час закінчення",
+
+	"chat.greeting": "Ласкаво просимо до чату",
+	"chat.description": "Оберіть канал з бічної панелі, щоб почати спілкування!",
+	"chat.channelNotFound": "Канал не знайдено",
+	"chat.channelNotFoundDescription": "Цей канал міг бути видалений або не існує.",
+	"chat.onlineUsers": "онлайн",
+	"chat.message.placeholder": "Повідомлення",
+	"chat.noMessages": "В #{channelSlug} поки немає повідомлень. Почніть розмову!",
+
+	"createChannelForm.placeholder": "Назва каналу",
+
+	"createdBy": "Створено",
+	"channels": "Канали",
+	"settings": "Налаштування"
 }

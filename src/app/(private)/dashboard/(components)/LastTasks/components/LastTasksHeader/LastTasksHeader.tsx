@@ -1,6 +1,6 @@
 import { PlusIcon } from 'lucide-react'
 import { parseAsStringLiteral, useQueryState } from 'nuqs'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import { FlipButton as ChangeSortTypeButton } from '@/components/animate-ui/buttons/flip'
 import {
@@ -9,6 +9,7 @@ import {
 	HoverCardTrigger
 } from '@/components/animate-ui/radix/hover-card'
 import { TabsList, TabsTrigger } from '@/components/animate-ui/radix/tabs'
+import { I18nText } from '@/components/common/I18nText/I18nText'
 
 import type { DBTask } from '@/types/db.types'
 import {
@@ -39,7 +40,7 @@ export function LastTasksHeader({ tasks }: { tasks: DBTask[] }) {
 		parseAsStringLiteral(SortFilter).withDefault('asc')
 	)
 
-	const numOfTasksByStatus = getNumOfTasksByStatus(tasks)
+	const numberOfTasksByStatus = useMemo(() => getNumOfTasksByStatus(tasks), [tasks])
 
 	const changeSortType = () => {
 		const newSortType = sortType === 'asc' ? 'desc' : 'asc'
@@ -57,7 +58,7 @@ export function LastTasksHeader({ tasks }: { tasks: DBTask[] }) {
 									key={tab.value}
 									value={tab.value}
 								>
-									{i18n.formatMessage({ id: `last-tasks.status.${tab.value}` })}
+									<I18nText path={`last-tasks.status.${tab.value}`} />
 								</TabsTrigger>
 							)
 						})}
@@ -79,14 +80,14 @@ export function LastTasksHeader({ tasks }: { tasks: DBTask[] }) {
 						<PlusIcon size={16} />
 					</div>
 					<span className='text-accent-foreground/60 pr-2 pl-1'>
-						({numOfTasksByStatus[statusType]})
+						({numberOfTasksByStatus[statusType]})
 					</span>
 					<HoverCard>
 						<HoverCardTrigger className='cursor-pointer scroll-m-20'>
 							{i18n.formatMessage({ id: 'last-tasks.title' })}
 						</HoverCardTrigger>
 						<HoverCardContent>
-							{Object.keys(numOfTasksByStatus).map(key => {
+							{Object.keys(numberOfTasksByStatus).map(key => {
 								const validKey = key as TaskStatuses
 								return (
 									<div
@@ -98,7 +99,7 @@ export function LastTasksHeader({ tasks }: { tasks: DBTask[] }) {
 												id: `last-tasks.status.${validKey}`
 											})}
 										</p>
-										<p>{numOfTasksByStatus[validKey]}</p>
+										<p>{numberOfTasksByStatus[validKey]}</p>
 									</div>
 								)
 							})}

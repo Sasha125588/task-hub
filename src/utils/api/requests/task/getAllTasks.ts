@@ -1,11 +1,12 @@
 import type { DBTask } from '@/types/db.types'
+import type { TSortFilter, TStatusFilter } from '@/types/task.types'
 
 import supabase from '@/lib/supabase/client'
 
 export interface GetAllTasksParams {
-	status?: string
+	status?: TStatusFilter
 	sort_by?: string
-	sort_type?: string
+	sort_type?: TSortFilter
 	limit?: string
 	offset?: string
 }

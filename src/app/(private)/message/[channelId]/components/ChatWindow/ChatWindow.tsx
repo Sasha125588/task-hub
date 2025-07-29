@@ -2,62 +2,37 @@
 
 import { Send } from 'lucide-react'
 import { motion } from 'motion/react'
-import { type FormEvent, Suspense, useEffect, useState } from 'react'
+import { Suspense, useEffect } from 'react'
 
+import { I18nText } from '@/components/common/I18nText/I18nText'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { LoadingSpinner } from '@/components/ui/loading-spinner'
 
 import type { DBChannel } from '@/types/db.types'
 
-import { sendMessage, useGetUserQuery } from '@/utils/api'
-import { useUser } from '@/utils/hooks/auth/useUser'
 import { useChannelDeletion } from '@/utils/hooks/chat/useChannelDeletion'
 import { useChatScroll } from '@/utils/hooks/chat/useChatScroll'
-import { useOnlineUsers } from '@/utils/hooks/chat/useOnlineUsers'
-import { useRealtimeMessages } from '@/utils/hooks/chat/useRealtimeMessages'
+import { useI18n } from '@/utils/providers'
 
 import { CreatedBy } from './components/CreatedBy/CreatedBy'
 import { MessageList } from './components/MessageList/MessageList'
+import { useChatWindow } from '@/app/(private)/message/[channelId]/components/ChatWindow/hooks/useChatWindow'
 
 interface ChatWindowProps {
 	channel: DBChannel
 }
 
 export function ChatWindow({ channel }: ChatWindowProps) {
-	const [newMessage, setNewMessage] = useState('')
-	const [isSending, setIsSending] = useState(false)
+	const i18n = useI18n()
+	const { state, functions } = useChatWindow(channel)
 	const { containerRef, scrollToBottom } = useChatScroll()
-	const { userId } = useUser()
-	const { data: user } = useGetUserQuery(channel.created_by!)
-
-	const messages = useRealtimeMessages(channel.id)
-	const onlineUsers = useOnlineUsers(channel.id, userId!)
 
 	useChannelDeletion(channel.id)
 
-	const handleSendMessage = async (e: FormEvent<HTMLFormElement>) => {
-		e.preventDefault()
-		if (!userId) return
-
-		setIsSending(true)
-		try {
-			await sendMessage({
-				message: newMessage,
-				channelId: channel.id,
-				userId
-			})
-			setNewMessage('')
-		} catch (error) {
-			console.error('Failed to send message:', error)
-		} finally {
-			setIsSending(false)
-		}
-	}
-
 	useEffect(() => {
 		scrollToBottom()
-	}, [scrollToBottom, messages])
+	}, [scrollToBottom, state.messages])
 
 	return (
 		<div className='flex h-full w-full flex-col'>
@@ -83,10 +58,12 @@ export function ChatWindow({ channel }: ChatWindowProps) {
 								ease: 'easeInOut'
 							}}
 						/>
-						<span className='text-muted-foreground text-sm'>{onlineUsers} online</span>
+						<span className='text-muted-foreground text-sm'>
+							{state.onlineUsers} <I18nText path='chat.onlineUsers' />
+						</span>
 					</motion.div>
 				</div>
-				{user && <CreatedBy user={user} />}
+				{state.user && <CreatedBy user={state.user} />}
 			</div>
 
 			<div
@@ -101,31 +78,31 @@ export function ChatWindow({ channel }: ChatWindowProps) {
 					}
 				>
 					<MessageList
-						messages={messages}
+						messages={state.messages}
 						channelSlug={channel.slug!}
 					/>
 				</Suspense>
 			</div>
 
 			<form
-				onSubmit={handleSendMessage}
+				onSubmit={functions.handleSendMessage}
 				className='flex w-full max-w-xl gap-2 bg-transparent px-4 pb-4'
 			>
 				<Input
 					className='rounded-full bg-transparent text-sm'
 					type='text'
-					value={newMessage}
-					onChange={e => setNewMessage(e.target.value)}
-					placeholder={`Message #${channel.slug}...`}
-					disabled={isSending}
+					value={state.newMessage}
+					onChange={e => functions.setNewMessage(e.target.value)}
+					placeholder={`${i18n.formatMessage({ id: 'chat.message.placeholder' })} #${channel.slug}...`}
+					disabled={state.isSending}
 				/>
-				{newMessage && (
+				{state.newMessage && (
 					<Button
 						className='aspect-square rounded-full'
 						type='submit'
-						disabled={isSending}
+						disabled={state.isSending}
 					>
-						{isSending ? (
+						{state.isSending ? (
 							<div className='h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent' />
 						) : (
 							<Send className='size-4' />

@@ -3,6 +3,7 @@
 import { Suspense } from 'react'
 import { use } from 'react'
 
+import { I18nText } from '@/components/common/I18nText/I18nText'
 import { LoadingSpinner } from '@/components/ui/loading-spinner'
 
 import { useGetChannelQuery } from '@/utils/api/hooks/chat/useGetChannelQuery'
@@ -30,9 +31,11 @@ export default function ChannelPage({ params }: ChannelPageProps) {
 		return (
 			<div className='flex h-[calc(100%+40px)] w-full items-center justify-center'>
 				<div className='text-center'>
-					<h2 className='mb-2 text-lg font-semibold'>Channel not found</h2>
+					<h2 className='mb-2 text-lg font-semibold'>
+						<I18nText path='chat.channelNotFound' />
+					</h2>
 					<p className='text-muted-foreground'>
-						This channel may have been deleted or doesn&apos;t exist.
+						<I18nText path='chat.channelNotFoundDescription' />
 					</p>
 				</div>
 			</div>

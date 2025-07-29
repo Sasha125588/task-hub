@@ -3,7 +3,6 @@
 	"site.description": "Управляйте своим прогрессом",
 	"site.loading": "Загрузка...",
 	"site.home": "Добро пожаловать в Task Hub!",
-	"loading.task": "Загрузка задачи...",
 
 	"button.addSubTask": "Добавить подзадачу",
 	"button.addTask": "Добавить задачу",
@@ -15,6 +14,7 @@
 	"button.next": "Далее",
 	"button.back": "Назад",
 	"button.create": "Создать",
+	"button.loading": "Загрузка...",
 
 	"form.basicInfo": "Основная информация",
 	"form.additionalInfo": "Дополнительная информация",
@@ -45,6 +45,8 @@
 
 	"form.nameRequired": "Имя обязательно",
 	"form.descriptionTooShort": "Описание слишком короткое",
+
+	"loading.task": "Загрузка задачи...",
 
 	"toast.subTaskAdded": "Подзадача добавлена!",
 	"toast.loggedOut": "Выход выполнен успешно",
@@ -114,6 +116,8 @@
 	"last-tasks.show-less": "Скрыть",
 	"last-tasks.show-all": "Перейти ко всем задачам",
 
+	"tasks.notFound": "Задачи не найдены",
+
 	"last-tasks.status.all": "Все",
 	"last-tasks.status.not-started": "Не начато",
 	"last-tasks.status.in-progress": "В процессе",
@@ -122,14 +126,16 @@
 	"last-tasks.sort.asc": "Ближайшие",
 	"last-tasks.sort.desc": "Последние",
 
+	"subTasksList.title": "Список подзадач",
+
 	"last-tasks.due": "Срок",
 	"last-tasks.days": "дней",
 
 	"task-edit.title": "Редактировать задачу",
 
 	"dashboard.todayTasks.title": "Задачи на сегодня",
-	"dashboard.todayTasks.tasksScheduled": "{count, plural, one {# задача запланирована на сегодня} few {# задачи запланированы на сегодня} many {# задач запланировано на сегодня} other {# задач запланировано на сегодня}}",
 	"dashboard.todayTasks.noTasksScheduled": "Задач на сегодня не запланировано",
+	"dashboard.todayTasks.tasksScheduled": "{count, plural, one {# задача запланирована на сегодня} few {# задачи запланированы на сегодня} many {# задач запланировано на сегодня} other {# задач запланировано на сегодня}}",
 
 	"toggleTheme.label": "Тема",
 	"toggleTheme.light": "Светлая",
@@ -142,10 +148,25 @@
 	"pages.Dashboard": "Дашборд",
 	"pages.Settings": "Настройки",
 	"pages.Message": "Сообщения",
+
 	"create-task.title": "Создать задачу",
 	"create-task.form.title": "Название задачи",
 	"create-task.form.icon": "Иконка задачи",
 	"create-task.form.dueDate": "Срок выполнения",
 	"create-task.form.startTime": "Время начала",
-	"create-task.form.endTime": "Время окончания"
+	"create-task.form.endTime": "Время окончания",
+
+	"chat.greeting": "Добро пожаловать в чат",
+	"chat.description": "Выберите канал из боковой панели, чтобы начать общение!",
+	"chat.channelNotFound": "Канал не найден",
+	"chat.channelNotFoundDescription": "Этот канал мог быть удален или не существует.",
+	"chat.onlineUsers": "онлайн",
+	"chat.message.placeholder": "Сообщение",
+	"chat.noMessages": "В #{channelSlug} пока нет сообщений. Начните разговор!",
+
+	"createChannelForm.placeholder": "Название канала",
+
+	"createdBy": "Создано",
+	"channels": "Каналы",
+	"settings": "Настройки"
 }

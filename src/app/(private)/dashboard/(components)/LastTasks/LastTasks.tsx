@@ -1,35 +1,40 @@
 'use client'
 
-import { parseAsStringLiteral, useQueryState } from 'nuqs'
-
 import { Tabs } from '@/components/animate-ui/radix/tabs'
+import { I18nText } from '@/components/common/I18nText/I18nText'
 
-import type { DBTask } from '@/types/db.types'
-import { StatusFilter, type TStatusFilter, type TaskStatuses } from '@/types/task.types'
+import { type TaskStatuses } from '@/types/task.types'
 
 import { LastTasksContent } from './components/LastTasksContent/LastTasksContent'
 import { LastTasksHeader } from './components/LastTasksHeader/LastTasksHeader'
+import { useLastTasks } from './hooks/useLastTasks'
 
-export function LastTasks({ tasks, statusType }: { tasks: DBTask[]; statusType: TaskStatuses }) {
-	const [, setStatus] = useQueryState<TStatusFilter>(
-		'status',
-		parseAsStringLiteral(StatusFilter).withDefault('all')
-	)
+export function LastTasks() {
+	const { state, functions } = useLastTasks()
 
 	const changeStatusType = (value: string) => {
 		const newType = value as TaskStatuses
-		setStatus(newType)
+		functions.setStatusType(newType)
 	}
 
 	return (
 		<Tabs
-			defaultValue={statusType}
+			defaultValue={state.statusType}
 			dir='rtl'
 			onValueChange={changeStatusType}
 		>
 			<div className='flex flex-col gap-3'>
-				<LastTasksHeader tasks={tasks} />
-				<LastTasksContent tasks={tasks} />
+				<LastTasksHeader tasks={state.tasks} />
+
+				{state.tasks.length > 0 ? (
+					<LastTasksContent tasks={state.tasks} />
+				) : (
+					<div className='flex h-52 items-center justify-center'>
+						<p className='text-muted-foreground'>
+							<I18nText path='tasks.notFound' />
+						</p>
+					</div>
+				)}
 			</div>
 		</Tabs>
 	)

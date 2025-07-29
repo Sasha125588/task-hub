@@ -87,11 +87,9 @@ export function useSubTasksList(taskId: string, subTasks: DBSubTask[]) {
 				reorderSubTasksMutation.isPending ||
 				updateSubTaskMutation.isPending
 		},
-		actions: {
+		functions: {
 			setTaskTitle,
-			setShowForm
-		},
-		handlers: {
+			setShowForm,
 			handleDragEnd,
 			handleCreateTask,
 			handleDeleteSubTask,

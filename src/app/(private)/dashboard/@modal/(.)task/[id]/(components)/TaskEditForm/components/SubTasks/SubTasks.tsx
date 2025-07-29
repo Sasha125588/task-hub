@@ -27,14 +27,14 @@ interface Props {
 }
 
 export function SubTasks({ id, subTasks }: Props) {
-	const reorderSubTasks = usePostReorderSubTasksMutation().mutate
-
 	const sensors = useSensors(
 		useSensor(PointerSensor),
 		useSensor(KeyboardSensor, {
 			coordinateGetter: sortableKeyboardCoordinates
 		})
 	)
+
+	const reorderSubTasks = usePostReorderSubTasksMutation().mutate
 
 	const updateSubTask = usePutUpdateSubTaskMutation().mutate
 
@@ -61,6 +61,7 @@ export function SubTasks({ id, subTasks }: Props) {
 			}
 		}
 	}
+
 	return (
 		<DndContext
 			sensors={sensors}

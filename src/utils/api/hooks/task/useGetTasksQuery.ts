@@ -4,7 +4,7 @@ import type { DBTask } from '@/types/db.types'
 
 import { type GetAllTasksParams, getAllTasks } from '../../requests'
 
-export const useGetAllTasksQuery = (params?: GetAllTasksParams) =>
+export const useGetTasksQuery = (params?: GetAllTasksParams) =>
 	useQuery<DBTask[]>({
 		queryKey: [
 			'getAllTasks',

@@ -33,6 +33,7 @@ export function SubTaskItem({ item, handleCheck }: Props) {
 				<Checkbox
 					checked={item.completed}
 					onCheckedChange={() => handleCheck(item.id!, !item.completed)}
+					aria-label='Toggle sub task completion'
 				/>
 				<div
 					{...listeners}

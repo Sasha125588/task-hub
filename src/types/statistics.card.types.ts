@@ -3,6 +3,6 @@ export interface StatisticsCard {
 	title: string
 	colorClass: string
 	darkColorClass: string
-	desc: string
+	description: string
 	imgSrc: string
 }

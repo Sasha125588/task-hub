@@ -16,6 +16,7 @@ import {
 import { useClickOutside } from '@siberiacancode/reactuse'
 import { Check, Plus, X } from 'lucide-react'
 
+import { I18nText } from '@/components/common/I18nText/I18nText'
 import { Button } from '@/components/ui/button'
 import { CardContent } from '@/components/ui/card'
 import { Card } from '@/components/ui/card'
@@ -24,25 +25,16 @@ import { LoadingSpinner } from '@/components/ui/loading-spinner'
 
 import type { DBSubTask } from '@/types/db.types'
 
+import { useI18n } from '@/utils/providers'
+
 import { SubTask } from './components/SubTask/SubTask'
 import { useSubTasksList } from '@/app/(private)/dashboard/task/[id]/(components)/SubTasksList/hooks/useSubTasksList'
 
 export function SubTasksList({ id, subTasks }: { id: string; subTasks: DBSubTask[] }) {
-	const { state, actions, handlers } = useSubTasksList(id, subTasks)
+	const i18n = useI18n()
+	const { state, functions } = useSubTasksList(id, subTasks)
 
-	const { showForm, taskTitle, isPending } = state
-	const { setTaskTitle, setShowForm } = actions
-	const {
-		handleDragEnd,
-		handleCreateTask,
-		handleDeleteSubTask,
-		handleCancel,
-		handleShowForm,
-		handleEnterPress,
-		handleUpdateSubTask
-	} = handlers
-
-	const ref = useClickOutside<HTMLDivElement>(() => setShowForm(false))
+	const ref = useClickOutside<HTMLDivElement>(() => functions.setShowForm(false))
 
 	const sensors = useSensors(
 		useSensor(PointerSensor),
@@ -54,17 +46,19 @@ export function SubTasksList({ id, subTasks }: { id: string; subTasks: DBSubTask
 	return (
 		<Card className='h-full'>
 			<CardContent className='flex flex-col gap-2'>
-				<h2 className='text-xl font-semibold'>Sub Tasks List</h2>
+				<h2 className='text-xl font-semibold'>
+					<I18nText path='subTasksList.title' />
+				</h2>
 
-				{!showForm ? (
+				{!state.showForm ? (
 					<Button
 						variant='ghost'
 						className='border-primary/30 h-14 w-full justify-start border-2 border-dashed'
-						onClick={handleShowForm}
-						disabled={isPending}
+						onClick={functions.handleShowForm}
+						disabled={state.isPending}
 					>
 						<Plus size={16} />
-						New Sub Task
+						<I18nText path='button.addSubTask' />
 					</Button>
 				) : (
 					<div
@@ -72,25 +66,25 @@ export function SubTasksList({ id, subTasks }: { id: string; subTasks: DBSubTask
 						className='border-primary/30 flex h-14 items-center gap-2 rounded-lg border-2 border-dashed px-3'
 					>
 						<Input
-							value={taskTitle}
-							onChange={e => setTaskTitle(e.target.value)}
-							onKeyDown={event => handleEnterPress(event)}
-							placeholder='Enter task title...'
+							value={state.taskTitle}
+							onChange={e => functions.setTaskTitle(e.target.value)}
+							onKeyDown={event => functions.handleEnterPress(event)}
+							placeholder={i18n.formatMessage({ id: 'create-sub-task.title' })}
 							autoFocus
-							disabled={isPending}
+							disabled={state.isPending}
 							className='flex-1 border-none !bg-transparent shadow-none focus-visible:ring-0'
 						/>
 						<Button
-							onClick={handleCreateTask}
-							disabled={!taskTitle.trim() || isPending}
+							onClick={functions.handleCreateTask}
+							disabled={!state.taskTitle.trim() || state.isPending}
 							className='size-7'
 						>
-							{isPending ? <LoadingSpinner /> : <Check />}
+							{state.isPending ? <LoadingSpinner /> : <Check />}
 						</Button>
 						<Button
 							variant='ghost'
-							onClick={handleCancel}
-							disabled={isPending}
+							onClick={functions.handleCancel}
+							disabled={state.isPending}
 							className='size-7'
 						>
 							<X />
@@ -101,7 +95,7 @@ export function SubTasksList({ id, subTasks }: { id: string; subTasks: DBSubTask
 				<DndContext
 					sensors={sensors}
 					collisionDetection={closestCenter}
-					onDragEnd={handleDragEnd}
+					onDragEnd={functions.handleDragEnd}
 				>
 					<div className='flex flex-col gap-2 pt-3'>
 						<SortableContext
@@ -112,8 +106,8 @@ export function SubTasksList({ id, subTasks }: { id: string; subTasks: DBSubTask
 								<SubTask
 									key={subTask.id}
 									subTask={subTask}
-									onDelete={() => handleDeleteSubTask(subTask.id)}
-									handleUpdate={handleUpdateSubTask}
+									onDelete={() => functions.handleDeleteSubTask(subTask.id)}
+									handleUpdate={functions.handleUpdateSubTask}
 								/>
 							))}
 						</SortableContext>

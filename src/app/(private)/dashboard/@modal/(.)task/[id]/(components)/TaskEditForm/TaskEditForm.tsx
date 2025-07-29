@@ -80,6 +80,8 @@ export function TaskEditForm({ id }: Props) {
 							className='mt-6 ml-4'
 						>
 							<Button
+								aria-label='Go to task page'
+								type='button'
 								variant='outline'
 								size='icon'
 								className='bg-primary/5 hover:bg-primary/10 border-primary/20 cursor-pointer'
