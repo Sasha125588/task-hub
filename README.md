@@ -64,7 +64,7 @@ cp .env.example
 BETTER_AUTH_SECRET=secret
 NEXT_PUBLIC_BETTER_AUTH_URL=url
 
-NEXT_PUBLIC_GITHUB_CLIENT_ID=id 
+NEXT_PUBLIC_GITHUB_CLIENT_ID=id
 NEXT_PUBLIC_GITHUB_CLIENT_SECRET=secret
 
 NEXT_PUBLIC_GOOGLE_CLIENT_ID=id
@@ -104,6 +104,12 @@ bun dev
 ![Chat](design-review/chat-white.png)
 
 ![Chat](design-review/chat-black.png)
+
+### Task Page
+
+![Task Page](design-review/task-page-white.png)
+
+![Task Page](design-review/task-page-black.png)
 
 ## 🏗 Структура проекта
 
