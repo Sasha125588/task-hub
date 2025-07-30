@@ -2,20 +2,23 @@
 
 import { parseAsStringLiteral, useQueryState } from 'nuqs'
 
-import { SortFilter, StatusFilter, type TSortFilter, type TStatusFilter } from '@/types/task.types'
+import { SortFilter, StatusFilter, type TSortFilter, type TStatusFilter } from '@/types/sort.types'
 
 import { useGetTasksQuery } from '@/utils/api'
 
 import { TASK_CONFIG } from '@/configs/task.config'
 
+const SORT_TYPE = TASK_CONFIG.STORAGE_KEYS.SORT_TYPE
+const STATUS_TYPE = TASK_CONFIG.STORAGE_KEYS.STATUS_TYPE
+
 export const useLastTasks = () => {
 	const [statusType, setStatusType] = useQueryState<TStatusFilter>(
-		'status',
+		STATUS_TYPE,
 		parseAsStringLiteral(StatusFilter).withDefault('all')
 	)
 
 	const [sortType, setSortType] = useQueryState<TSortFilter>(
-		'sort',
+		SORT_TYPE,
 		parseAsStringLiteral(SortFilter).withDefault('asc')
 	)
 

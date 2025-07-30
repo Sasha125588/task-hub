@@ -9,8 +9,8 @@ import { Card, CardContent } from '@/components/ui/card'
 import { useGetSubTasksQuery, useGetTaskByIdQuery } from '@/utils/api/hooks/task'
 import { getNumOfSubTasksByStatus } from '@/utils/helpers/task/getNumOfTasksByStatus'
 
-import { Statistics } from '@/app/(private)/dashboard/task/[id]/(components)/Statistics/Statistics'
-import { SubTasksList } from '@/app/(private)/dashboard/task/[id]/(components)/SubTasksList/SubTasksList'
+import { Statistics } from './components/Statistics/Statistics'
+import { SubTasksList } from './components/SubTasksList/SubTasksList'
 
 export function TaskPage({ taskId }: { taskId: string }) {
 	const { data: subTasks } = useGetSubTasksQuery(taskId)

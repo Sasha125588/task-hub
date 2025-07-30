@@ -2,9 +2,9 @@ import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import { type PropsWithChildren } from 'react'
 
 import { I18nProvider, type I18nProviderProps } from '@/utils/providers'
-import { AppConfigProvider } from '@/utils/providers/app-config/app-config-provider'
-import { QueryProvider } from '@/utils/providers/query/query-provider'
-import { ThemeProvider } from '@/utils/providers/theme/theme-provider'
+import { AppConfigProvider } from '@/utils/providers/app-config/appConfigProvider'
+import { QueryProvider } from '@/utils/providers/query/queryProvider'
+import { ThemeProvider } from '@/utils/providers/theme/themeProvider'
 
 export function Providers({ i18n, children }: PropsWithChildren<{ i18n: I18nProviderProps }>) {
 	return (

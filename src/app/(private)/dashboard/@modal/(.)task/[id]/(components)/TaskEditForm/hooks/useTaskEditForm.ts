@@ -9,7 +9,7 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { useGetTaskByIdQuery, usePutUpdateTaskMutation } from '@/utils/api'
-import { useGetSubTasksQuery } from '@/utils/api/hooks/task/useGetSubTasksQuery'
+import { useGetSubTasksQuery } from '@/utils/api/hooks/task/sub-task/useGetSubTasksQuery'
 import { useI18n } from '@/utils/providers'
 
 import { taskEditFormSchema } from '../constants/taskEditFormSchema'

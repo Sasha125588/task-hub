@@ -1,3 +1,4 @@
+import { I18nText } from '@/components/common/I18nText/I18nText'
 import { SocialLoginButtons } from '@/components/common/SocialLoginButtons'
 import { Button } from '@/components/ui/button'
 import {
@@ -30,10 +31,10 @@ export function SignInForm() {
 				<div className='flex flex-col gap-6'>
 					<div className='flex flex-col items-center text-center'>
 						<h1 className='text-2xl font-bold'>
-							{i18n.formatMessage({ id: 'auth.signin.form.title' })}
+							<I18nText path='auth.signin.form.title' />
 						</h1>
 						<p className='text-muted-foreground text-balance'>
-							{i18n.formatMessage({ id: 'auth.signin.form.description' })}
+							<I18nText path='auth.signin.form.description' />
 						</p>
 					</div>
 					<FormField
@@ -42,7 +43,7 @@ export function SignInForm() {
 						render={({ field }) => (
 							<FormItem>
 								<FormLabel htmlFor='email'>
-									{i18n.formatMessage({ id: 'field.email.label' })}
+									<I18nText path='field.email.label' />
 								</FormLabel>
 								<FormControl>
 									<Input
@@ -67,13 +68,13 @@ export function SignInForm() {
 							<FormItem>
 								<div className='flex items-center'>
 									<FormLabel htmlFor='password'>
-										{i18n.formatMessage({ id: 'field.password.label' })}
+										<I18nText path='field.password.label' />
 									</FormLabel>
 									<a
 										href='#'
 										className='ml-auto text-sm underline-offset-2 hover:underline'
 									>
-										{i18n.formatMessage({ id: 'auth.form.forgotPassword' })}
+										<I18nText path='auth.form.forgotPassword' />
 									</a>
 								</div>
 								<FormControl>
@@ -90,7 +91,7 @@ export function SignInForm() {
 								</FormControl>
 								<FormMessage />
 								<p className='text-muted-foreground mt-2 text-sm'>
-									{i18n.formatMessage({ id: 'auth.form.passwordRequirements' })}
+									<I18nText path='auth.form.passwordRequirements' />
 								</p>
 							</FormItem>
 						)}
@@ -100,25 +101,23 @@ export function SignInForm() {
 						className='w-full cursor-pointer dark:hover:bg-zinc-50/80'
 						disabled={state.loading}
 					>
-						{state.loading
-							? i18n.formatMessage({ id: 'site.loading' })
-							: i18n.formatMessage({ id: 'button.login' })}
+						{state.loading ? <I18nText path='site.loading' /> : <I18nText path='button.login' />}
 					</Button>
 					<div className='after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t'>
 						<span className='bg-card text-muted-foreground relative z-10 px-2'>
-							{i18n.formatMessage({ id: 'auth.form.orContinueWith' })}
+							<I18nText path='auth.form.orContinueWith' />
 						</span>
 					</div>
 					<SocialLoginButtons />
 					<div className='text-center text-sm'>
-						{i18n.formatMessage({ id: 'auth.form.dontHaveAccount' })}{' '}
+						<I18nText path='auth.form.dontHaveAccount' />{' '}
 						<Button
 							type='button'
 							variant='link'
 							className='h-auto cursor-pointer p-0'
 							onClick={functions.goToSignUp}
 						>
-							{i18n.formatMessage({ id: 'button.signup' })}
+							<I18nText path='button.signup' />
 						</Button>
 					</div>
 				</div>

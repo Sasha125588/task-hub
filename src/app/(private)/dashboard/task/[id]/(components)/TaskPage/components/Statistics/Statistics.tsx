@@ -1,7 +1,7 @@
 import { getRandomColor } from '@/utils/helpers/common/getRandomColor'
 
+import { StatisticsCard } from './components/StatisticsCard/StatisticsCard'
 import { statisticData } from './constants/data'
-import { StatisticsCard } from '@/app/(private)/dashboard/task/[id]/(components)/Statistics/components/StatisticsCard/StatisticsCard'
 
 export const Statistics = function Statistics({
 	statistics

@@ -1,8 +1,7 @@
 import Image from 'next/image'
 
+import { I18nText } from '@/components/common/I18nText/I18nText'
 import { Card, CardContent } from '@/components/ui/card'
-
-import { useI18n } from '@/utils/providers'
 
 export function StatisticCard({
 	title,
@@ -18,8 +17,6 @@ export function StatisticCard({
 	colorClass: string
 	darkColorClass: string
 }) {
-	const i18n = useI18n()
-
 	return (
 		<Card
 			className={`border-border h-full w-full max-w-sm cursor-pointer border shadow ${colorClass} ${darkColorClass}`}
@@ -30,9 +27,7 @@ export function StatisticCard({
 						{title}
 					</h1>
 					<p className='leading-7 font-medium'>
-						{i18n.formatMessage({
-							id: `statistics.desc.${description}`
-						})}
+						<I18nText path={`statistics.desc.${description}` as LocaleMessageId} />
 					</p>
 				</div>
 				<Image

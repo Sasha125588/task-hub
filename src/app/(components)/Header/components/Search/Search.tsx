@@ -2,6 +2,7 @@ import { Search } from 'lucide-react'
 import type { ComponentProps } from 'react'
 
 import { SidebarInput } from '@/components/animate-ui/radix/sidebar'
+import { I18nText } from '@/components/common/I18nText/I18nText'
 import { Label } from '@/components/ui/label'
 
 import { useI18n } from '@/utils/providers'
@@ -15,7 +16,7 @@ export function SearchForm({ ...props }: ComponentProps<'form'>) {
 					htmlFor='search'
 					className='sr-only'
 				>
-					{i18n.formatMessage({ id: 'search.label' })}
+					<I18nText path='search.label' />
 				</Label>
 				<SidebarInput
 					id='search'

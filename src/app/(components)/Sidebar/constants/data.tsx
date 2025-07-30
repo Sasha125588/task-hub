@@ -32,8 +32,8 @@ export const SIDEBAR_MENU_DATA: SidebarData = {
 					icon: <MessageCircle />
 				},
 				{
-					title: 'Insight',
-					url: PAGES_CONFIG.INSIGHT_URL,
+					title: 'Insights',
+					url: PAGES_CONFIG.INSIGHTS_URL,
 					icon: <BarChart3 />
 				},
 				{
@@ -47,8 +47,8 @@ export const SIDEBAR_MENU_DATA: SidebarData = {
 					icon: <Calendar />
 				},
 				{
-					title: 'Report',
-					url: PAGES_CONFIG.REPORT_URL,
+					title: 'Reports',
+					url: PAGES_CONFIG.REPORTS_URL,
 					icon: <FileText />
 				},
 				{

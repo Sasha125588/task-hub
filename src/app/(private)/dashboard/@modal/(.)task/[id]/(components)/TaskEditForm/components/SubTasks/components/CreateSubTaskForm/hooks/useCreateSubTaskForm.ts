@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useTransition } from 'react'
 import { toast } from 'sonner'
 
 import { usePostCreateSubTaskMutation } from '@/utils/api'
@@ -6,30 +6,28 @@ import { usePostCreateSubTaskMutation } from '@/utils/api'
 export const useCreateSubTaskForm = (taskId: string) => {
 	const [showForm, setShowForm] = useState(false)
 	const [taskTitle, setTaskTitle] = useState('')
-	const [isLoading, setIsLoading] = useState(false)
+	const [isPending, startTransition] = useTransition()
 
 	const createSubTaskMutation = usePostCreateSubTaskMutation()
 
 	const handleCreateTask = async () => {
-		if (!taskTitle.trim() || isLoading) return
-
-		setIsLoading(true)
+		if (!taskTitle.trim() || isPending) return
 		try {
-			createSubTaskMutation.mutate({
-				taskId,
-				body: {
-					title: taskTitle.trim()
-				}
-			})
+			startTransition(() => {
+				createSubTaskMutation.mutate({
+					taskId,
+					body: {
+						title: taskTitle.trim()
+					}
+				})
 
-			setTaskTitle('')
-			setShowForm(false)
-			toast.success('Sub task created!')
+				setTaskTitle('')
+				setShowForm(false)
+				toast.success('Sub task created!')
+			})
 		} catch (error) {
 			console.error('Failed to create sub task:', error)
 			toast.error('Failed to create sub task')
-		} finally {
-			setIsLoading(false)
 		}
 	}
 
@@ -42,7 +40,7 @@ export const useCreateSubTaskForm = (taskId: string) => {
 		state: {
 			showForm,
 			taskTitle,
-			isLoading
+			isPending
 		},
 		functions: {
 			handleCreateTask,

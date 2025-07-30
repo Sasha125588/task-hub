@@ -1,5 +1,8 @@
 import type { DBSubTask } from '@/types/db.types'
 
+import { getSubTasks } from '@/utils/api/requests/task/sub-task/getSubTasks'
+import { getTaskStatusByProgress } from '@/utils/helpers/task/getTaskStatusByProgress'
+
 import supabase from '@/lib/supabase/client'
 
 export const updateSubTask = async ({ id, params }: { id: string; params: Partial<DBSubTask> }) => {
@@ -14,23 +17,21 @@ export const updateSubTask = async ({ id, params }: { id: string; params: Partia
 		if (updateError) throw updateError
 
 		if ('completed' in params && updatedSubTask) {
-			const { data: allSubTasks, error: fetchError } = await supabase
-				.from('sub_tasks')
-				.select('*')
-				.eq('task_id', updatedSubTask.task_id)
-
-			if (fetchError) throw fetchError
+			const allSubTasks = await getSubTasks(updatedSubTask.task_id)
 
 			if (allSubTasks) {
 				const completedTasks = allSubTasks.filter(task => task.completed).length
 				const progress = Math.round((completedTasks * 100) / allSubTasks.length)
 
-				const { error: progressError } = await supabase
-					.from('tasks')
-					.update({ progress })
-					.match({ id: updatedSubTask.task_id })
+				const status = getTaskStatusByProgress(progress)
 
-				if (progressError) throw progressError
+				const taskUpdates: { progress: number; status?: string } = { progress }
+
+				if (status) {
+					taskUpdates.status = status
+				}
+
+				await supabase.from('tasks').update(taskUpdates).match({ id: updatedSubTask.task_id })
 			}
 		}
 

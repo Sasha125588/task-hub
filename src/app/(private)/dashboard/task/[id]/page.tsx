@@ -1,4 +1,4 @@
-import { TaskPage } from '@/app/(private)/dashboard/task/[id]/TaskPage'
+import { TaskPage } from './(components)/TaskPage/TaskPage'
 
 interface Props {
 	params: Promise<{ id: string }>

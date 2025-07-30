@@ -12,22 +12,19 @@ import {
 	SidebarMenuButton,
 	SidebarMenuItem
 } from '@/components/animate-ui/radix/sidebar'
-
-import { useI18n } from '@/utils/providers'
+import { I18nText } from '@/components/common/I18nText/I18nText'
 
 import type { SidebarSection } from '@/app/(components)/Sidebar/constants/types'
 
 export function SidebarItem({ item }: { item: SidebarSection }) {
 	const pathname = usePathname()
 	const pageName = pathname === '/' ? '/' : '/' + pathname.split('/')[1]
-	const i18n = useI18n()
+
 	return (
 		<SidebarGroup key={item.title}>
 			<SidebarGroupLabel className='my-0 py-0'>
 				<p className='text-xs leading-7 [&:not(:first-child)]:mt-6'>
-					{i18n.formatMessage({
-						id: `sidebar.menu.${item.title}`
-					})}
+					<I18nText path={`sidebar.menu.${item.title}` as LocaleMessageId} />
 				</p>
 			</SidebarGroupLabel>
 			<SidebarGroupContent>
@@ -48,9 +45,7 @@ export function SidebarItem({ item }: { item: SidebarSection }) {
 										>
 											<div className={`m-0 flex h-5 w-5 items-center p-0`}>{item.icon}</div>
 											<p className='text-sm font-normal'>
-												{i18n.formatMessage({
-													id: `sidebar.menu.${item.title}`
-												})}
+												<I18nText path={`sidebar.menu.${item.title}` as LocaleMessageId} />
 											</p>
 										</Link>
 									</SidebarMenuButton>

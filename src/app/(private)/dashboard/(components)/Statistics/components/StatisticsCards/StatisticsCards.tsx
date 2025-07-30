@@ -70,16 +70,11 @@ export function StatisticsCards({ tasks }: { tasks: DBTask[] }) {
 											{title}
 										</h1>
 										<p className='leading-7 font-medium'>
-											<I18nText
-												path={
-													`statistics.desc.${card.description}` as Parameters<
-														typeof I18nText
-													>[0]['path']
-												}
-											/>
+											<I18nText path={`statistics.desc.${card.description}` as LocaleMessageId} />
 										</p>
 									</div>
 									<Image
+										className='select-none'
 										src={card.imgSrc}
 										alt={card.title}
 										width={80}

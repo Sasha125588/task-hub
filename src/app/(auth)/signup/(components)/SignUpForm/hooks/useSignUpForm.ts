@@ -1,12 +1,14 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useRouter } from 'next/navigation'
+import { redirect } from 'next/navigation'
+import { useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
-import { usePostSignUpMutation } from '@/utils/api'
 import { getErrorMessage } from '@/utils/helpers/auth/getErrorMessage'
 
 import { signUpFormSchema } from '../constants/signUpSchema'
+
+import { handleSignUp } from '@/app/(auth)/(actions)/handleSignUp'
 
 interface SignUpForm {
 	email: string
@@ -16,8 +18,7 @@ interface SignUpForm {
 }
 
 export const useSignUpForm = () => {
-	const router = useRouter()
-	const signUpMutation = usePostSignUpMutation()
+	const [isPending, startTransition] = useTransition()
 
 	const signUpForm = useForm<SignUpForm>({
 		resolver: zodResolver(signUpFormSchema),
@@ -30,33 +31,31 @@ export const useSignUpForm = () => {
 	})
 
 	const onSubmit = signUpForm.handleSubmit(async values => {
-		const loadingToast = toast.loading('Creating your account...')
+		startTransition(async () => {
+			const loadingToast = toast.loading('Creating your account...')
 
-		const { error } = await signUpMutation.mutateAsync({
-			email: values.email,
-			password: values.password,
-			username: values.username
-		})
+			const { error } = await handleSignUp(values.email, values.password, values.username)
 
-		if (error?.code) {
-			const errMsg = getErrorMessage(error.code)
-			toast.error(`Failed to create account. ${errMsg}`, {
+			if (error?.code) {
+				const errMsg = getErrorMessage(error.code)
+				toast.error(`Failed to create account. ${errMsg}`, {
+					id: loadingToast
+				})
+				return
+			}
+
+			toast.success('Account created successfully! Welcome to Task Hub!', {
 				id: loadingToast
 			})
-			return
-		}
-
-		toast.success('Account created successfully! Welcome to Task Hub!', {
-			id: loadingToast
+			redirect('/dashboard')
 		})
-		router.push('/dashboard')
 	})
 
-	const goToSignIn = () => router.push('/signin')
+	const goToSignIn = () => redirect('/signin')
 
 	return {
 		state: {
-			loading: signUpMutation.isPending
+			loading: isPending
 		},
 		form: signUpForm,
 		functions: { onSubmit, goToSignIn }

@@ -55,7 +55,7 @@ IconGridItem.displayName = 'IconGridItem'
 
 const IconGrid = memo(
 	({ icons, onSelect }: { icons: { name: string }[]; onSelect: (name: string) => void }) => {
-		const visibleIcons = useMemo(() => icons.slice(0, 200), [icons])
+		const visibleIcons = useMemo(() => icons.slice(0, 100), [icons])
 
 		return (
 			<div className='grid max-h-[400px] grid-cols-8 gap-2 overflow-y-auto rounded-lg border p-2'>
@@ -126,7 +126,7 @@ export const IconPicker = ({ value, onChange, placeholder = 'Select icon' }: Ico
 					<DialogTitle>Choose Icon</DialogTitle>
 					<DialogDescription>
 						Select from {icons.length} available icons
-						{icons.length > 200 && ' (showing first 200)'}
+						{icons.length > 100 && ' (showing first 100)'}
 					</DialogDescription>
 				</DialogHeader>
 				<div className='space-y-4'>

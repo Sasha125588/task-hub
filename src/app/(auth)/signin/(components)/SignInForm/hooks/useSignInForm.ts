@@ -1,12 +1,14 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { redirect } from 'next/navigation'
+import { useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
-import { usePostSignInMutation } from '@/utils/api'
 import { getErrorMessage } from '@/utils/helpers/auth/getErrorMessage'
 
 import { loginFormSchema } from '../constants/signInSchema'
+
+import { handleSignIn } from '@/app/(auth)/(actions)/handleSignIn'
 
 interface SignInForm {
 	email: string
@@ -14,7 +16,7 @@ interface SignInForm {
 }
 
 export const useSignInForm = () => {
-	const signInMutation = usePostSignInMutation()
+	const [isPending, startTransition] = useTransition()
 
 	const signInForm = useForm<SignInForm>({
 		resolver: zodResolver(loginFormSchema),
@@ -25,32 +27,31 @@ export const useSignInForm = () => {
 	})
 
 	const onSubmit = signInForm.handleSubmit(async values => {
-		const loadingToast = toast.loading('Logging...')
+		startTransition(async () => {
+			const loadingToast = toast.loading('Logging...')
 
-		const { error } = await signInMutation.mutateAsync({
-			email: values.email,
-			password: values.password
-		})
+			const { error } = await handleSignIn(values.email, values.password)
 
-		if (error?.code) {
-			const errMsg = getErrorMessage(error.code)
-			toast.error(`Failed to login. ${errMsg}.`, {
+			if (error?.code) {
+				const errMsg = getErrorMessage(error.code)
+				toast.error(`Failed to login. ${errMsg}.`, {
+					id: loadingToast
+				})
+				return
+			}
+
+			toast.success('Successfully logged in!', {
 				id: loadingToast
 			})
-			return
-		}
-
-		toast.success('Successfully logged in!', {
-			id: loadingToast
+			redirect('/dashboard')
 		})
-		redirect('/dashboard')
 	})
 
 	const goToSignUp = () => redirect('/signup')
 
 	return {
 		state: {
-			loading: signInMutation.isPending
+			loading: isPending
 		},
 		form: signInForm,
 		functions: { onSubmit, goToSignUp }

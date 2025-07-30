@@ -1,8 +1,5 @@
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import { z } from 'zod'
-
 import { DatePicker } from '@/components/common/DatePicker'
+import { I18nText } from '@/components/common/I18nText/I18nText'
 import { IconPicker } from '@/components/common/IconPicker'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
@@ -16,19 +13,9 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 
-import { usePostCreateTaskMutation } from '@/utils/api'
-import { getIcon } from '@/utils/constants/icons'
 import { useI18n } from '@/utils/providers'
 
-const formSchema = z.object({
-	title: z.string().min(1, { message: 'Title is required' }),
-	iconName: z.string().min(1, { message: 'Icon is required' }),
-	dueDate: z.date(),
-	startTime: z.string().optional(),
-	endTime: z.string().optional()
-})
-
-type FormValues = z.infer<typeof formSchema>
+import { useCreateTaskForm } from './hooks/useCreateTaskForm'
 
 interface CreateTaskFormProps {
 	isOpen: boolean
@@ -37,34 +24,8 @@ interface CreateTaskFormProps {
 
 export function CreateTaskForm({ isOpen, onClose }: CreateTaskFormProps) {
 	const i18n = useI18n()
-	const createTask = usePostCreateTaskMutation().mutate
 
-	const form = useForm<FormValues>({
-		resolver: zodResolver(formSchema),
-		defaultValues: {
-			title: '',
-			iconName: '',
-			dueDate: new Date(),
-			startTime: '',
-			endTime: ''
-		}
-	})
-
-	const onSubmit = (data: FormValues) => {
-		const iconData = getIcon(data.iconName)
-		if (!iconData) return
-
-		createTask({
-			due_date: data.dueDate.toISOString(),
-			icon_name: iconData.name,
-			status: 'not-started',
-			title: data.title,
-			start_time: data.startTime,
-			end_time: data.endTime
-		})
-		form.reset()
-		onClose()
-	}
+	const { functions, form } = useCreateTaskForm(onClose)
 
 	return (
 		<Dialog
@@ -73,11 +34,13 @@ export function CreateTaskForm({ isOpen, onClose }: CreateTaskFormProps) {
 		>
 			<DialogContent>
 				<DialogHeader>
-					<DialogTitle>{i18n.formatMessage({ id: 'create-task.title' })}</DialogTitle>
+					<DialogTitle>
+						<I18nText path='create-task.title' />
+					</DialogTitle>
 				</DialogHeader>
 				<Form {...form}>
 					<form
-						onSubmit={form.handleSubmit(onSubmit)}
+						onSubmit={form.handleSubmit(functions.onSubmit)}
 						className='space-y-4'
 					>
 						<FormField
@@ -85,7 +48,9 @@ export function CreateTaskForm({ isOpen, onClose }: CreateTaskFormProps) {
 							name='title'
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>{i18n.formatMessage({ id: 'create-task.form.title' })}</FormLabel>
+									<FormLabel>
+										<I18nText path='create-task.form.title' />
+									</FormLabel>
 									<FormControl>
 										<Input {...field} />
 									</FormControl>
@@ -98,7 +63,9 @@ export function CreateTaskForm({ isOpen, onClose }: CreateTaskFormProps) {
 							name='iconName'
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>{i18n.formatMessage({ id: 'create-task.form.icon' })}</FormLabel>
+									<FormLabel>
+										<I18nText path='create-task.form.icon' />
+									</FormLabel>
 									<FormControl>
 										<IconPicker
 											placeholder={i18n.formatMessage({ id: 'create-task.form.icon' })}
@@ -115,7 +82,9 @@ export function CreateTaskForm({ isOpen, onClose }: CreateTaskFormProps) {
 							name='dueDate'
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>{i18n.formatMessage({ id: 'create-task.form.dueDate' })}</FormLabel>
+									<FormLabel>
+										<I18nText path='create-task.form.dueDate' />
+									</FormLabel>
 									<FormControl>
 										<DatePicker
 											dateForm={field.value}
@@ -133,7 +102,7 @@ export function CreateTaskForm({ isOpen, onClose }: CreateTaskFormProps) {
 								render={({ field }) => (
 									<FormItem>
 										<FormLabel>
-											{i18n.formatMessage({ id: 'create-task.form.startTime' })}
+											<I18nText path='create-task.form.startTime' />
 										</FormLabel>
 										<FormControl>
 											<Input
@@ -150,7 +119,9 @@ export function CreateTaskForm({ isOpen, onClose }: CreateTaskFormProps) {
 								name='endTime'
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>{i18n.formatMessage({ id: 'create-task.form.endTime' })}</FormLabel>
+										<FormLabel>
+											<I18nText path='create-task.form.endTime' />
+										</FormLabel>
 										<FormControl>
 											<Input
 												type='time'
@@ -168,9 +139,11 @@ export function CreateTaskForm({ isOpen, onClose }: CreateTaskFormProps) {
 								variant='outline'
 								onClick={onClose}
 							>
-								{i18n.formatMessage({ id: 'button.cancel' })}
+								<I18nText path='button.cancel' />
 							</Button>
-							<Button type='submit'>{i18n.formatMessage({ id: 'button.create' })}</Button>
+							<Button type='submit'>
+								<I18nText path='button.create' />
+							</Button>
 						</div>
 					</form>
 				</Form>

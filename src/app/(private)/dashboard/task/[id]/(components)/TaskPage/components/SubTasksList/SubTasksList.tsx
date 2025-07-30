@@ -28,7 +28,7 @@ import type { DBSubTask } from '@/types/db.types'
 import { useI18n } from '@/utils/providers'
 
 import { SubTask } from './components/SubTask/SubTask'
-import { useSubTasksList } from '@/app/(private)/dashboard/task/[id]/(components)/SubTasksList/hooks/useSubTasksList'
+import { useSubTasksList } from './hooks/useSubTasksList'
 
 export function SubTasksList({ id, subTasks }: { id: string; subTasks: DBSubTask[] }) {
 	const i18n = useI18n()

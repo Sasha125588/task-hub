@@ -15,8 +15,8 @@ import {
 
 import type { DBSubTask } from '@/types/db.types'
 
-import { usePostReorderSubTasksMutation } from '@/utils/api/hooks/task/usePostReorderSubTasksMutation'
-import { usePutUpdateSubTaskMutation } from '@/utils/api/hooks/task/usePutUpdateSubTaskMutation'
+import { usePostReorderSubTasksMutation } from '@/utils/api/hooks/task/sub-task/usePostReorderSubTasksMutation'
+import { usePutUpdateSubTaskMutation } from '@/utils/api/hooks/task/sub-task/usePutUpdateSubTaskMutation'
 
 import { SubTaskItem } from './components/SubTaskItem/SubTaskItem'
 import { CreateSubTaskForm } from '@/app/(private)/dashboard/@modal/(.)task/[id]/(components)/TaskEditForm/components/SubTasks/components/CreateSubTaskForm/CreateSubTaskForm'

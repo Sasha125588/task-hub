@@ -4,7 +4,6 @@ import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { format } from 'date-fns'
 import { CalendarDays, GripVertical, MoreVertical } from 'lucide-react'
-import { useTransition } from 'react'
 
 import { TrashIcon } from '@/components/animate-ui/icons/trash-icon'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -22,8 +21,6 @@ export function SubTask({
 	onDelete: () => void
 	handleUpdate: (subTaskId: string, completed: boolean) => void
 }) {
-	const [, startTransition] = useTransition()
-
 	const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
 		id: subTask.id
 	})
@@ -36,9 +33,7 @@ export function SubTask({
 
 	const handleToggle = async () => {
 		try {
-			startTransition(async () => {
-				handleUpdate(subTask.id, !subTask.completed)
-			})
+			handleUpdate(subTask.id, !subTask.completed)
 		} catch (error) {
 			console.error('Failed to update sub task:', error)
 		}
@@ -46,9 +41,7 @@ export function SubTask({
 
 	const handleDelete = () => {
 		try {
-			startTransition(() => {
-				onDelete()
-			})
+			onDelete()
 		} catch (error) {
 			console.error('Failed to delete sub task:', error)
 		}

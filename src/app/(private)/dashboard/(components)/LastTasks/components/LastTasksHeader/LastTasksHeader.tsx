@@ -1,5 +1,4 @@
 import { PlusIcon } from 'lucide-react'
-import { parseAsStringLiteral, useQueryState } from 'nuqs'
 import { useMemo, useState } from 'react'
 
 import { FlipButton as ChangeSortTypeButton } from '@/components/animate-ui/buttons/flip'
@@ -12,13 +11,7 @@ import { TabsList, TabsTrigger } from '@/components/animate-ui/radix/tabs'
 import { I18nText } from '@/components/common/I18nText/I18nText'
 
 import type { DBTask } from '@/types/db.types'
-import {
-	SortFilter,
-	StatusFilter,
-	type TSortFilter,
-	type TStatusFilter,
-	type TaskStatuses
-} from '@/types/task.types'
+import { type TSortFilter, type TStatusFilter, type TaskStatuses } from '@/types/sort.types'
 
 import { getNumOfTasksByStatus } from '@/utils/helpers/task/getNumOfTasksByStatus'
 import { useI18n } from '@/utils/providers'
@@ -26,19 +19,19 @@ import { useI18n } from '@/utils/providers'
 import { CreateTaskForm } from './components/CreateTaskForm/CreateTaskForm'
 import { TABS } from './constants/data'
 
-export function LastTasksHeader({ tasks }: { tasks: DBTask[] }) {
+export function LastTasksHeader({
+	tasks,
+	statusType,
+	sortType,
+	setSortType
+}: {
+	tasks: DBTask[]
+	statusType: TStatusFilter
+	sortType: TSortFilter
+	setSortType: (sortType: TSortFilter) => void
+}) {
 	const i18n = useI18n()
 	const [isCreateFormOpen, setIsCreateFormOpen] = useState(false)
-
-	const [statusType] = useQueryState<TStatusFilter>(
-		'status',
-		parseAsStringLiteral(StatusFilter).withDefault('all')
-	)
-
-	const [sortType, setSortType] = useQueryState<TSortFilter>(
-		'sort',
-		parseAsStringLiteral(SortFilter).withDefault('asc')
-	)
 
 	const numberOfTasksByStatus = useMemo(() => getNumOfTasksByStatus(tasks), [tasks])
 
@@ -84,7 +77,7 @@ export function LastTasksHeader({ tasks }: { tasks: DBTask[] }) {
 					</span>
 					<HoverCard>
 						<HoverCardTrigger className='cursor-pointer scroll-m-20'>
-							{i18n.formatMessage({ id: 'last-tasks.title' })}
+							<I18nText path='last-tasks.title' />
 						</HoverCardTrigger>
 						<HoverCardContent>
 							{Object.keys(numberOfTasksByStatus).map(key => {
@@ -95,9 +88,7 @@ export function LastTasksHeader({ tasks }: { tasks: DBTask[] }) {
 										className='flex gap-2'
 									>
 										<p>
-											{i18n.formatMessage({
-												id: `last-tasks.status.${validKey}`
-											})}
+											<I18nText path={`last-tasks.status.${validKey}`} />
 										</p>
 										<p>{numberOfTasksByStatus[validKey]}</p>
 									</div>

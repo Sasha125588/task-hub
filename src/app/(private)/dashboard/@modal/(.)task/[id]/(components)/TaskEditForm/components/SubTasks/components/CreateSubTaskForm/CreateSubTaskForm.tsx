@@ -22,14 +22,14 @@ export function CreateSubTaskForm({ taskId }: { taskId: string }) {
 					<Input
 						value={state.taskTitle}
 						onChange={e => functions.setTaskTitle(e.target.value)}
-						placeholder='Task name...'
+						placeholder='Sub task name...'
 						autoFocus
-						disabled={state.isLoading}
+						disabled={state.isPending}
 						className='flex-1'
 					/>
 					<Button
 						onClick={functions.handleCreateTask}
-						disabled={!state.taskTitle.trim() || state.isLoading}
+						disabled={!state.taskTitle.trim() || state.isPending}
 						className='size-8'
 					>
 						<Check size={16} />
@@ -38,7 +38,7 @@ export function CreateSubTaskForm({ taskId }: { taskId: string }) {
 						variant='ghost'
 						onClick={functions.handleCancel}
 						size='icon'
-						disabled={state.isLoading}
+						disabled={state.isPending}
 						className='hover:bg-accent/50 size-8'
 					>
 						<X size={16} />

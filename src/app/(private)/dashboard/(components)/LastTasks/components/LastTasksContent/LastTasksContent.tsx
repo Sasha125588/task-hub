@@ -5,7 +5,7 @@ import { TabsContent } from '@/components/animate-ui/radix/tabs'
 import { I18nText } from '@/components/common/I18nText/I18nText'
 
 import type { DBTask } from '@/types/db.types'
-import { StatusFilter, type TStatusFilter } from '@/types/task.types'
+import { StatusFilter, type TStatusFilter } from '@/types/sort.types'
 
 import { Task } from './Task/Task'
 import { TASK_CONFIG } from '@/configs/task.config'
@@ -18,11 +18,13 @@ const ANIMATION_VARIANTS = {
 	transition: { duration: 0.2, layout: { duration: 0.3 } }
 } as const
 
+const STATUS_TYPE = TASK_CONFIG.STORAGE_KEYS.STATUS_TYPE
+
 export function LastTasksContent({ tasks }: { tasks: DBTask[] }) {
 	const [isShowAll, setIsShowAll] = useQueryState('show-all', parseAsBoolean)
 
 	const [statusType] = useQueryState<TStatusFilter>(
-		'status',
+		STATUS_TYPE,
 		parseAsStringLiteral(StatusFilter).withDefault('all')
 	)
 

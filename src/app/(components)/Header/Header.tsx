@@ -3,15 +3,13 @@
 import { usePathname } from 'next/navigation'
 
 import { SidebarTrigger } from '@/components/animate-ui/radix/sidebar'
+import { I18nText } from '@/components/common/I18nText/I18nText'
 import { LanguageSwitcher } from '@/components/common/LanguageSwitcher'
 import { Separator } from '@/components/ui/separator'
-
-import { useI18n } from '@/utils/providers'
 
 import { SearchForm } from './components/Search/Search'
 
 export function Header() {
-	const i18n = useI18n()
 	const pathname = usePathname()
 
 	const pageName =
@@ -25,7 +23,7 @@ export function Header() {
 					orientation='vertical'
 					className='mr-2 data-[orientation=vertical]:h-4'
 				/>
-				{i18n.formatMessage({ id: `pages.${pageName}` })}
+				<I18nText path={`pages.${pageName}` as LocaleMessageId} />
 			</div>
 			<div className='flex items-center gap-3'>
 				<SearchForm />

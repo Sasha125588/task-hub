@@ -3,7 +3,7 @@
 import { Tabs } from '@/components/animate-ui/radix/tabs'
 import { I18nText } from '@/components/common/I18nText/I18nText'
 
-import { type TaskStatuses } from '@/types/task.types'
+import { type TaskStatuses } from '@/types/sort.types'
 
 import { LastTasksContent } from './components/LastTasksContent/LastTasksContent'
 import { LastTasksHeader } from './components/LastTasksHeader/LastTasksHeader'
@@ -24,7 +24,12 @@ export function LastTasks() {
 			onValueChange={changeStatusType}
 		>
 			<div className='flex flex-col gap-3'>
-				<LastTasksHeader tasks={state.tasks} />
+				<LastTasksHeader
+					tasks={state.tasks}
+					statusType={state.statusType}
+					sortType={state.sortType}
+					setSortType={functions.setSortType}
+				/>
 
 				{state.tasks.length > 0 ? (
 					<LastTasksContent tasks={state.tasks} />

@@ -1,5 +1,5 @@
 import type { DBTask } from '@/types/db.types'
-import type { TSortFilter, TStatusFilter } from '@/types/task.types'
+import type { TSortFilter, TStatusFilter } from '@/types/sort.types'
 
 import supabase from '@/lib/supabase/client'
 
