@@ -1,11 +1,11 @@
 import { AnimatePresence, motion } from 'motion/react'
-import { parseAsBoolean, parseAsStringLiteral, useQueryState } from 'nuqs'
+import { parseAsBoolean, useQueryState } from 'nuqs'
 
 import { TabsContent } from '@/components/animate-ui/radix/tabs'
 import { I18nText } from '@/components/common/I18nText/I18nText'
 
 import type { DBTask } from '@/types/db.types'
-import { StatusFilter, type TStatusFilter } from '@/types/sort.types'
+import { type TStatusFilter } from '@/types/sort.types'
 
 import { Task } from './Task/Task'
 import { TASK_CONFIG } from '@/configs/task.config'
@@ -18,15 +18,16 @@ const ANIMATION_VARIANTS = {
 	transition: { duration: 0.2, layout: { duration: 0.3 } }
 } as const
 
-const STATUS_TYPE = TASK_CONFIG.STORAGE_KEYS.STATUS_TYPE
+const DISPLAYED_TASKS_LIMIT = TASK_CONFIG.DISPLAYED_TASKS_LIMIT
 
-export function LastTasksContent({ tasks }: { tasks: DBTask[] }) {
+export function LastTasksContent({
+	tasks,
+	statusType
+}: {
+	tasks: DBTask[]
+	statusType: TStatusFilter
+}) {
 	const [isShowAll, setIsShowAll] = useQueryState('show-all', parseAsBoolean)
-
-	const [statusType] = useQueryState<TStatusFilter>(
-		STATUS_TYPE,
-		parseAsStringLiteral(StatusFilter).withDefault('all')
-	)
 
 	const toggleShowAll = () => {
 		setIsShowAll(!isShowAll)
@@ -53,7 +54,7 @@ export function LastTasksContent({ tasks }: { tasks: DBTask[] }) {
 					))}
 				</AnimatePresence>
 			</div>
-			{tasks.length >= TASK_CONFIG.DISPLAYED_TASKS_LIMIT && (
+			{tasks.length >= DISPLAYED_TASKS_LIMIT && (
 				<div className='mt-5 text-center font-medium'>
 					<button
 						onClick={toggleShowAll}

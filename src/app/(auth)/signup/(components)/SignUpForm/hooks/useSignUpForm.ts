@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { redirect } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 import { useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -19,6 +19,7 @@ interface SignUpForm {
 
 export const useSignUpForm = () => {
 	const [isPending, startTransition] = useTransition()
+	const router = useRouter()
 
 	const signUpForm = useForm<SignUpForm>({
 		resolver: zodResolver(signUpFormSchema),
@@ -34,7 +35,7 @@ export const useSignUpForm = () => {
 		startTransition(async () => {
 			const loadingToast = toast.loading('Creating your account...')
 
-			const { error } = await handleSignUp(values.email, values.password, values.username)
+			const error = await handleSignUp(values.email, values.password, values.username)
 
 			if (error?.code) {
 				const errMsg = getErrorMessage(error.code)
@@ -47,7 +48,8 @@ export const useSignUpForm = () => {
 			toast.success('Account created successfully! Welcome to Task Hub!', {
 				id: loadingToast
 			})
-			redirect('/dashboard')
+
+			router.push('/dashboard')
 		})
 	})
 

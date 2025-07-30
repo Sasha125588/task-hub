@@ -1,5 +1,5 @@
 import { I18nText } from '@/components/common/I18nText/I18nText'
-import { SocialLoginButtons } from '@/components/common/SocialLoginButtons'
+import { SocialLoginButtons } from '@/components/common/SocialLoginButtons/SocialLoginButtons'
 import { Button } from '@/components/ui/button'
 import {
 	Form,

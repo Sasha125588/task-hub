@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation'
 
 import { SidebarTrigger } from '@/components/animate-ui/radix/sidebar'
 import { I18nText } from '@/components/common/I18nText/I18nText'
-import { LanguageSwitcher } from '@/components/common/LanguageSwitcher'
+import { LanguageSwitcher } from '@/components/common/LanguageSwitcher/LanguageSwitcher'
 import { Separator } from '@/components/ui/separator'
 
 import { SearchForm } from './components/Search/Search'

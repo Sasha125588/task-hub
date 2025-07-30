@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { getUser } from '../../requests'
+import { getUser } from '../../requests/client'
 
 export const useGetUserQuery = (userId: string) =>
 	useQuery({

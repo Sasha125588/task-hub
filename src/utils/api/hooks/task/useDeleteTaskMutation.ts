@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query'
 
 import { queryClient } from '@/utils/providers'
 
-import { deleteTask } from '../../requests'
+import { deleteTask } from '../../requests/client'
 
 export const useDeleteTaskMutation = () =>
 	useMutation({

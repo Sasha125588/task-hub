@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { redirect } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 import { useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -17,6 +17,7 @@ interface SignInForm {
 
 export const useSignInForm = () => {
 	const [isPending, startTransition] = useTransition()
+	const router = useRouter()
 
 	const signInForm = useForm<SignInForm>({
 		resolver: zodResolver(loginFormSchema),
@@ -30,7 +31,7 @@ export const useSignInForm = () => {
 		startTransition(async () => {
 			const loadingToast = toast.loading('Logging...')
 
-			const { error } = await handleSignIn(values.email, values.password)
+			const error = await handleSignIn(values.email, values.password)
 
 			if (error?.code) {
 				const errMsg = getErrorMessage(error.code)
@@ -43,7 +44,8 @@ export const useSignInForm = () => {
 			toast.success('Successfully logged in!', {
 				id: loadingToast
 			})
-			redirect('/dashboard')
+
+			router.push('/dashboard')
 		})
 	})
 

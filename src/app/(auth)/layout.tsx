@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { type PropsWithChildren } from 'react'
 
-import { Background } from '@/components/common/Background'
+import { Background } from '@/components/common/Background/Background'
 
 export const metadata: Metadata = {
 	title: 'Auth',

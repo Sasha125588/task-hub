@@ -10,7 +10,7 @@ import { toast } from 'sonner'
 import { I18nText } from '@/components/common/I18nText/I18nText'
 import { Button } from '@/components/ui/button'
 
-import { deleteChannel } from '@/utils/api'
+import { deleteChannel } from '@/utils/api/requests'
 import { cn } from '@/utils/helpers/cn'
 import { useUser } from '@/utils/hooks/auth/useUser'
 import { useRealtimeChannels } from '@/utils/hooks/chat/useRealtimeChannels'

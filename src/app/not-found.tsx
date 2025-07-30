@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 
-import { Background } from '@/components/common/Background'
+import { Background } from '@/components/common/Background/Background'
 import { I18nText } from '@/components/common/I18nText/I18nText'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'

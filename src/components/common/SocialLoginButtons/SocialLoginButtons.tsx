@@ -4,7 +4,9 @@ import { usePostAuthWithProviderMutation } from '@/utils/api'
 
 export function SocialLoginButtons() {
 	const authWithProvider = usePostAuthWithProviderMutation()
-	const handleAuth = (provider: string) => authWithProvider.mutateAsync(provider)
+	const handleAuth = async (provider: string) => {
+		await authWithProvider.mutateAsync(provider)
+	}
 
 	return (
 		<div className='grid grid-cols-2 gap-4'>

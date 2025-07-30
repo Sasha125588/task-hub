@@ -3,14 +3,15 @@
 import { Tabs } from '@/components/animate-ui/radix/tabs'
 import { I18nText } from '@/components/common/I18nText/I18nText'
 
+import type { DBTask } from '@/types/db.types'
 import { type TaskStatuses } from '@/types/sort.types'
 
 import { LastTasksContent } from './components/LastTasksContent/LastTasksContent'
 import { LastTasksHeader } from './components/LastTasksHeader/LastTasksHeader'
 import { useLastTasks } from './hooks/useLastTasks'
 
-export function LastTasks() {
-	const { state, functions } = useLastTasks()
+export function LastTasks({ initialTasks }: { initialTasks: DBTask[] }) {
+	const { state, functions } = useLastTasks(initialTasks)
 
 	const changeStatusType = (value: string) => {
 		const newType = value as TaskStatuses
@@ -32,7 +33,10 @@ export function LastTasks() {
 				/>
 
 				{state.tasks.length > 0 ? (
-					<LastTasksContent tasks={state.tasks} />
+					<LastTasksContent
+						tasks={state.tasks}
+						statusType={state.statusType}
+					/>
 				) : (
 					<div className='flex h-52 items-center justify-center'>
 						<p className='text-muted-foreground'>

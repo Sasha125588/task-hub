@@ -3,7 +3,7 @@ import { Poppins } from 'next/font/google'
 import { cookies } from 'next/headers'
 import { type PropsWithChildren } from 'react'
 
-import { ThemeSwitcher } from '@/components/common/ThemeSwitcher'
+import { ThemeSwitcher } from '@/components/common/ThemeSwitcher/ThemeSwitcher'
 
 import { getMessagesByLocale } from '@/utils/helpers/i18n/getMessageByLocale'
 

@@ -3,7 +3,7 @@
 import { format } from 'date-fns'
 import { CalendarDays, Clock } from 'lucide-react'
 
-import { IconDisplay } from '@/components/common/IconPicker'
+import { IconDisplay } from '@/components/common/IconPicker/IconPicker'
 import { Card, CardContent } from '@/components/ui/card'
 
 import { useGetSubTasksQuery, useGetTaskByIdQuery } from '@/utils/api/hooks/task'

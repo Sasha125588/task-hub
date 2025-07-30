@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import type { DBSubTask } from '@/types/db.types'
 
-import { reorderSubTasks } from '@/utils/api/requests'
+import { reorderSubTasks } from '@/utils/api/requests/client'
 
 interface ReorderMutationParams {
 	subTasks: DBSubTask[]

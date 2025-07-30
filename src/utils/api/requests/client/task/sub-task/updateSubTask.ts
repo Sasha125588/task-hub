@@ -1,6 +1,6 @@
 import type { DBSubTask } from '@/types/db.types'
 
-import { getSubTasks } from '@/utils/api/requests/task/sub-task/getSubTasks'
+import { getSubTasks } from '@/utils/api/requests/client/task/sub-task/getSubTasks'
 import { getTaskStatusByProgress } from '@/utils/helpers/task/getTaskStatusByProgress'
 
 import supabase from '@/lib/supabase/client'

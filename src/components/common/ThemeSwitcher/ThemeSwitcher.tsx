@@ -6,7 +6,7 @@ import { useId } from 'react'
 
 import { Label } from '@/components/ui/label'
 
-import { Switch } from '../ui/switch'
+import { Switch } from '../../ui/switch'
 
 export function ThemeSwitcher() {
 	const id = useId()

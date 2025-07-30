@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
 
-import { type CreateSubTaskParams, createSubTask } from '@/utils/api/requests'
+import { type CreateSubTaskParams, createSubTask } from '@/utils/api/requests/client'
 import { queryClient } from '@/utils/providers'
 
 export const usePostCreateSubTaskMutation = () =>

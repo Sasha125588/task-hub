@@ -4,7 +4,7 @@ import type { DBTask } from '@/types/db.types'
 
 import { queryClient } from '@/utils/providers'
 
-import { createTask } from '../../requests'
+import { createTask } from '../../requests/client'
 
 export const usePostCreateTaskMutation = () =>
 	useMutation({

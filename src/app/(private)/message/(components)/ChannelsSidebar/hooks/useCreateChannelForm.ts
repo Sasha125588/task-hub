@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
-import { createChannel } from '@/utils/api'
+import { createChannel } from '@/utils/api/requests'
 import { useUser } from '@/utils/hooks/auth/useUser'
 
 import { createChannelSchema } from '../constants/createChannelSchema'

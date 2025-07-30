@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
 
-import { deleteSubTask } from '@/utils/api/requests'
+import { deleteSubTask } from '@/utils/api/requests/client'
 import { queryClient } from '@/utils/providers'
 
 export const useDeleteSubTaskMutation = () =>

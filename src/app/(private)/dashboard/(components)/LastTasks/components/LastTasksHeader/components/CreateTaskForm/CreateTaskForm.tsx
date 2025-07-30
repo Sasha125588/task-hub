@@ -1,6 +1,6 @@
-import { DatePicker } from '@/components/common/DatePicker'
+import { DatePicker } from '@/components/common/DatePicker/DatePicker'
 import { I18nText } from '@/components/common/I18nText/I18nText'
-import { IconPicker } from '@/components/common/IconPicker'
+import { IconPicker } from '@/components/common/IconPicker/IconPicker'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import {

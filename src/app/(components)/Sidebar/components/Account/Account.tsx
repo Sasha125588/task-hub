@@ -33,7 +33,7 @@ import {
 	DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
 
-import { authClient, signOut } from '@/lib/better-auth/auth-client'
+import { sendVerificationEmail, signOut } from '@/lib/better-auth/auth-client'
 
 export function Account({ currentUser, isPending }: { currentUser: User; isPending: boolean }) {
 	const router = useRouter()
@@ -61,7 +61,7 @@ export function Account({ currentUser, isPending }: { currentUser: User; isPendi
 			return
 		}
 
-		await authClient.sendVerificationEmail({
+		await sendVerificationEmail({
 			email: userEmail,
 			callbackURL: '/dashboard'
 		})

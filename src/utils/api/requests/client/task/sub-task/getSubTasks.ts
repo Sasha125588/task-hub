@@ -11,7 +11,7 @@ export const getSubTasks = async (taskId: string): Promise<DBSubTask[]> => {
 			.order('order', { ascending: true })
 
 		if (error) throw error
-		return data || []
+		return data
 	} catch (error) {
 		console.error('Error fetching sub-tasks:', error)
 		throw error

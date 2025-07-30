@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query'
 
 import type { DBSubTask } from '@/types/db.types'
 
-import { updateSubTask } from '@/utils/api/requests'
+import { updateSubTask } from '@/utils/api/requests/client'
 import { queryClient } from '@/utils/providers'
 
 export const usePutUpdateSubTaskMutation = () =>

@@ -1,23 +1,23 @@
 import { getSessionCookie } from 'better-auth/cookies'
 import { NextRequest, NextResponse } from 'next/server'
 
-const publicRoutes = ['/signin', '/signup', '/']
-
-const privateRoutes = [
-	'/dashboard',
-	'/message',
-	'/reports',
-	'/schedule',
-	'/team',
-	'/insights',
-	'/settings'
-]
-
 export async function middleware(request: NextRequest) {
+	const publicRoutes = ['/signin', '/signup', '/']
+
+	const privateRoutes = [
+		'/dashboard',
+		'/message',
+		'/reports',
+		'/schedule',
+		'/team',
+		'/insights',
+		'/settings'
+	]
 	const sessionCookie = getSessionCookie(request)
-	const { pathname } = request.nextUrl
 
 	const isAuthenticated = !!sessionCookie
+
+	const { pathname } = request.nextUrl
 
 	if (isAuthenticated && publicRoutes.includes(pathname)) {
 		return NextResponse.redirect(new URL('/dashboard', request.url))

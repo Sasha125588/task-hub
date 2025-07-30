@@ -1,7 +1,7 @@
 import { motion } from 'motion/react'
 import Link from 'next/link'
 
-import { IconDisplay } from '@/components/common/IconPicker'
+import { IconDisplay } from '@/components/common/IconPicker/IconPicker'
 
 import type { DBTask } from '@/types/db.types'
 
