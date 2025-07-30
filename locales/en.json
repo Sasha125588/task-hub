@@ -4,6 +4,11 @@
 	"site.loading": "Loading...",
 	"site.home": "Welcome to Task Hub!",
 
+	"not-found": "Page not found",
+	"not-found-description": "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.",
+	"button.go-back": "Go back",
+	"button.go-to-dashboard": "Go to dashboard",
+
 	"button.addSubTask": "Add Sub Task",
 	"button.addTask": "Add Task",
 	"button.cancel": "Cancel",

@@ -23,6 +23,8 @@ export default function SignInPage() {
 								width={500}
 								height={500}
 								alt='Image'
+								loading='eager'
+								priority={true}
 								className='absolute inset-0 h-full w-full object-cover'
 							/>
 						</div>

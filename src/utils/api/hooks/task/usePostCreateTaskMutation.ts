@@ -11,5 +11,6 @@ export const usePostCreateTaskMutation = () =>
 		mutationFn: (params: Partial<DBTask>) => createTask(params),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ['getAllTasks'] })
+			queryClient.invalidateQueries({ queryKey: ['getTasksStatistics'] })
 		}
 	})
